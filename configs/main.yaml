@@ -1,8 +1,20 @@
-# Main Configuration File
-paths:
-  data: "data/"
-  results: "results/"
 
-experiment:
-  seed: 42
-  split_ratio: 0.8
+# Data Paths
+data:
+  train_path: "dataset/UNSW_NB15_training-set.csv"
+  test_path: "dataset/UNSW_NB15_testing-set.csv"
+  # Standard column names to drop (High cardinality / Identifiers)
+  drop_columns:
+    - "id"
+  
+  target_multiclass: "attack_cat"
+  target_binary: "label"
+
+# Reproducibility
+random_state: 42
+
+# Protocol
+validation_size: 0.20 # 20% of training data for internal validation
+
+# Output
+results_dir: "results"

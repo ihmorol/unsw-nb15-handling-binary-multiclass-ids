@@ -1,0 +1,635 @@
+﻿Paper Title,Paper Link,Relevance to Research,Dataset / Domain,Key Findings,Methodology / Model,Summary,Limitations,Status,bibtex
+"Efficient Approach for Anomaly Detection in Internet of Things
+Traffic Using Deep Learning
+Syed Ibrahim Imtiaz,2024 (7s7)",https://onlinelibrary.wiley.com/doi/pdf/10.1155/2022/8266347,,UNSW NB15,"Focus is mainly on binary anomaly vs normal classification,  DT AND RF Accuracy 99%.
+Uses the UNSW‑NB15 dataset as a benchmark, mainly for binary anomaly vs normal detection in an IoT context (network traffic to IoT devices).
+
+Evaluates performance after applying feature reduction, but does not deeply analyze per‑attack classes or within‑class imbalance.
+
+Relies on overall accuracy, which can be misleading when minority classes are rare; detailed macro‑averaged metrics or per‑class F1 for rare attacks are not central in their evaluation",,,"
+Relies on overall accuracy, which can be misleading when minority classes are rare; detailed macro‑averaged metrics or per‑class F1 for rare attacks are not central in their evaluation",Done,"@article{Imtiaz2022EfficientIoTAnomaly,
+title        = {Efficient Approach for Anomaly Detection in Internet of Things Traffic Using Deep Learning},
+author       = {Imtiaz, Syed Ibrahim and Khan, Liaqat Ali and Almadhor, Ahmad S. and Abbas, Sidra and Alsubai, Shtwai and Gregus, Michal and Jalil, Zunera},
+journal      = {Concurrency and Computation: Practice and Experience},
+year         = {2022},
+volume       = {34},
+number       = {26},
+pages        = {e8266347},
+doi          = {10.1155/2022/8266347},
+publisher    = {Wiley},
+}
+"
+"Addressing Imbalanced Data in Network Intrusion
+Detection: A Review and Survey
+Elham Abdullah Al-Qarni (7s7)",https://pdfs.semanticscholar.org/27b3/e96f846b58b42e63bf1add9f741cfc90a9a5.pdf,,"The paper surveys nine key intrusion detection datasets, all exhibiting class imbalance between normal traffic and attacks. These include CICIDS2017 (2.8M records, 83 features, 14 attacks), CSE-CIC-IDS2018 (16.2M records, 80 features, 6 attacks), CIDDS-001 (32M records, 14 features, 92 attacks), KDD99 (4.9M records, 41 features, 4 attacks), NSL-KDD (improved KDD99, 41 features, 4 attacks), UNSW-NB15 (2.5M records, 49 features, 9 attacks), UNSW-NB18 (3.7M records, 42 features, 6 attacks), UGR'16 (16.9M records, 12 features, 7 attacks), and UWF-ZeekData22 (18M records, 14 attacks).","NIDS: ADASYN achieved up to 99.91% accuracy on CICIDS2017 (vs. 99.86% baseline), while SMOTE yielded averages of 88.13% accuracy, 86.96% F1, 85.68% recall, 90.68% precision across studies. Post-balancing, models like RF on UNSW-NB15 hit 95.1% accuracy and ensembles reached 99.84% on KDD99. ADASYN outperformed SMOTE in accuracy (92.28% vs. 88.13%) and recall, though SMOTE preserved higher precision.",,"This review surveys datasets like CICIDS2017, KDD99, and UNSW-NB15, focusing on oversampling methods (SMOTE, ADASYN) with ML/DL models (RF, LSTM). Key findings show oversampling boosts accuracy (e.g., ADASYN to 99.91%) and recall, but limitations include narrow scope on oversampling, no original experiments, and unresolved issues like noise and evolving threats",oversampling techniques like SMOTE and ADASYN and unresolved issues like noise and evolving threats,Done,"@article{AlQarni2024,author = {Al-Qarni, Elham Abdullah},title = {Addressing Imbalanced Data in Network Intrusion Detection: A Review and Survey},journal = {International Journal of Advanced Computer Science and Applications},volume = {15},number = {2},year = {2024},doi = {10.14569/IJACSA.2024.0150215},url = {https://thesai.org/Publications/ViewPaper?Volume=15&Issue=2&Code=IJACSA&SerialNo=15%7D}
+
+"
+"Resampling imbalanced data for network
+intrusion detection datasets",https://www.researchgate.net/publication/348289073_Resampling_imbalanced_data_for_network_intrusion_detection_datasets,Important,https://research.unsw.edu.au/projects/unsw-nb15-dataset,"1. Hybrid resampling (RU-SMOTE) boosts Macro Recall from ~32% to ~74% on UNSW-NB15, significantly improving minority attack detection.
+2. Standard classifiers without resampling fail to detect minority attacks due to the extreme dominance of benign traffic.
+3. Hybrid methods provide a better balance between high detection rates and training efficiency compared to computationally expensive oversampling.
+4. Macro-averaged metrics are proven superior to micro-metrics for fairly evaluating performance on imbalanced cybersecurity datasets.
+5. Resampling is critical for highly imbalanced datasets like NB15 but shows negligible impact on relatively balanced datasets.","1. Implemented a hybrid pipeline combining Random Undersampling (for majority) with SMOTE/ADASYN (for minority).
+2. Used Artificial Neural Networks (ANN) within the Apache Spark Big Data framework for scalable processing.
+3. Applied a consistent 70% Training and 30% Testing split across all experiments to ensure reproducibility.
+4. Selected Macro Precision, Macro Recall, and Macro F1-score as primary metrics to prevent majority class bias.
+5. Systematically compared five resampling combinations (RU, RO, RURO, RU-SMOTE, RU-ADASYN) against a no-resampling baseline.","This study addresses the extreme class imbalance in datasets like UNSW-NB15 by implementing hybrid resampling techniques. The authors propose combining Random Undersampling (to reduce majority classes) with Oversampling methods like SMOTE (to synthesize minority attacks). Results show that this hybrid approach boosts Macro Recall from 32% to over 74% on UNSW-NB15, proving that resampling is essential for detecting rare attacks. The paper strongly advocates for using Macro-averaged metrics to ensure minority classes are not overshadowed by the majority class during evaluation.","1. Random Undersampling discards a massive portion of the majority class data, leading to potential loss of important normal traffic patterns.
+2. Pure Random Oversampling drastically increases the training time, making it computationally expensive for large datasets.
+3. While Macro Recall improved significantly, Macro Precision often decreased, indicating a trade-off with increased False Positives.",Done,"@article{bagui2021resampling,
+  title={Resampling imbalanced data for network intrusion detection datasets},
+  author={Bagui, Sikha and Li, Kunqi},
+  journal={Journal of Big Data},
+  volume={8},
+  number={1},
+  pages={6},
+  year={2021},
+  publisher={Springer}
+}"
+"Feature Selection in UNSW-NB15 and
+KDDCUP’99 datasets",https://shura.shu.ac.uk/15662/1/Feature%20Selection%20TJ-SZ-ISIE%202017-Camera%20Ready1.pdf,Medium,https://research.unsw.edu.au/projects/unsw-nb15-dataset,"1. Subset 2 (5 features) proposed in this study outperformed previous subsets, achieving the highest Kappa score (0.7639).
+2. Critical Features: Identifies sttl, sbytes, service, smean, and ct_dst_sport_ltm as the most significant features for intrusion detection.
+3. Algorithm: Random Forest proved to be the most robust and accurate classifier among those tested in Weka.
+4. Fair Evaluation: Unlike KDD’99 which introduced new attacks in testing, UNSW-NB15 maintains consistent attack types across training and testing sets, ensuring reliable evaluation.
+5. Dimensionality: Reducing features solves the ""curse of dimensionality,"" improving training speed without sacrificing accuracy.
+","1. Used Weka (v3.8) for machine learning tasks.
+2. Compared two feature subsets: Subset 1 (based on Association Rule Mining) vs. Subset 2 (based on InfoGain/GreedyStepwise selection).
+3. Analyzed the official UNSW-NB15 Training and Testing splits (which exclude IDs and some IPs).
+4. Evaluated performance using Kappa Statistics and ROC values.
+5. Compared feature overlaps between UNSW-NB15 and the legacy KDD’99 dataset.","This paper addresses the ""curse of dimensionality"" in UNSW-NB15 by identifying significant features using machine learning. Using Random Forest in Weka, the authors proposed a subset of just 5 features (including sttl and service) which outperformed larger subsets. The study concludes that UNSW-NB15 is a more reliable benchmark than KDD’99 because it maintains consistent attack types across training and testing sets, whereas KDD’99 introduced unknown attacks in the test phase.","1. Aggressive reduction to only 5 features might discard subtle data patterns necessary for detecting extremely rare attack types.
+2. The maximum Kappa score achieved (0.76) indicates that a significant number of misclassifications still persist.
+3. Relies primarily on classical algorithms (Weka/Random Forest) without exploring deep learning for complex feature extraction.",Done,"@INPROCEEDINGS{8001537,
+author={Janarthanan, Tharmini and Zargari, Shahrzad},
+booktitle={2017 IEEE 26th International Symposium on Industrial Electronics (ISIE)},
+title={Feature selection in UNSW-NB15 and KDDCUP'99 datasets},
+year={2017},
+volume={},
+number={},
+pages={1881-1886},
+keywords={Feature extraction;Training;Intrusion detection;Testing;Data mining;Telecommunication traffic;Decision trees;anomaly detection;feature selection;data mining;machine learning;KDDCUP'99;UNSWNB15;IDS},
+doi={10.1109/ISIE.2017.8001537}}
+"
+"A Survey of Network-based Intrusion Detection
+Data Sets
+",https://arxiv.org/abs/1903.02460,Medium,https://research.unsw.edu.au/projects/unsw-nb15-dataset,"1. Lack of representative public datasets is identified as a major challenge for NIDS research.
+2. UNSW-NB15 is explicitly classified as an imbalanced dataset in the comparative analysis.
+3. Real-world network traffic is inherently imbalanced requiring preprocessing before training models.
+4. Predefined training and testing splits are crucial for fair and reproducible evaluation.
+5. The survey confirms UNSW-NB15 contains diverse modern attack scenarios like Backdoors and Worms.","1. Defined 15 specific properties to assess the suitability of intrusion detection datasets.
+2. Grouped properties into five categories including Nature of Data and Recording Environment.
+3. Analyzed 34 existing datasets against these properties to identify peculiarities and quality.
+4. Evaluated datasets for key criteria like label availability and class balance.
+5. Categorized traffic origins as real, emulated, or synthetic to assess realism.","This literature survey evaluates 34 NIDS datasets against 15 properties, including data nature and recording environment. It highlights the scarcity of high-quality benchmarks and explicitly classifies UNSW-NB15 as an imbalanced dataset, validating the need for balancing techniques. The authors emphasize that real-world traffic is naturally imbalanced and recommend using datasets with predefined splits for reproducibility. This work confirms UNSW-NB15 as a suitable, modern benchmark containing diverse attack families.","1. Provides a theoretical critique of dataset properties without proposing novel algorithms to solve the identified limitations.
+2. Focuses on metadata and qualitative assessment rather than benchmarking specific machine learning model performance.
+3. Identifies class imbalance as a critical issue in real-world traffic but offers limited practical implementation details for resolving it.",Done,"@ARTICLE{2019arXiv190302460R,
+author = {{Ring}, Markus and {Wunderlich}, Sarah and {Scheuring}, Deniz and {Landes}, Dieter and {Hotho}, Andreas},
+title = ""{A Survey of Network-based Intrusion Detection Data Sets}"",
+journal = {arXiv e-prints},
+keywords = {Computer Science - Cryptography and Security},
+year = 2019,
+month = mar,
+eid = {arXiv:1903.02460},
+pages = {arXiv:1903.02460},
+doi = {10.48550/arXiv.1903.02460},
+archivePrefix = {arXiv},
+eprint = {1903.02460},
+primaryClass = {http://cs.cr/},
+adsurl = {https://ui.adsabs.harvard.edu/abs/2019arXiv190302460R},
+adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}"
+"Resampling imbalanced data for network
+intrusion detection datasets",https://link.springer.com/article/10.1186/s40537-020-00390-x,,"1. KDD99 
+{https://www.kaggle.com/datasets/toobajamal/kdd99-dataset}
+2. UNSW‑NB15 
+{https://www.kaggle.com/datasets/mrwellsdavid/unsw-nb15}
+3. ","1. Oversampling slows down training, under sampling speeds it up
+2. For highly dataset, resampling greatly improves recall
+3. Macro precision sometimes decreases after resampling
+4. RURO and RU-SMOTE give the best performance","1. Select cybersecurity datasets
+2. Preprocess the datasets
+3. Apply resampling techniques on training data
+(a) Random Undersampling (RU)
+(b) Random Oversampling (RO)
+(c) RURO (RU + RO combined)
+(d) RU-SMOTE
+(e) RU-ADASYN
+4. Train an Artificial Neural Network (ANN) classifier
+5. Evaluate performance","The paper studies how to fix the class imbalance problem in network intrusion detection datasets, where normal traffic is huge but many attack types have very few samples. Because of this imbalance, machine-learning models perform poorly on rare but dangerous attacks.
+The authors compare different resampling techniques (like oversampling minority classes, undersampling majority classes, and hybrid methods) to see which one helps machine-learning models detect attacks more accurately. They find that SMOTE-based oversampling and hybrid methods significantly improve detection of minority attacks without hurting overall performance. The paper highlights that choosing the right resampling technique is crucial for building reliable intrusion detection systems.","1. Only Resampling Techniques Were Explored
+2. Synthetic Samples May Not Represent Real Attacks
+3. Classifier Variety Was Limited
+4. No Real-Time Testing
+5. Feature Engineering Not Strongly Addressed",Done,"@article{article,
+author = {Bagui, Sikha and Li, Kunqi},
+year = {2021},
+month = {01},
+pages = {},
+title = {Resampling imbalanced data for network intrusion detection datasets},
+volume = {8},
+journal = {Journal of Big Data},
+doi = {10.1186/s40537-020-00390-x}
+}"
+Ensemble based Effective Intrusion Detection System for Cloud Environment over UNSW-NB15 Dataset,https://www.researchgate.net/publication/360783406_Ensemble_based_Effective_Intrusion_Detection_System_for_Cloud_Environment_over_UNSW-NB15_Dataset,"1. High-Performance Baseline: This paper achieves extremely high accuracy (99.28%) using Random Forest, serving as a strong ""Gold Standard"" baseline for our Task A (Binary Classification).
+
+2. Methodology Validation: It confirms the effectiveness of using a combined Train+Test dataset split (75/25) and standard preprocessing (Label Encoding, Min-Max Normalization) which we can replicate .
+
+3. Contrast Point: The paper focuses exclusively on binary classification, ignoring the multiclass problem (specific attack types), which perfectly sets up our research gap regarding minority class detection.","Dataset: UNSW-NB15 (Cloud/Network Intrusion Detection) .
+{https://research.unsw.edu.au/projects/unsw-nb15-dataset}
+
+Features: 49 features initially, reduced to 38 using ANOVA feature selection .
+
+Data Split: Combined Training and Testing sets (257,673 total records), then re-split into 75% Training and 25% Testing .","1. Superior Accuracy: The Bagging algorithm achieved the highest accuracy of 99.47%, while Random Forest achieved 99.28%.
+
+2. Feature Selection: Univariate feature selection (ANOVA) successfully identified 38 key features that contributed to high model performance.
+
+3. Precision/Recall: Both models achieved near-perfect Precision and Recall (99%-100%) for binary classification (Normal vs. Attack).",". Preprocessing:
+• Encoding: Label Encoding for nominal features (Protocol, Service, State) .
+
+• Normalization: Standard Min-Max normalization .
+
+• Feature Selection: Univariate selection using ANOVA F-test (selected 38 features).
+
+2. Models:
+• Random Forest: Ensemble of decision trees trained on bootstrap samples .
+
+• Bagging: Bootstrap aggregation using Decision Trees as base learners.
+
+3. Evaluation: Accuracy, Precision, Recall, F1-Score, and Confusion Matrix.","This study proposes an anomaly-based Intrusion Detection System (IDS) for cloud environments using ensemble machine learning techniques. The authors combined the UNSW-NB15 training and testing sets, applied ANOVA feature selection to select 38 features, and evaluated Random Forest and Bagging algorithms. Both models demonstrated exceptional performance for binary classification, with Bagging achieving 99.47% accuracy and Random Forest achieving 99.28%, proving the effectiveness of ensemble methods for detecting cloud intrusions.","1. Binary Only: The study is strictly limited to binary classification (Normal vs. Attack) and does not evaluate performance on specific attack types (Multiclass), masking potential failures on minority classes.
+
+2. Data Leakage Risk: By combining the official Train and Test sets and then re-splitting them randomly (75/25), the experimental setup may introduce bias compared to using the strict official split, potentially inflating accuracy .",Done,"@inproceedings{amin2021ensemble,
+  title={Ensemble based effective intrusion detection system for cloud environment over UNSW-NB15 dataset},
+  author={Amin, Uzma and Ahanger, Aamir S and Masoodi, F and Bamhdi, AM},
+  booktitle={Scrs Conf. Proc. Intell. Syst},
+  pages={483--494},
+  year={2021}
+}"
+Anomaly detection using random forest: A performance revisited,https://www.researchgate.net/publication/323135297_Anomaly_detection_using_random_forest_A_performance_revisited,"1. Direct Baseline for UNSW-NB15: This paper explicitly tests Random Forest (RF) on UNSW-NB15, aiming for an optimal ""number of trees."" This serves as a perfect comparison point for our own RF baseline in Task A.
+2. Validation of RF Superiority: Their findings confirm that Random Forest significantly outperforms other single and ensemble classifiers, reinforcing our choice of RF as a strong classical baseline.
+3. Handling Sample Size/Imbalance: They note performance issues in the GPRS dataset due to ""lack of samples"" and ""class imbalance,"" validating our research focus on solving these specific issues.
+4. Metric Focus: They use Accuracy and False Alarm Rate (FAR), aligning with the metrics used in our other references.","1. NSL-KDD 
+{https://www.kaggle.com/datasets/hassan06/nslkdd}
+
+2.UNSW_NB15:
+{https://research.unsw.edu.au/projects/unsw-nb15-dataset}
+
+3..GPRS:
+","1. Optimal Tree Count: The Random Forest model with 800 trees (RF-800) was statistically the best performer across all datasets, followed closely by RF-400 and RF-500.
+2. Performance on UNSW-NB15: The RF-800 model achieved 95.5% Accuracy and 7.22% False Alarm Rate (FAR) on the UNSW-NB15 dataset.
+3. Statistical Significance: The Friedman and Nemenyi tests confirmed that RF-800 is statistically superior to lower tree counts (like RF-20) and other existing models in literature.
+4. Dataset Variance: Performance was highest on NSL-KDD (~99%) but dropped for GPRS and UNSW-NB15 (~95%), suggesting modern datasets are harder to classify.","1. Model: Random Forest Classifier (Ensemble of Decision Trees).
+2. Tuning: Used Grid Search to optimize parameters like min_depth, nbins, and sample_rate. Tested tree sizes: {10, 20, 40, 50, 80, 100, 200, 400, 500, 800}.
+3. Implementation: Used the H2O package in R for efficient training.
+4. Evaluation: Used 10-Fold Cross-Validation (10cv) to ensure robustness.
+5. Metrics: Accuracy, False Alarm Rate (FAR), and Statistical Significance Tests (Friedman Test, Nemenyi Test).","This study proposes an effective Intrusion Detection System (IDS) for IoT networks using a Random Forest classifier. The authors evaluated the model across three diverse datasets (NSL-KDD, UNSW-NB15, GPRS) and systematically tested ensemble sizes ranging from 10 to 800 trees. Using statistical significance testing, they determined that a Random Forest with 800 trees (RF-800) provided the most robust performance, significantly outperforming existing methods like Naive Bayes Trees and Neural Networks in terms of accuracy and false alarm rates.","1. High False Alarm Rate (FAR): On the UNSW-NB15 dataset, the False Alarm Rate was 7.22%, which is relatively high compared to the 0.34% achieved on NSL-KDD.
+2. Underperformance on Modern Data: The authors admitted their model ""could not perform better than decision tree"" from a previous study on the UNSW-NB15 dataset.
+3. Imbalance Issues: They explicitly identified ""class imbalance"" and ""overlapping classes"" as reasons for lower performance on the GPRS and UNSW-NB15 datasets, but did not implement specific sampling or weighting strategies to fix it.",Done,"@inproceedings{primartha2017anomaly,
+  title={Anomaly detection using random forest: A performance revisited},
+  author={Primartha, Rifkie and Tama, Bayu Adhi},
+  booktitle={2017 International conference on data and software engineering (ICoDSE)},
+  pages={1--6},
+  year={2017},
+  organization={IEEE}
+}"
+Performance Analysis of Intrusion Detection Systems Using a Feature Selection Method on the UNSW-NB15 Dataset,https://www.researchgate.net/publication/345061553_Performance_Analysis_of_Intrusion_Detection_Systems_Using_a_Feature_Selection_Method_on_the_UNSW-NB15_Dataset,"1. Shared Goal: This paper validates our core problem statement by explicitly mentioning that high-dimensional data and ""highly imbalanced datasets"" degrade IDS performance.
+2. Methodology Alignment: They use classical ML models (LR, DT, KNN, SVM, ANN) on UNSW-NB15, providing a direct baseline for our work.
+3. Contrast in Solution: While we are testing sampling/weighting strategies for imbalance, they used Feature Selection (XGBoost) to solve it. This allows us to position our work as a complementary approach.
+4. Results Benchmark: Their Decision Tree model achieved 90.85% binary accuracy and 67.57% multiclass accuracy, giving us specific numbers to compare our own baselines against.","https://www.unsw.adfa.edu.au/unsw-canberra-cyber/cybersecurity/ADFA-NB15-Datasets/  
+
+
+Classes: Normal + 9 Attack Types (Generic, Exploits, Fuzzers, DoS, Reconnaissance, Analysis, Backdoor, Shellcode, Worms)
+
+Features: 42 original features reduced to 19 using XGBoost Feature Selection.","1. Feature Selection Impact: Using XGBoost to select 19 optimal features improved performance for most models compared to using all 42 features. For example, the Decision Tree binary accuracy increased from 88.13% to 90.85%.
+2. Best Models: The Decision Tree (DT) was the best performer for binary classification (90.85% accuracy), while the Artificial Neural Network (ANN) was best for multiclass classification (77.51% accuracy).
+3. Minority Class Failure: Even with feature selection, the ANN model underperformed on minority classes (Backdoor, Shellcode, Worms), showing that feature selection alone does not fully solve the imbalance problem.
+4. Model Efficiency: Feature selection significantly reduced model complexity; for instance, the ANN required 50% fewer neurons in the hidden layer to achieve better results.","1. Data Pre-processing:
+• Normalization: Applied Min-Max scaling to normalize numerical features between 0 and 1 to improve model efficiency .
+
+• Encoding: Used One-Hot Encoding to transform categorical features (non-numeric inputs) into a format suitable for machine learning.
+
+2. Feature Selection (Core Contribution):
+• Used the XGBoost algorithm to calculate a Feature Importance (FI) score for every attribute .
+
+• Reduction: Reduced the original 42 features down to 19 optimal features, discarding those with low importance scores to reduce complexity.
+
+3. Models Implemented & Hyperparameters:
+• Artificial Neural Network (ANN): Uses the Adam solver and a single hidden layer (tested with 5, 10, 15, 30, 50, 100 neurons) .
+
+• Decision Tree (DT): Tested with maximum depth values of {2, 5, 7, 8, 9} .
+
+• k-Nearest Neighbor (KNN): Uses Euclidean metric; tested neighbour counts of {3, 5, 7, 9, 11} .
+
+• Support Vector Machine (SVM): Used Radial Basis Function (RBF) kernel with Regularization parameter C=1.12 .
+
+• Logistic Regression (LR): Random state set to 10 with max iterations of 1000.
+
+4. Experimental Setup:
+• Data Split: The official Training set was further split into 75% Training and 25% Validation (to prevent data leakage). The official Testing set was kept separate for final evaluation .
+
+• Metrics: Accuracy, Precision, Recall, and F1-Score .","This study proposes a filter-based feature selection method using XGBoost to enhance Intrusion Detection Systems (IDS). The authors evaluated five machine learning models (ANN, LR, KNN, SVM, DT) on the UNSW-NB15 dataset for both binary and multiclass tasks. By reducing the feature space from 42 to 19 significant attributes, they achieved higher accuracy and lower computational complexity. The results demonstrated that the Decision Tree model excelled in binary detection, while the ANN model performed best for multiclass detection, although detection of rare attacks remained a challenge.","1. Minority Class Detection: The paper admits that their best multiclass model (ANN) still ""underperforms with regards to the minority classes (class 7–9)"" such as Worms and Shellcode.
+2. Limited Imbalance Handling: They focused on feature selection rather than specific data balancing techniques (like SMOTE or class weighting) to address the skewed class distribution.
+3. Low Multiclass Accuracy: While binary accuracy was high (~90%), the best multiclass accuracy was only ~77%, leaving significant room for improvement.",Done,"
+
+@article{kasongo2020performance,
+  title={Performance analysis of intrusion detection systems using a feature selection method on the UNSW-NB15 dataset},
+  author={Kasongo, Sydney M and Sun, Yanxia},
+  journal={Journal of Big Data},
+  volume={7},
+  number={1},
+  pages={105},
+  year={2020},
+  publisher={Springer}
+}"
+Enhanced Intrusion Detection Systems Performance with UNSW-NB15 Data Analysis,https://www.mdpi.com/1999-4893/17/2/64,"1. Acknowledges Imbalance: The paper admits imbalance is a major issue  but solves it via feature engineering, whereas we  will systematically test sampling/weighting.
+
+2. Clarifies Scope: Their focus is detecting any intrusion (Misuse Detection); ours extends to identifying specific attack families like Worms/Shellcode (Multiclass Misuse).
+
+3. Confirms Core Challenge: Both studies agree that data imbalance is the universal design challenge, justifying our focus on balancing techniques.",https://research.unsw.edu.au/projects/unsw-nb15-dataset,"Best Performing Model:
+The Random Forest model with feature selection achieved the highest performance:
+* Accuracy: 99.45%.
+* F1-Score: 99.65%.
+* False Alarm Rate (FAR): 1.94% (0.0194), the lowest among all models tested.
+Feature Importance:
+Feature selection significantly improved performance. The Random Forest model with selected features demonstrated increased true positives and true negatives compared to the model without selection.
+Model Comparison:
+* Logistic Regression: 98.93% accuracy.
+* SVM: 98.79% accuracy, showing high effectiveness in managing complex patterns.
+* Decision Tree: 99.04% accuracy.
+* The proposed Random Forest model outperformed existing benchmark models from 2018–2022 literature, including Stack Models and XGBoost variants.","Data Pre-processing:
+The study used the UNSW-NB15 dataset containing 2,540,044 records. Cleaning involved removing null values and correcting data types (e.g., converting 'ct_ftp_cmd' to numeric).
+Feature Engineering & Selection:
+* New Feature: Created ""network_bytes"" by combining source-to-destination (sbytes) and destination-to-source (dbytes) bytes.
+* Encoding: Applied One-Hot Encoding to categorical features (proto, service, state), resulting in 197 columns.
+* Selection: Used XGBClassifier feature importance to select 55 significant features from the original 197. Highly correlated features (e.g., Sloss, ct_srv_dst) were removed using Pearson's Correlation Coefficient.
+Models Implemented:
+1. Logistic Regression.
+2. Linear Support Vector Machine (SVM).
+3. Decision Tree (tuned with min_sample_split=6, max_depth=10, min_sample_leaf=9).
+4. Random Forest (tuned with n_estimators=300, max_depth=22).
+5. Gradient Boosted Decision Tree (GBDT).
+Evaluation:
+The dataset was split into 70% training and 30% testing. Models were evaluated using Accuracy, Precision, Recall, F1-Score, False Alarm Rate (FAR), ROC, and AUC.","This study addresses the need for robust cybersecurity measures due to the rapid proliferation of network traffic data. The authors developed machine learning models to identify cyber-attacks and enhance Intrusion Detection Systems (IDS) performance using the UNSW-NB15 dataset. By employing algorithms like Logistic Regression, Support Vector Machine (SVM), Decision Tree, and Random Forest, combined with exploratory data analysis and feature selection, the study aimed to reduce false positives and improve accuracy. The results demonstrated that the Random Forest model with feature selection provided the best performance for securing networks against modern threats.","Network Bandwidth Impact:
+Although the False Alarm Rate (FAR) is low (1.94%), it is not zero. False detections can still trigger unnecessary data exchange between hosts, generating unnecessary network traffic and reducing effective bandwidth.
+Insufficiency for Real-world Deployment:
+While accuracy is close to 100%, the authors state it is ""insufficient for a Network Intrusion Detection System"" and requires further optimization for real-world application.
+Data Balance:
+The dataset used was imbalanced (83.77% normal vs. 12.66% attack in training), which introduces complexities in precision and recall.",Done,"
+
+@article{more2024enhanced,
+  title={Enhanced intrusion detection systems performance with UNSW-NB15 data analysis},
+  author={More, Shweta and Idrissi, Moad and Mahmoud, Haitham and Asyhari, A Taufiq},
+  journal={Algorithms},
+  volume={17},
+  number={2},
+  pages={64},
+  year={2024},
+  publisher={MDPI}
+}"
+"Cost-Sensitive Learning Methods for Imbalanced Data 
+",https://ieeexplore.ieee.org/abstract/document/5596486,Relevent for imbalanced datasets handling,"Imbalanced datasets from UCI repository 
+{https://archive.ics.uci.edu/datasets}
+","1. Reduced Misclassification Costs 
+Method- Resampling + CSL on SVM
+2. Improved Overall Performance (GMean)
+Method- CSL-OCRL
+
+Resampling → These methods change the dataset to make classes balanced.
+CSL on SVM → Here the model gives higher penalties to mistakes involving the minority class.
+GMean → GMean balances performance on both classes:
+i. If minority class is detected poorly → GMean is low
+ii. If both classes are detected well → GMean is high","1. Resampling Techniques
+2. Cost-Sensitive Learning ","Class imbalance causes most machine-learning models to ignore the minority class, leading to many misclassifications. The paper proposes two practical methods combining resampling and cost-sensitive learning (CSL):
+1. Resampling + CSL-SVM –> The dataset is rebalanced using techniques like SMOTE, ROS, RUS, and TLINK. An SVM is trained, probabilities are computed via Platt scaling, and predictions are selected using Bayes risk to minimize misclassification costs.
+2. CSL-OCRL –> Instead of assuming a fixed cost ratio, it is optimized automatically for each dataset to improve minority-class detection and overall performance.
+Results:
+- First method reduces total misclassification costs.
+- Second method improves balanced performance (GMean), often outperforming other approaches.",,Done,"
+
+@INPROCEEDINGS{5596486,
+  author={Thai-Nghe, Nguyen and Gantner, Zeno and Schmidt-Thieme, Lars},
+  booktitle={The 2010 International Joint Conference on Neural Networks (IJCNN)}, 
+  title={Cost-sensitive learning methods for imbalanced data}, 
+  year={2010},
+  volume={},
+  number={},
+  pages={1-8},
+  keywords={Support vector machines;Rain;Measurement;Nearest neighbor searches;Kernel;Noise;Cancer},
+  doi={10.1109/IJCNN.2010.5596486}}"
+"Increasing the Performance of Machine Learning-Based IDSs on an Imbalanced and Up-to-Date Dataset 
+",https://ieeexplore.ieee.org/abstract/document/8993711,Important,"1. KDD CUP99 {https://www.kaggle.com/datasets/galaxyh/kdd-cup-1999-data}
+2. NSL-KDD 
+{https://www.kaggle.com/datasets/hassan06/nslkdd}
+3. CIC-IDS2017 {https://www.kaggle.com/datasets/chethuhn/network-intrusion-dataset}
+4. CSE-CIC-IDS2018 
+{https://www.kaggle.com/datasets/solarmainframe/ids-intrusion-csv}
+5. IMBALANCE RATIO OF KNOWN DATASETS 
+{https://www.kaggle.com/discussions/questions-and-answers/372288}","1. Balancing the dataset greatly improves IDS performance.
+2. Rare attacks were detected much better.
+3. All six machine learning models performed strongly on the updated dataset (CSE-CIC-IDS2018), showing better results compared to recent literature.
+ 
+The importance of this paper are:
+1. Uses modern dataset
+2. Addressing the class imbalance problem in IDS datasets.
+3. Development and comparison of six machine-learning-based IDS models
+• Decision Tree
+• Random Forest
+• KNN
+• AdaBoost
+• Gradient Boosting
+• LDA
+4. Demonstrated significant accuracy improvement after balancing","1. Using an Up-to-Date Dataset
+2. SMOTE – Synthetic Minority Oversampling Technique
+- The dataset was imbalanced (rare attacks had very few samples).
+- SMOTE creates synthetic (fake but realistic) samples for minority attack classes.
+- This balances the dataset so machine learning models can learn all attack types properly.
+3. Data Sampling
+4. Comparative Evaluation
+
+Models Used:
+-Decision Tree
+-Random Forest
+-KNN
+-AdaBoost
+-Gradient Boosting
+-LDA","-The paper aims to improve intrusion detection systems (IDS) by using modern data and solving the class imbalance problem. The authors use the up-to-date CSE-CIC-IDS2018 dataset, which contains real and recent cyberattacks but is highly imbalanced—some attack types have very few samples.
+-To fix this, the paper applies SMOTE, a technique that generates synthetic samples for minority attack classes, making the dataset more balanced.
+-Six machine-learning models—Decision Tree, Random Forest, KNN, AdaBoost, Gradient Boosting, and LDA—are trained and tested before and after applying SMOTE.
+-The results show a big accuracy improvement (4%–30%), especially in detecting rare attacks.
+-The paper concludes that balancing data is essential for effective IDS performance and suggests using deep learning in future work.",,Done,"@ARTICLE{8993711,
+  author={Karatas, Gozde and Demir, Onder and Sahingoz, Ozgur Koray},
+  journal={IEEE Access}, 
+  title={Increasing the Performance of Machine Learning-Based IDSs on an Imbalanced and Up-to-Date Dataset}, 
+  year={2020},
+  volume={8},
+  number={},
+  pages={32150-32162},
+  keywords={Support vector machines;Intrusion detection;Random forests;Computer hacking;Servers;IDS;intrusion detection;SMOTE;machine learning;CSE-CIC-IDS2018;imbalanced dataset},
+  doi={10.1109/ACCESS.2020.2973219}}"
+"Deep Learning Approach for Intelligent Intrusion
+Detection System
+R. VINAYAKUMAR 1, (7s7)",https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8681044,,"DNNs used multi-layer topologies (e.g., 3-5 hidden layers, 100-300 neurons) optimized via grid search on KDDCup'99 then transferred to UNSW-NB15 for binary/multiclass testing with Adam optimizer and categorical cross-entropy loss. ","Gap Analysis
+Your recent work on 2022–2024 deep learning IDS using UNSW-NB15 likely 
+advances this 2019 baseline by incorporating newer architectures (e.g., 
+transformers, CNN-LSTM hybrids) or techniques like advanced feature 
+engineering and handling class imbalance, which the paper's vanilla DNN 
+lacks. Key gaps include no explicit subcategory rates for ""Worms"" (e.g.,
+ low-volume exploits) or ""Shellcode"" in UNSW-NB15 results, limited to 
+overall metrics; your analysis fills this with recent benchmarks. 
+Additionally, post-2019 methods emphasize real-time drift adaptation and
+ larger models, offering superior multiclass F1-scores (often 95%+ vs. 
+their ~90%) on the same dataset.","Methods and Models
+Hyperparameters
+ for DNNs were optimized on KDDCup 99 via grid search, running up to 
+1,000 epochs with learning rates from 0.01–0.5, testing topologies like 
+varying layers and neurons. The best DNN was then benchmarked on other 
+datasets without retraining, compared to classifiers such as SVM, Random
+ Forest, and Naive Bayes using metrics like accuracy, precision, recall,
+ F1-score, and false alarm rates. No specific ""Worms"" or ""Shellcode"" 
+rates are detailed in available abstracts for UNSW-NB15; the paper 
+reports overall multiclass performance where DNN achieves high detection
+ across attack categories, though exact subcategory metrics require full
+ PDF access via DOI","Paper Summary
+The
+ paper proposes a deep learning approach with Convolutional Neural 
+Networks (CNNs) to identify network anomalies in near real-time using 
+the benchmark UNSW-NB15 dataset. It focuses on performance evaluation of
+ CNN models for intrusion detection, addressing challenges in network 
+traffic analysis. The study compares CNN against traditional methods, 
+emphasizing improved detection in imbalanced, high-dimensional data 
+typical of cybersecurity datasets",,Done,"@article{Vinayakumar2019,
+author = {Vinayakumar, R. and Alazab, Mamoun and Soman, K. P. and Poornachandran, Prabaharan and Al-Nemrat, Ameer and Venkatraman, Sitalakshmi},
+title = {Deep Learning Approach for Intelligent Intrusion Detection System},
+journal = {IEEE Access},
+volume = {7},
+pages = {41525--41550},
+year = {2019},
+doi = {10.1109/ACCESS.2019.2895334},
+note = {Received December 27, 2018, accepted January 3, 2019, date of current version April 11, 2019}
+}"
+"Network anomaly detection and performance evaluation of
+Convolutional Neural Networks on UNSW-NB15 dataset
+Amol D. Vibhutea,∗, Minhaj Khan b , Chandrashekhar H. Patil c , Sandeep V. Gaikwad a ,
+Arjun V. Maned , Kanubhai K. Patel (7s7)",https://www.sciencedirect.com/science/article/pii/S1877050924008871?utm_source=chatgpt.com,Core,UNSW NB15,"detects worms 89%, shell-code 99%","What they did (methods / model):
+• They used the dataset UNSW-NB15 for network anomaly / intrusion detection. https://www.sciencedirect.com/science/article/pii/S1877050924008871/pdf?md5=1a374a4f642f860dbd12598dd56888d2&pid=1-s2.0-S1877050924008871-main.pdf&utm_source=chatgpt.com
+• First, they applied a feature-selection step using a classical ML method: they used Random Forest to reduce dimensionality — selecting only the 15 most important features out of the original ~41 features. https://www.sciencedirect.com/science/article/pii/S1877050924008871?utm_source=chatgpt.com
+• Then, they built a deep learning model based on a Convolutional Neural Network (CNN) to detect anomalies (i.e. attack vs normal) using that reduced feature set. https://www.sciencedirect.com/science/article/pii/S1877050924008871/pdf?md5=1a374a4f642f860dbd12598dd56888d2&pid=1-s2.0-S1877050924008871-main.pdf&utm_source=chatgpt.com
+• They trained and tested the CNN on UNSW-NB15, and report a 99.00% testing accuracy. https://www.sciencedirect.com/science/article/pii/S1877050924008871?utm_source=chatgpt.com
+• They also evaluated performance not just via accuracy but using precision, recall, and F1-score","Vibhute et al. (2024) propose a CNN model for binary network anomaly detection on UNSW-NB15, first using random forest for feature selection (reducing 44 to 15 key features like sbytes and smean) before training a three-layer CNN (64/128/256 filters, ReLU, max-pooling, dropout 0.5, Adam optimizer). It achieves 99% binary test accuracy, 98.7% precision, 99.2% recall, outperforming LSTM (97.8%) and DNN (96.5%), with strong per-class results on majority attacks like DoS (99.8%) but near-perfect on rare ones (worms 89%, shellcode 99%).",,Done,"
+@article{Vibhute2024,
+author  = {Vibhute, Amol D.},
+title   = {Network anomaly detection and performance evaluation of Convolutional Neural Networks on UNSW-NB15 dataset},
+journal = {Procedia Computer Science},
+volume  = {235},
+pages   = {261--268},
+year    = {2024},
+issn    = {1877-0509},
+doi     = {10.1016/j.procs.2024.04.211}
+}"
+"The evaluation of Network Anomaly Detection
+Systems: Statistical analysis of the UNSW-NB15
+data set and the comparison with the KDD99 data
+set",https://www.researchgate.net/publication/304847859_The_evaluation_of_Network_Anomaly_Detection_Systems_Statistical_analysis_of_the_UNSW-NB15_data_set_and_the_comparison_with_the_KDD99_data_set,Important,https://research.unsw.edu.au/projects/unsw-nb15-dataset," ","1. Statistical Analysis: • Used Kolmogorov-Smirnov (K-S) test, Skewness, and Kurtosis to analyze the distribution of Training vs. Testing sets.
+
+2. Preprocessing: • Converted features to numerical values.• Applied Z-score transformation (Standard Scaler) to normalize the features.
+
+3. Feature Correlation: • Used Pearson’s Correlation Coefficient (PCC) (without labels) and Gain Ratio (GR) (with labels) to identify important features.
+
+4. Complexity Evaluation: • Implemented 5 classifiers: Naïve Bayes, Decision Tree, ANN, Logistic Regression, and EM Clustering.• Compared results (Accuracy & FAR) directly with KDD99 benchmarks.","The paper “The Evaluation of Network Anomaly Detection Systems: Statistical Analysis of the UNSW-NB15 Dataset” statistically validates UNSW-NB15 as a more complex and realistic benchmark than KDD99. It shows the dataset is non-linear and non-normal, requiring robust classification methods. Five machine learning models were tested, with Decision Tree achieving the highest accuracy of 85.56%. The study confirms there is no training-testing distribution mismatch, unlike older datasets, but modern attacks closely mimic normal traffic, making detection significantly more challenging for anomaly detection systems.","1. Employed basic classifiers (like NB, LR) that yielded lower accuracy (85.56%) compared to older benchmarks like KDD99.
+2. Did not implement specific class balancing techniques to mitigate the high False Alarm Rates caused by the imbalance.
+3. The definition of ""False Alarm Rate"" (average of FPR and FNR) differs from the standard industry focus on just False Positives.",Done,"@article{moustafa2016evaluation,
+  title={The evaluation of Network Anomaly Detection Systems: Statistical analysis of the UNSW-NB15 data set and the comparison with the KDD99 data set},
+  author={Moustafa, Nour and Slay, Jill},
+  journal={Information Security Journal: A Global Perspective},
+  volume={25},
+  number={1-3},
+  pages={18--31},
+  year={2016},
+  publisher={Taylor \& Francis}
+}"
+"Network-based Intrusion Detection: A One-class
+Classification Approach",https://www.researchgate.net/profile/Paulina-Arregoces-2/publication/363024842_Network-based_Intrusion_Detection_A_One-class_Classification_Approach/links/6749d5fea7fbc259f19d944a/Network-based-Intrusion-Detection-A-One-class-Classification-Approach.pdf,"1. Acknowledges OCC as an alternative for binary imbalance but highlights our focus on multiclass attack identification.
+
+2. Clarifies that OCC is for general Anomaly Detection, while our supervised ML is for identifying specific attack types.
+
+3. Confirms that data imbalance is the core, universal design challenge, whether solved by data balancing or by changing the classification type.",UNSW-NB15,"1. The One-Class Classification approach inherently avoids the bias issue of supervised learning since the model is never exposed to the minority attack class during training.
+
+2. OCC models are better suited for detecting unseen, unknown threats because they flag any significant deviation from the learned normal profile.
+
+3. The paper finds that certain OCC algorithms like OC-SVM and Isolation Forest achieve a favorable trade-off between detecting attacks and minimizing false positives.","Problem Formulation, Dataset & Preprocessing, Algorithms Testing, Training Data, Evaluation Metrics and models (ocSVM, ISOF, MCD,LOF)","The core premise of OCC is to train a model only on normal traffic, enabling the system to classify any deviation from this ""normal profile"" as an attack. This approach naturally bypasses the difficulties of class imbalance by completely ignoring the minority (attack) class during training. The authors test and compare various OCC algorithms on an IDS dataset to validate their effectiveness.","1. Focuses on Anomaly Detection (AIDS) via One-Class Classification.
+2. Only addresses the binary problem (Normal vs. Anomaly).
+3. Does not use the full label information of attacks.",Done,"@inproceedings{arregoces2022network,
+  title={Network-based Intrusion Detection: A One-class Classification Approach.},
+  author={Arregoces, Paulina and Vergara, Jaime and Guti{\'e}rrez, Sergio Armando and Botero, Juan Felipe},
+  booktitle={NOMS},
+  volume={2022},
+  pages={1--6},
+  year={2022}
+}"
+Review Paper on Imbalanced Network based Intrusion Detection System using Deep Learning Technique,https://ijarmt.com/index.php/j/article/view/573,"1. Strongly validates the research problem that is class imbalance is the most critical issue in modern NIDS research.
+2. Talks about Cost-Sensitive Learning which justify our Class Weighting experiment.
+3. Positions our work as the foundational ML baseline necessary for comparing future DL studies referenced in this review.","NSL-KDD, UNSW-NB15, CICIDS2017, and CSE-CIC-IDS2018","1. Deep Learning models, despite their power, still suffer significantly from class imbalance.
+
+2. Different DL architectures are suited for different data types, but all require a robust imbalance strategy
+
+3. DL often involves advanced techniques like Cost-Sensitive Learning or using GANs to generate high-quality synthetic minority attack data.","Problem, Architectures Reviewed, Imbalance Strategies Reviewed, Dataset Context","This is a review paper that focuses on the intersection of Deep Learning (DL) and the class imbalance problem in Network-based Intrusion Detection Systems (NIDS).
+The paper asserts that while DL offers superior feature representation and anomaly detection compared to traditional ML, class imbalance remains a primary performance bottleneck, leading to high false negatives. It systematically investigates:
+1. The impact of data imbalance on IDS performance.
+2. Recent Deep Learning architectures used in this domain.
+3. The various imbalance mitigation approaches adapted for DL models.","1. Focuses exclusively on Deep Learning techniques.
+2. It is a review/survey paper.
+3. The discussion of Cost-Sensitive Learning is theoretical/literature-based.",Done,"@article{choudhary2025review,
+  title={Review Paper on Imbalanced Network based Intrusion Detection System using Deep Learning Technique},
+  author={Choudhary, Mithilesh Kumar and Mishra, Atul Kumar},
+  journal={International Journal of Advanced Research and Multidisciplinary Trends (IJARMT)},
+  volume={2},
+  number={4},
+  pages={257--264},
+  year={2025}
+} "
+A Survey of Network-based Intrusion Detection Data Sets,https://arxiv.org/abs/1903.02460,"1. This survey explicitly justifies our decision to use UNSW-NB15 by positioning it as a modern, necessary benchmark, rather than an older, flawed dataset.
+
+2. It officially documents class imbalance as a core, persistent property and problem within IDS datasets, thereby validating the central focus of our abstract.
+
+3. It helps define the context of our research within the field, showing that while modern data sets exist, the methodology for effectively handling their inherent imbalance, especially for rare attacks like Worms and Shellcode, is still an area requiring our systematic experimental comparison.",10-15 dataset used," 1. Older datasets like KDD Cup 99 are considered largely obsolete due to outdated network traffic, lack of modern attacks, and various data-quality issues.
+
+2. The survey identifies the UNSW-NB15 dataset as one of the stronger, more modern alternatives, noting its inclusion of modern attacks and its comprehensive features.
+
+3. A persistent challenge across many datasets is the presence of redundancy, noise, and imbalance, which can lead to misleadingly high model accuracy scores if not addressed.
+
+4. The paper emphasizes that clear documentation, raw packet data, and high-quality feature labeling are crucial for reproducible research in IDS.","Confirms that the classical ML models (LR, RF, GB) we plan to use are highly relevant.","Its primary goal is to help us select the most suitable dataset for our specific evaluation needs by providing a structured assessment framework. The survey details the underlying network data and introduces a set of 15 distinct properties, grouped into five categories, to assess each dataset's suitability, covering criteria from data volume to recording environment and attack diversity.","1. It only describes the data sets and the issue of imbalance.
+2. It recommends modern data sets like UNSW-NB15.
+3. It only focuses on the data and properties of the data.",Done,"@article{ring2019survey,
+  title={A survey of network-based intrusion detection data sets},
+  author={Ring, Markus and Wunderlich, Sarah and Scheuring, Deniz and Landes, Dieter and Hotho, Andreas},
+  journal={Computers \& security},
+  volume={86},
+  pages={147--167},
+  year={2019},
+  publisher={Elsevier}
+}"
+Addressing Class Imbalance in Intrusion Detection: A Comprehensive Evaluation of Machine Learning Approaches,https://www.mdpi.com/2079-9292/14/1/69,"1. It establishes the critical necessity of evaluating imbalance strategies in IDS justifying our entire research question.
+
+2. It provides a transparent experimental protocol that we can adopt to build your own clean classical-ML baseline.","A processed IDS dataset, specifically featuring normal traffic and a single minority attack class like DrDoS_DNS. (NOT  UNSW-NB15)"," 1. As the class imbalance ratio increased (from 1:10 to 1:1000), the performance of all tested models dramatically degraded their ability to detect the minority attack class.
+
+2. The application of appropriate resampling techniques significantly improved the detection performance of the minority class, as demonstrated by the increase in F1-score and G-mean across all scenarios.
+
+3. The paper confirms that no single approach is universally superior; the optimal combination of a classification algorithm and a resampling technique depends on the severity of the imbalance.","Dataset & Scenarios,
+Data Processing,
+Feature Selection,
+Algorithms Tested,
+Imbalance Strategy,
+Evaluation Metrics , Models ( Random Forest, Decision Tree, KNN, MLP) ","The authors systematically tested a suite of classical ML classifiers (such as Random Forest, KNN, and MLP) under varying degrees of extreme class imbalance ( 1:100 to 1:1000). The core of their work lies in assessing how well different resampling strategies improve performance, specifically prioritizing metrics like the F1-score and Geometric Mean (G-mean), which are better indicators of minority class detection than simple accuracy.
+
+","1. Primarily focuses on binary classification.
+2. Uses a generic IDS dataset.
+3. Primarily evaluates resampling methods.",Done,"@article{shanmugam2024addressing,
+  title={Addressing class imbalance in intrusion detection: a comprehensive evaluation of machine learning approaches},
+  author={Shanmugam, Vaishnavi and Razavi-Far, Roozbeh and Hallaji, Ehsan},
+  journal={Electronics},
+  volume={14},
+  number={1},
+  pages={69},
+  year={2024},
+  publisher={MDPI}
+}"
+A Survey on Data-Driven Learning for Intelligent Network Intrusion Detection Systems,https://www.mdpi.com/2079-9292/11/2/213,Relevent for Data organizing technique,"UNSW-NB15, NSL-KDD, CICIDS2017, and Bot-IoT.","1. The shift from classical ML to Deep Learning is driven by the need to analyze complex network features.
+
+2. Adversarial learning and data augmentation are key solutions for data imbalance.
+
+3. IDS robustness is highly dependent on high-quality data.
+
+4. Showed that for data generation, GANs Performs Better than SMOTEs","1. UNSW-NB15 as a Benchmark
+2. SMOTE vs. Generative Models
+3. Relevance of AC-GAN","This paper shows the progression from classical Machine Learning to complex Deep Learning architectures, justifying the need for faster, more sophisticated feature extraction. Critically, the paper identifies data imbalance as a major, ongoing challenge that causes DL models to exhibit high overall accuracy but poor per-class recall. The authors highlight Generative Adversarial Networks and other advanced data augmentation techniques as the state-of-the-art solution for this imbalance.",Does not present novel experimental results or a specific comparison of balancing techniques. It highlights the trend toward highly complex solutions. Also SMOTE suffers from overfitting and overlapping,Done,"@article{abdelmoumin2022survey,
+  title={A survey on data-driven learning for intelligent network intrusion detection systems},
+  author={Abdelmoumin, Ghada and Whitaker, Jessica and Rawat, Danda B and Rahman, Abdul},
+  journal={Electronics},
+  volume={11},
+  number={2},
+  pages={213},
+  year={2022},
+  publisher={MDPI}
+} "
+"UNSW-NB15: A Comprehensive Data set for Network
+Intrusion Detection systems
+(UNSW-NB15 Network Data Set)",https://www.researchgate.net/publication/287330529_UNSW-NB15_a_comprehensive_data_set_for_network_intrusion_detection_systems_UNSW-NB15_network_data_set,Core,https://research.unsw.edu.au/projects/unsw-nb15-dataset,"1. Existing datasets (KDD99, NSL-KDD) are outdated and do not represent modern low-footprint attacks.
+2. UNSW-NB15 introduces modern synthetic + real-like attack traffic generated using IXIA PerfectStorm.
+3. Contains 9 major attack types and 49 rich features extracted using Argus & Bro-IDS.
+4. Dataset captures realistic network behavior using 2 simulations (1 attack/sec & 10 attacks/sec).
+5. Provides 2.54 million labeled records across 4 CSV files.
+6. Provides both flow-based and packet-based features, improving NIDS performance.
+7. UNSW-NB15 can act as a modern benchmark dataset for IDS research.","Dataset Preparation
+• UNSW-NB15 dataset (4 CSV files, Ground Truth, Event List)
+
+Traffic Generation
+• Modern normal and attack traffic generated using IXIA PerfectStorm
+
+Feature Extraction
+• 49 features extracted using Argus and Bro-IDS, plus additional flow-based features
+
+Label Assignment
+• Each record labeled as normal (0) or attack (1) using the ground truth table
+
+Attack Categorization & Comparison
+• 9 attack families defined; compared with older datasets like KDDCUP99 and NSL-KDD","This paper presents the UNSW-NB15 dataset, created to address the limitations of older datasets like KDD99 and NSL-KDD, which do not reflect modern network traffic and low-footprint attacks. Using a synthetic testbed with the IXIA PerfectStorm tool, realistic normal and malicious traffic was generated. Raw packets were captured as pcap files and processed with Argus, Bro-IDS, and twelve custom algorithms to extract 49 features. The dataset contains 2.54 million labeled records across 4 CSV files, covering 9 attack categories, providing a comprehensive benchmark for ML-based NIDS.","1. Relies on a synthetic simulation environment (IXIA tool) rather than purely real-world production network traffic.
+2. Suffers from severe class imbalance where normal traffic vastly outnumbers attack records, challenging standard classifiers.
+3. The high dimensionality (49 features) creates computational overhead and potential overfitting without proper feature selection.",Done,"@inproceedings{moustafa2015unsw,
+  title={UNSW-NB15: a comprehensive data set for network intrusion detection systems (UNSW-NB15 network data set)},
+  author={Moustafa, Nour and Slay, Jill},
+  booktitle={2015 military communications and information systems conference (MilCIS)},
+  pages={1--6},
+  year={2015},
+  organization={IEEE}
+}"
+"Features Dimensionality Reduction Approaches for Machine Learning Based Network
+Intrusion Detection 
+",https://www.mdpi.com/2079-9292/8/3/322,Important,1. CICIDS2017{https://www.kaggle.com/datasets/chethuhn/network-intrusion-dataset},"1. Dimensionality Reduction Works
+2. PCA Outperformed AE
+3. Random Forest was the best classifier
+4. Important discriminating features were identified:","1. Dataset Preparation
+• Dataset used: CICIDS2017 (5 files for 5 days)
+2. Feature Dimensionality Reduction
+3. Classification Models
+After dimensionality reduction, the reduced features are fed into classifiers to detect attacks.
+4. Handling Imbalanced Data
+• Uniform Distribution Based Balancing (UDBB)
+5. Performance Evaluation
+
+","Features Dimensionality Reduction Approaches for Machine Learning Based Network
+Intrusion Detection 
+
+—> This paper proposes using feature dimensionality reduction techniques to improve machine learning–based Intrusion Detection Systems (IDS). It applies Autoencoder (AE) and Principal Component Analysis (PCA) to reduce the number of features in the CICIDS2017 dataset from 81 to as few as 10. The reduced features are then used with classifiers like Random Forest, Bayesian Network, LDA, and QDA for both binary and multi-class attack detection.
+
+",,Done,"@Article{electronics8030322,AUTHOR = {Abdulhammed, Razan and Musafer, Hassan and Alessa, Ali and Faezipour, Miad and Abuzneid, Abdelshakour},TITLE = {Features Dimensionality Reduction Approaches for Machine Learning Based Network Intrusion Detection},JOURNAL = {Electronics},VOLUME = {8},YEAR = {2019},NUMBER = {3},ARTICLE-NUMBER = {322},URL = {https://www.mdpi.com/2079-9292/8/3/322},ISSN = {2079-9292},ABSTRACT = {The security of networked systems has become a critical universal issue that influences individuals, enterprises and governments. The rate of attacks against networked systems has increased dramatically, and the tactics used by the attackers are continuing to evolve. Intrusion detection is one of the solutions against these attacks. A common and effective approach for designing Intrusion Detection Systems (IDS) is Machine Learning. The performance of an IDS is significantly improved when the features are more discriminative and representative. This study uses two feature dimensionality reduction approaches: (i) Auto-Encoder (AE): an instance of deep learning, for dimensionality reduction, and (ii) Principle Component Analysis (PCA). The resulting low-dimensional features from both techniques are then used to build various classifiers such as Random Forest (RF), Bayesian Network, Linear Discriminant Analysis (LDA) and Quadratic Discriminant Analysis (QDA) for designing an IDS. The experimental findings with low-dimensional features in binary and multi-class classification show better performance in terms of Detection Rate (DR), F-Measure, False Alarm Rate (FAR), and Accuracy. This research effort is able to reduce the CICIDS2017 dataset’s feature dimensions from 81 to 10, while maintaining a high accuracy of 99.6% in multi-class and binary classification. Furthermore, in this paper, we propose a Multi-Class Combined performance metric C o m b i n e d M c with respect to class distribution to compare various multi-class and binary classification systems through incorporating FAR, DR, Accuracy, and class distribution parameters. In addition, we developed a uniform distribution based balancing approach to handle the imbalanced distribution of the minority class instances in the CICIDS2017 network intrusion dataset.},DOI = {10.3390/electronics8030322}}"
+SMOTE: Synthetic Minority Over-sampling Technique,https://www.jair.org/index.php/jair/article/view/10302/24590,Core,"1. The Pima Indian Diabetes (Blake & Merz, 1998) {https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database}
+2. The Phoneme dataset is from the ELENA project he Phoneme dataset is from the ELENA project 
+3. The Adult dataset (Blake & Merz, 1998) 
+4. The E-state data4 (Hall, Mohney, & Kier, 1991) 
+5. The Satimage dataset (Blake & Merz, 1998) 
+6. The Forest Cover dataset is from the UCI repository (Blake & Merz, 1998) 
+","SMOTE’s main contribution is a synthetic over-sampling technique that, when combined with under-sampling, significantly improves minority-class detection in imbalanced datasets for classical machine learning models.
+
+In short way these are the main contributions:
+1. Synthetic Minority Over-Sampling
+2. Combining SMOTE with Under-Sampling
+3. Improved Classifier Performance
+4. Outperforms Other Methods
+5. Robust Across Datasets","Methodology of SMOTE:
+1. Oversampling Minority Class Using SMOTE
+2. Comparison With Other Methods
+3. Evaluation Metrics
+
+Models:
+1. C4.5 Decision Tree
+2. Ripper (Rule-based classifier)
+3. Naive Bayes
+4. k-NN","SMOTE is a method designed to fix class imbalance by creating synthetic minority samples instead of just duplicating existing ones. It works by generating new examples between real minority samples, which helps classifiers learn better decision boundaries. When SMOTE is combined with under-sampling the majority class, it significantly improves the detection of minority classes. Experiments using C4.5, Ripper, and Naive Bayes show that SMOTE usually outperforms simple under-sampling, cost-sensitive methods, and class-prior adjustments across many datasets, especially when evaluated using ROC curves and AUC.
+
+",,Done,"
+
+@article{chawla2002smote,
+  title={SMOTE: synthetic minority over-sampling technique},
+  author={Chawla, Nitesh V and Bowyer, Kevin W and Hall, Lawrence O and Kegelmeyer, W Philip},
+  journal={Journal of artificial intelligence research},
+  volume={16},
+  pages={321--357},
+  year={2002}
+}"
