@@ -1,0 +1,8 @@
+# Main Configuration File
+paths:
+  data: "data/"
+  results: "results/"
+
+experiment:
+  seed: 42
+  split_ratio: 0.8
