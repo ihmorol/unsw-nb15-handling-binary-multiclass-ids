@@ -1,7 +1,39 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-.ipynb_checkpoints
-results/runs/
-data/
-.vscode
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Results (optional - keep experiment_log.csv, exclude large files)
+results/models/*.joblib
+results/processed/*.npy
+results/processed/*.npz
+
+# Logs
+results/logs/
+
+# Hidden docs
 docs_hid/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large data files that shouldn't be in git
+*.csv.gz
+*.pkl
+*.pickle
