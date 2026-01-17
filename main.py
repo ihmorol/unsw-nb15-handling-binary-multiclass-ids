@@ -262,6 +262,15 @@ def main():
                 experiment_count += 1
                 experiment_id = f"{task}_{model_name}_{strategy_name}"
                 
+                # Check if experiment already completed (resume capability)
+                metrics_file = results_dir / 'metrics' / f"{experiment_id}.json"
+                if metrics_file.exists():
+                    logger.info(f"\n[{experiment_count}/{total_experiments}] SKIPPING {experiment_id} (already completed)")
+                    with open(metrics_file, 'r') as f:
+                        existing_result = json.load(f)
+                    all_results.append(existing_result)
+                    continue
+                
                 logger.info(f"\n[{experiment_count}/{total_experiments}] Running {experiment_id}")
                 
                 try:
