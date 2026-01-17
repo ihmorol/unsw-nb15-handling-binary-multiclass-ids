@@ -653,9 +653,131 @@ Each experiment must include:
 
 ---
 
+## 11. Literature Benchmark Comparison
+
+> [!IMPORTANT]
+> This table establishes the competitive landscape for contextualizing our results.
+
+### 11.1 Binary Classification Benchmarks
+
+| Study | Year | Dataset | Model | Accuracy | Macro-F1 | Notes |
+|-------|------|---------|-------|----------|----------|-------|
+| Primartha & Tama | 2017 | UNSW-NB15 | RF (800 trees) | 95.5% | N/R | FAR 7.22% |
+| Amin et al. | 2021 | UNSW-NB15 | RF + ANOVA | 99.28% | N/R | Cloud env |
+| More et al. | 2024 | UNSW-NB15 | RF (optimized) | **99.45%** | N/R | Feature selection |
+| **This Study** | 2026 | UNSW-NB15 | RF + S1 | 90.36% | 90.08% | Focus on rare classes |
+
+### 11.2 Multiclass Classification Benchmarks
+
+| Study | Year | Dataset | Model | Accuracy | Macro-F1 | Rare Class Focus |
+|-------|------|---------|-------|----------|----------|------------------|
+| Kasongo & Sun | 2020 | UNSW-NB15 | XGB + DT | 67.57% | N/R | Partial |
+| Vinayakumar et al. | 2019 | UNSW-NB15 | DNN | ~75% | N/R | No |
+| **This Study** | 2026 | UNSW-NB15 | XGB + S1 | 69.57% | **52.40%** | **Yes (Worms, Shellcode)** |
+
+> [!NOTE]
+> Our multiclass Macro-F1 of 52.40% with explicit rare-class analysis represents a unique contribution, as prior work does not report per-class metrics for Worms/Shellcode.
+
+---
+
+## 12. Ablation Study Design
+
+### 12.1 Ablation Matrix
+
+| ID | Ablation | Hypothesis | Baseline | Comparison |
+|----|----------|------------|----------|------------|
+| A1 | Remove S2 (SMOTE/ROS) | Oversampling is critical for rare class recall | multi_xgb_s2a | multi_xgb_s0 |
+| A2 | Remove S1 (Class Weights) | CSL improves recall/precision trade-off | multi_rf_s1 | multi_rf_s0 |
+| A3 | Feature Subset (Top-20 by RF importance) | Feature redundancy is acceptable | Full 196 features | Top-20 features |
+| A4 | Single Model (RF only) | Model choice is secondary to strategy | All 3 models | RF only |
+
+### 12.2 Ablation Success Criteria
+
+| Ablation | Expected Result | Conclusion If True |
+|----------|-----------------|---------------------|
+| A1 | Worms recall drops by >15pp | Oversampling essential for rare classes |
+| A2 | Backdoor recall drops by >10pp | CSL provides complementary benefit |
+| A3 | Macro-F1 drops by <2pp | Feature redundancy is tolerable |
+| A4 | RF ≈ XGB performance | Strategy > Model for this dataset |
+
+---
+
+## 13. Statistical Validation Protocol
+
+### 13.1 Confidence Interval Computation
+
+```python
+def compute_bootstrap_ci(y_true, y_pred, metric_fn, n_iter=1000, ci=0.95):
+    """Bootstrap 95% CI for any metric."""
+    scores = []
+    n = len(y_true)
+    for _ in range(n_iter):
+        idx = np.random.choice(n, n, replace=True)
+        scores.append(metric_fn(y_true[idx], y_pred[idx]))
+    lower = np.percentile(scores, (1 - ci) / 2 * 100)
+    upper = np.percentile(scores, (1 + ci) / 2 * 100)
+    return {"mean": np.mean(scores), "ci_lower": lower, "ci_upper": upper}
+```
+
+### 13.2 Paired Comparison Protocol
+
+| Comparison | Test | α (Bonferroni) | Interpretation |
+|------------|------|----------------|----------------|
+| Model A vs Model B (same test set) | McNemar's χ² | 0.05/18 = 0.0028 | Significant if p < 0.0028 |
+| Strategy S1 vs S0 | Wilcoxon Signed-Rank | 0.05/3 = 0.0167 | Significant if p < 0.0167 |
+
+### 13.3 Effect Size Reporting
+
+| Metric | Effect Size Measure | Interpretation |
+|--------|---------------------|----------------|
+| Classification Agreement | Cohen's κ | κ > 0.8 = excellent |
+| Recall Improvement | Δ (percentage points) | Report with 95% CI |
+
+---
+
+## 14. Team Coordination Protocol
+
+> This section defines how the personas in `persona/team.yaml` should collaborate.
+
+### 14.1 Workflow Stages
+
+```mermaid
+graph LR
+    A[Lead: Define Scope] --> B[Executor: Implement]
+    B --> C[Auditor: Validate]
+    C --> D{Pass?}
+    D -- No --> B
+    D -- Yes --> E[Author: Document]
+    E --> F[Reviewer: Stats Check]
+    F --> G{Approved?}
+    G -- No --> E
+    G -- Yes --> H[Lead: Finalize]
+```
+
+### 14.2 Handoff Checklist
+
+| From | To | Artifact Required | Validation Gate |
+|------|----|-------------------|-----------------|
+| Lead | Executor | `implementation_plan.md` | User approval |
+| Executor | Auditor | `experiment_log.csv`, `predictions.csv` | All 18 runs complete |
+| Auditor | Author | QA Report (pass/fail) | No leakage, artifacts exist |
+| Author | Reviewer | Draft paper sections | Metrics match artifacts |
+| Reviewer | Lead | Statistical validation report | CIs computed, no overclaims |
+
+### 14.3 Conflict Resolution
+
+| Issue | Resolution Path |
+|-------|-----------------|
+| Discrepancy in metrics | Auditor re-runs validation, traces to source |
+| Statistical claim disputed | Reviewer provides CI/p-value evidence |
+| Scope creep | Lead enforces original `experiment_contract.md` |
+
+---
+
 ## Document History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-01-17 | Initial contract |
 | 2.0 | 2026-01-17 | Complete enhancement with hyperparameters, metrics, and protocols |
+| 3.0 | 2026-01-18 | Added §11-14: Literature benchmarks, ablation design, statistical validation, team coordination |

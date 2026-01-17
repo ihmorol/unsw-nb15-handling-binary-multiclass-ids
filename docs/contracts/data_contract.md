@@ -387,9 +387,62 @@ This exact processed dataset is the **single consistent input** for all 18 exper
 
 ---
 
+## 9. Feature Correlation Audit
+
+> [!NOTE]
+> All 42 predictive features are retained by design. This section documents the rationale.
+
+### 9.1 Multicollinearity Assessment
+
+| Feature Pair | Correlation | Action | Rationale |
+|--------------|-------------|--------|-----------|
+| `sbytes` ↔ `Sload` | 0.85+ | Retain Both | Capture different attack signatures |
+| `sttl` ↔ `dttl` | 0.70+ | Retain Both | TTL asymmetry indicates spoofing |
+| `sintpkt` ↔ `dintpkt` | 0.60+ | Retain Both | Jitter patterns differ by attack type |
+
+### 9.2 Feature Retention Justification
+
+**Why retain all 42 features?**
+1. **Rare Class Signal Preservation:** Aggressive feature selection optimizes for majority variance, potentially discarding subtle signals critical for Worms (130 samples) and Shellcode (1,133 samples).
+2. **Model Robustness:** Tree-based models (RF, XGB) naturally handle correlated features via feature importance.
+3. **Reproducibility:** Consistent feature set across all 18 experiments ensures fair comparison.
+
+---
+
+## 10. Statistical Validation Requirements
+
+### 10.1 Uncertainty Quantification
+
+| Metric | Method | Parameters |
+|--------|--------|------------|
+| Macro-F1 | Bootstrap CI | 1000 iterations, 95% CI |
+| G-Mean | Bootstrap CI | 1000 iterations, 95% CI |
+| Per-Class Recall | Bootstrap CI | 1000 iterations, 95% CI |
+
+### 10.2 Significance Testing
+
+| Comparison Type | Test | Correction |
+|-----------------|------|------------|
+| Paired Models (same data) | McNemar's Test | Bonferroni (α = 0.05/18) |
+| Strategy Comparison | Wilcoxon Signed-Rank | Bonferroni |
+| Effect Size | Cohen's κ | Report with CI |
+
+### 10.3 Required Statistical Artifacts
+
+```yaml
+statistical_outputs:
+  - "results/tables/metric_confidence_intervals.csv"
+  - "results/tables/paired_significance_tests.csv"
+  - "results/tables/effect_sizes.csv"
+  - "results/tables/rare_class_ci.csv"
+```
+
+---
+
 ## Document History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-01-17 | Initial contract |
 | 2.0 | 2026-01-17 | Complete enhancement with class distributions, leakage protocols |
+| 3.0 | 2026-01-18 | Added §9 Feature Correlation Audit, §10 Statistical Validation Requirements |

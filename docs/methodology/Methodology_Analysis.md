@@ -487,9 +487,70 @@ All remaining features are treated as numerical and scaled using StandardScaler.
 
 ---
 
+## 7. Novelty Statement & Contributions
+
+> [!IMPORTANT]
+> This section explicitly states what makes this research unique for publication purposes.
+
+### 7.1 Research Contributions
+
+| # | Contribution | Novelty | Evidence |
+|---|--------------|---------|----------|
+| C1 | **First systematic comparison** of 3 imbalance strategies × 3 classical ML models × 2 tasks (18 experiments) on UNSW-NB15 | Prior work focuses on single strategy or single task | Full experiment grid in `experiment_log.csv` |
+| C2 | **First explicit rare-class analysis** with quantified recall targets (Worms >20%, Shellcode >40%) | Prior work uses aggregate metrics that mask rare class failures | `rare_class_report.csv` |
+| C3 | **Reproducible baseline pipeline** with complete artifact contracts | Most prior work lacks reproducibility artifacts | `data_contract.md`, `experiment_contract.md` |
+| C4 | **Statistical validation protocol** with bootstrap CIs and McNemar's tests | Prior work reports point estimates without uncertainty | `metric_confidence_intervals.csv` |
+
+### 7.2 Gap Addressed
+
+**The Critical Gap:** Existing literature on UNSW-NB15 reports high binary accuracy (95-99%) but **fails to address**:
+- 0% recall for Worms class (only 130 training samples)
+- <20% recall for Shellcode, Backdoor, Analysis classes
+- Lack of per-class metrics in published results
+
+**Our Solution:** Systematic imbalance handling with transparent per-class reporting.
+
+---
+
+## 8. Limitations & Threats to Validity
+
+### 8.1 Threats to Internal Validity
+
+| Threat | Impact | Mitigation |
+|--------|--------|------------|
+| Hyperparameter sensitivity | Results may change with tuning | Fixed hyperparameters documented in `configs/main.yaml` |
+| Single random seed | Non-reproducible variance | Seed=42 fixed; multi-seed recommended as future work |
+| Preprocessing order | Encoding before scaling may affect some models | Consistent pipeline for all experiments |
+
+### 8.2 Threats to External Validity
+
+| Threat | Impact | Mitigation |
+|--------|--------|------------|
+| Single dataset | Results may not generalize | UNSW-NB15 is standard benchmark; replication on other datasets recommended |
+| Classical ML only | DL may outperform | Excluded by design; provides interpretable baseline |
+| Synthetic attacks | May not reflect real-world distribution | Acknowledged; dataset limitation |
+
+### 8.3 Threats to Conclusion Validity
+
+| Threat | Impact | Mitigation |
+|--------|--------|------------|
+| Multiple comparisons | Inflated Type I error | Bonferroni correction (α = 0.05/18) |
+| Small rare class support | Wide confidence intervals | Explicitly report CIs for rare classes |
+| G-Mean sensitivity | May overweight minority classes | Report multiple metrics (Accuracy, Macro-F1, G-Mean) |
+
+### 8.4 Acknowledged Limitations
+
+1. **No deep learning comparison:** Intentionally excluded to establish classical ML baseline.
+2. **No time-series modeling:** Treats each connection independently.
+3. **No adversarial robustness testing:** Assumes clean test data.
+4. **No real-time deployment evaluation:** Focus is on research metrics, not latency.
+
+---
+
 ## Document History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-01-17 | Initial analysis |
 | 2.0 | 2026-01-17 | Complete enhancement with specifications |
+| 3.0 | 2026-01-18 | Added §7 Novelty Statement, §8 Limitations & Threats to Validity |
