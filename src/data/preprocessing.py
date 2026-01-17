@@ -264,7 +264,7 @@ class UNSWPreprocessor:
         assert not np.isnan(self.X_test).any(), "NaN values in X_test!"
         assert not np.isinf(self.X_train).any(), "Inf values in X_train!"
         
-        logger.info("✓ Data leakage validation passed")
+        logger.info("[OK] Data leakage validation passed")
     
     def get_splits(self, task: str) -> Tuple[np.ndarray, np.ndarray, 
                                               np.ndarray, np.ndarray,

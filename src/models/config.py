@@ -17,7 +17,8 @@ MODEL_CONFIGS = {
             'solver': 'saga',           # Supports L1/L2/ElasticNet
             'max_iter': 1000,
             'penalty': 'l2',
-            'n_jobs': -1
+            'n_jobs': -1,
+            'verbose': 1                # Show optimization progress
         },
         'multi': {
             'C': 1.0,
@@ -25,7 +26,8 @@ MODEL_CONFIGS = {
             'max_iter': 1000,
             'penalty': 'l2',
             'multi_class': 'multinomial',  # Softmax regression
-            'n_jobs': -1
+            'n_jobs': -1,
+            'verbose': 1                # Show optimization progress
         }
     },
     'rf': {
@@ -36,7 +38,8 @@ MODEL_CONFIGS = {
             'min_samples_leaf': 2,
             'max_features': 'sqrt',
             'bootstrap': True,
-            'n_jobs': -1
+            'n_jobs': -1,
+            'verbose': 1                # Show tree-building progress
         },
         'multi': {
             'n_estimators': 200,
@@ -45,7 +48,8 @@ MODEL_CONFIGS = {
             'min_samples_leaf': 2,
             'max_features': 'sqrt',
             'bootstrap': True,
-            'n_jobs': -1
+            'n_jobs': -1,
+            'verbose': 1                # Show tree-building progress
         }
     },
     'xgb': {
@@ -60,7 +64,7 @@ MODEL_CONFIGS = {
             'eval_metric': 'logloss',
             'objective': 'binary:logistic',
             'n_jobs': -1,
-            'verbosity': 0
+            'verbosity': 1              # Show training progress
         },
         'multi': {
             'n_estimators': 200,
@@ -73,7 +77,7 @@ MODEL_CONFIGS = {
             'eval_metric': 'mlogloss',
             'objective': 'multi:softprob',
             'n_jobs': -1,
-            'verbosity': 0
+            'verbosity': 1              # Show training progress
         }
     }
 }
