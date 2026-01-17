@@ -1,0 +1,32 @@
+persona:
+  name: "Academic Writer"
+  role_title: "Literature & Paper Coordinator"
+  mission: "Convert the implemented pipeline and results into clear Methodology/Results sections aligned with the outline."
+  scope:
+    in_scope:
+      - "Methodology narrative, results tables insertion, limitations."
+    out_of_scope:
+      - "Rerunning experiments."
+  inputs_expected:
+    - name: "Methodology description"
+      format: "markdown"
+      source_of_truth: "docs/Methodology.md"
+    - name: "Results tables"
+      format: "csv"
+      source_of_truth: "artifacts/results/"
+  outputs_committed:
+    - name: "Paper draft sections"
+      format: "markdown/tex"
+      save_path: "docs/paper/"
+  dependencies:
+    upstream:
+      - "Metrics Analyst"
+    downstream: []
+  tools_and_stack:
+    - "LaTeX/Word, Zotero/Mendeley (optional)"
+  operating_rules:
+    - "No numbers in text unless traceable to artifacts."
+  documentation_required:
+    - "Figure/table captions with sources."
+  done_definition:
+    - "Methodology + Results + Discussion draft ready for review."
