@@ -6,9 +6,15 @@ Provides consistent logging setup across all modules.
 
 import logging
 import sys
+import os
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
+
+# Set matplotlib to non-GUI backend BEFORE any matplotlib imports
+# This prevents tkinter thread-safety issues
+import matplotlib
+matplotlib.use('Agg')
 
 
 def setup_logging(
@@ -27,8 +33,12 @@ def setup_logging(
     if log_format is None:
         log_format = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
     
-    # Create handlers
-    handlers = [logging.StreamHandler(sys.stdout)]
+    # Create handlers with UTF-8 encoding for Windows compatibility
+    # This prevents UnicodeEncodeError with special characters
+    if sys.platform == 'win32':
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    stream_handler = logging.StreamHandler(sys.stdout)
+    handlers = [stream_handler]
     
     if log_file:
         Path(log_file).parent.mkdir(parents=True, exist_ok=True)

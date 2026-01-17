@@ -11,6 +11,8 @@ All figures use consistent professional styling suitable for research papers.
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend to prevent tkinter warnings
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path

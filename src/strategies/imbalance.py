@@ -205,7 +205,7 @@ class S2a_RandomOverSampler(ImbalanceStrategy):
         new_size = len(y_resampled)
         
         logger.info(f"S2a: RandomOverSampler applied")
-        logger.info(f"     Original size: {original_size:,} → New size: {new_size:,}")
+        logger.info(f"     Original size: {original_size:,} -> New size: {new_size:,}")
         logger.info(f"     Expansion ratio: {new_size/original_size:.2f}x")
         
         return X_resampled, y_resampled
@@ -266,7 +266,7 @@ class S2b_SMOTE(ImbalanceStrategy):
         
         new_size = len(y_resampled)
         logger.info(f"S2b: {method} applied")
-        logger.info(f"     Original size: {original_size:,} → New size: {new_size:,}")
+        logger.info(f"     Original size: {original_size:,} -> New size: {new_size:,}")
         
         return X_resampled, y_resampled
 

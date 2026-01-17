@@ -1,0 +1,295 @@
+2026-01-18 00:44:16,197 | INFO     | __main__ | ======================================================================
+2026-01-18 00:44:16,197 | INFO     | __main__ | UNSW-NB15 CLASS IMBALANCE STUDY
+2026-01-18 00:44:16,198 | INFO     | __main__ | ======================================================================
+2026-01-18 00:44:16,198 | INFO     | __main__ | Started at: 2026-01-18T00:44:16.198128
+2026-01-18 00:44:16,198 | INFO     | __main__ | 
+==================================================
+2026-01-18 00:44:16,199 | INFO     | __main__ | PHASE 1: DATA PREPROCESSING
+2026-01-18 00:44:16,199 | INFO     | __main__ | ==================================================
+2026-01-18 00:44:16,199 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-18 00:44:16,199 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-18 00:44:16,584 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-18 00:44:16,584 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-18 00:44:16,764 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-18 00:44:16,764 | INFO     | src.data.preprocessing | ============================================================
+2026-01-18 00:44:16,764 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-18 00:44:16,764 | INFO     | src.data.preprocessing | ============================================================
+2026-01-18 00:44:16,764 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-18 00:44:16,764 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-18 00:44:16,765 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-18 00:44:16,929 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-18 00:44:16,929 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-18 00:44:16,929 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-18 00:44:16,954 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-18 00:44:16,993 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-18 00:44:17,600 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-18 00:44:17,796 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-18 00:44:17,797 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-18 00:44:17,797 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-18 00:44:17,797 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-18 00:44:17,797 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-18 00:44:17,797 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-18 00:44:17,797 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-18 00:44:17,866 | INFO     | src.data.preprocessing | Saved preprocessing metadata to results\processed\preprocessing_metadata.json
+2026-01-18 00:44:17,866 | INFO     | __main__ | 
+==================================================
+2026-01-18 00:44:17,866 | INFO     | __main__ | PHASE 2: RUNNING EXPERIMENTS
+2026-01-18 00:44:17,867 | INFO     | __main__ | ==================================================
+2026-01-18 00:44:17,867 | INFO     | __main__ | Total experiments to run: 18
+2026-01-18 00:44:17,867 | INFO     | __main__ | 
+[1/18] Running binary_lr_s0
+2026-01-18 00:44:17,867 | INFO     | __main__ | ============================================================
+2026-01-18 00:44:17,867 | INFO     | __main__ | EXPERIMENT: binary_lr_s0
+2026-01-18 00:44:17,867 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:44:17,867 | INFO     | __main__ |   Model:    LR
+2026-01-18 00:44:17,867 | INFO     | __main__ |   Strategy: S0
+2026-01-18 00:44:17,867 | INFO     | __main__ | ============================================================
+2026-01-18 00:44:17,868 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-18 00:44:17,869 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...
+2026-01-18 00:48:01,694 | INFO     | src.models.trainer | Training completed in 223.83s
+2026-01-18 00:48:01,783 | INFO     | __main__ | 
+Results:
+2026-01-18 00:48:01,783 | INFO     | __main__ | Accuracy:    0.8070
+Macro F1:    0.7926
+Weighted F1: 0.7981
+G-Mean:      0.7884
+ROC-AUC:     0.9541
+2026-01-18 00:48:01,784 | INFO     | __main__ | Saved metrics to results\metrics\binary_lr_s0.json
+2026-01-18 00:48:03,017 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_lr_s0.png
+2026-01-18 00:48:03,018 | INFO     | __main__ | Completed binary_lr_s0 in 223.92s
+2026-01-18 00:48:03,018 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:48:03,018 | INFO     | __main__ | 
+[2/18] Running binary_lr_s1
+2026-01-18 00:48:03,018 | INFO     | __main__ | ============================================================
+2026-01-18 00:48:03,018 | INFO     | __main__ | EXPERIMENT: binary_lr_s1
+2026-01-18 00:48:03,018 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:48:03,018 | INFO     | __main__ |   Model:    LR
+2026-01-18 00:48:03,018 | INFO     | __main__ |   Strategy: S1
+2026-01-18 00:48:03,018 | INFO     | __main__ | ============================================================
+2026-01-18 00:48:03,019 | INFO     | src.strategies.imbalance | S1: Class weighting enabled. Training size: 140,272
+2026-01-18 00:48:03,020 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...
+2026-01-18 00:52:09,232 | INFO     | src.models.trainer | Training completed in 246.21s
+2026-01-18 00:52:09,319 | INFO     | __main__ | 
+Results:
+2026-01-18 00:52:09,319 | INFO     | __main__ | Accuracy:    0.8341
+Macro F1:    0.8278
+Weighted F1: 0.8311
+G-Mean:      0.8231
+ROC-AUC:     0.9548
+2026-01-18 00:52:09,320 | INFO     | __main__ | Saved metrics to results\metrics\binary_lr_s1.json
+2026-01-18 00:52:09,768 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_lr_s1.png
+2026-01-18 00:52:09,768 | INFO     | __main__ | Completed binary_lr_s1 in 246.30s
+2026-01-18 00:52:09,768 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:52:09,768 | INFO     | __main__ | 
+[3/18] Running binary_lr_s2a
+2026-01-18 00:52:09,769 | INFO     | __main__ | ============================================================
+2026-01-18 00:52:09,769 | INFO     | __main__ | EXPERIMENT: binary_lr_s2a
+2026-01-18 00:52:09,769 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:52:09,769 | INFO     | __main__ |   Model:    LR
+2026-01-18 00:52:09,769 | INFO     | __main__ |   Strategy: S2A
+2026-01-18 00:52:09,769 | INFO     | __main__ | ============================================================
+2026-01-18 00:52:09,940 | INFO     | src.strategies.imbalance | S2a: RandomOverSampler applied
+2026-01-18 00:52:09,944 | INFO     | src.strategies.imbalance |      Expansion ratio: 1.36x
+2026-01-18 00:52:09,945 | INFO     | src.models.trainer | Training LogisticRegression on 190,944 samples...
+2026-01-18 00:57:41,011 | INFO     | src.models.trainer | Training completed in 331.07s
+2026-01-18 00:57:41,094 | INFO     | __main__ | 
+Results:
+2026-01-18 00:57:41,094 | INFO     | __main__ | Accuracy:    0.8349
+Macro F1:    0.8287
+Weighted F1: 0.8320
+G-Mean:      0.8241
+ROC-AUC:     0.9549
+2026-01-18 00:57:41,095 | INFO     | __main__ | Saved metrics to results\metrics\binary_lr_s2a.json
+2026-01-18 00:57:41,520 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_lr_s2a.png
+2026-01-18 00:57:41,520 | INFO     | __main__ | Completed binary_lr_s2a in 331.33s
+2026-01-18 00:57:41,520 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:57:41,539 | INFO     | __main__ | 
+[4/18] Running binary_rf_s0
+2026-01-18 00:57:41,539 | INFO     | __main__ | ============================================================
+2026-01-18 00:57:41,539 | INFO     | __main__ | EXPERIMENT: binary_rf_s0
+2026-01-18 00:57:41,539 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:57:41,539 | INFO     | __main__ |   Model:    RF
+2026-01-18 00:57:41,540 | INFO     | __main__ |   Strategy: S0
+2026-01-18 00:57:41,540 | INFO     | __main__ | ============================================================
+2026-01-18 00:57:41,540 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-18 00:57:41,545 | INFO     | src.models.trainer | Training RandomForestClassifier on 140,272 samples...
+2026-01-18 00:57:52,002 | INFO     | src.models.trainer | Training completed in 10.46s
+2026-01-18 00:57:52,659 | INFO     | __main__ | 
+Results:
+2026-01-18 00:57:52,659 | INFO     | __main__ | Accuracy:    0.8618
+Macro F1:    0.8543
+Weighted F1: 0.8576
+G-Mean:      0.8474
+ROC-AUC:     0.9827
+2026-01-18 00:57:52,660 | INFO     | __main__ | Saved metrics to results\metrics\binary_rf_s0.json
+2026-01-18 00:57:53,079 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_rf_s0.png
+2026-01-18 00:57:53,079 | INFO     | __main__ | Completed binary_rf_s0 in 11.12s
+2026-01-18 00:57:53,079 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:57:53,086 | INFO     | __main__ | 
+[5/18] Running binary_rf_s1
+2026-01-18 00:57:53,086 | INFO     | __main__ | ============================================================
+2026-01-18 00:57:53,086 | INFO     | __main__ | EXPERIMENT: binary_rf_s1
+2026-01-18 00:57:53,086 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:57:53,086 | INFO     | __main__ |   Model:    RF
+2026-01-18 00:57:53,086 | INFO     | __main__ |   Strategy: S1
+2026-01-18 00:57:53,086 | INFO     | __main__ | ============================================================
+2026-01-18 00:57:53,086 | INFO     | src.strategies.imbalance | S1: Class weighting enabled. Training size: 140,272
+2026-01-18 00:57:53,087 | INFO     | src.models.trainer | Training RandomForestClassifier on 140,272 samples...
+2026-01-18 00:58:03,075 | INFO     | src.models.trainer | Training completed in 9.99s
+2026-01-18 00:58:03,691 | INFO     | __main__ | 
+Results:
+2026-01-18 00:58:03,692 | INFO     | __main__ | Accuracy:    0.9036
+Macro F1:    0.9008
+Weighted F1: 0.9025
+G-Mean:      0.8958
+ROC-AUC:     0.9847
+2026-01-18 00:58:03,693 | INFO     | __main__ | Saved metrics to results\metrics\binary_rf_s1.json
+2026-01-18 00:58:04,088 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_rf_s1.png
+2026-01-18 00:58:04,088 | INFO     | __main__ | Completed binary_rf_s1 in 10.61s
+2026-01-18 00:58:04,088 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:58:04,092 | INFO     | __main__ | 
+[6/18] Running binary_rf_s2a
+2026-01-18 00:58:04,093 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:04,093 | INFO     | __main__ | EXPERIMENT: binary_rf_s2a
+2026-01-18 00:58:04,093 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:58:04,093 | INFO     | __main__ |   Model:    RF
+2026-01-18 00:58:04,093 | INFO     | __main__ |   Strategy: S2A
+2026-01-18 00:58:04,093 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:04,495 | INFO     | src.strategies.imbalance | S2a: RandomOverSampler applied
+2026-01-18 00:58:04,497 | INFO     | src.strategies.imbalance |      Expansion ratio: 1.36x
+2026-01-18 00:58:04,498 | INFO     | src.models.trainer | Training RandomForestClassifier on 190,944 samples...
+2026-01-18 00:58:18,291 | INFO     | src.models.trainer | Training completed in 13.79s
+2026-01-18 00:58:18,923 | INFO     | __main__ | 
+Results:
+2026-01-18 00:58:18,923 | INFO     | __main__ | Accuracy:    0.9046
+Macro F1:    0.9020
+Weighted F1: 0.9036
+G-Mean:      0.8972
+ROC-AUC:     0.9843
+2026-01-18 00:58:18,924 | INFO     | __main__ | Saved metrics to results\metrics\binary_rf_s2a.json
+2026-01-18 00:58:19,321 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_rf_s2a.png
+2026-01-18 00:58:19,321 | INFO     | __main__ | Completed binary_rf_s2a in 14.83s
+2026-01-18 00:58:19,321 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:58:19,344 | INFO     | __main__ | 
+[7/18] Running binary_xgb_s0
+2026-01-18 00:58:19,345 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:19,345 | INFO     | __main__ | EXPERIMENT: binary_xgb_s0
+2026-01-18 00:58:19,345 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:58:19,345 | INFO     | __main__ |   Model:    XGB
+2026-01-18 00:58:19,346 | INFO     | __main__ |   Strategy: S0
+2026-01-18 00:58:19,346 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:19,346 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-18 00:58:19,351 | INFO     | src.models.trainer | Training XGBClassifier on 140,272 samples...
+2026-01-18 00:58:23,384 | INFO     | src.models.trainer | Training completed in 4.03s
+2026-01-18 00:58:23,606 | INFO     | __main__ | 
+Results:
+2026-01-18 00:58:23,607 | INFO     | __main__ | Accuracy:    0.8719
+Macro F1:    0.8659
+Weighted F1: 0.8688
+G-Mean:      0.8594
+ROC-AUC:     0.9834
+2026-01-18 00:58:23,608 | INFO     | __main__ | Saved metrics to results\metrics\binary_xgb_s0.json
+2026-01-18 00:58:24,065 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_xgb_s0.png
+2026-01-18 00:58:24,066 | INFO     | __main__ | Completed binary_xgb_s0 in 4.26s
+2026-01-18 00:58:24,066 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:58:24,067 | INFO     | __main__ | 
+[8/18] Running binary_xgb_s1
+2026-01-18 00:58:24,067 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:24,068 | INFO     | __main__ | EXPERIMENT: binary_xgb_s1
+2026-01-18 00:58:24,068 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:58:24,068 | INFO     | __main__ |   Model:    XGB
+2026-01-18 00:58:24,068 | INFO     | __main__ |   Strategy: S1
+2026-01-18 00:58:24,068 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:24,068 | INFO     | src.strategies.imbalance | S1: Class weighting enabled. Training size: 140,272
+2026-01-18 00:58:24,069 | INFO     | src.strategies.imbalance | S1: XGBoost scale_pos_weight = 0.47
+2026-01-18 00:58:24,069 | INFO     | src.models.trainer | Training XGBClassifier on 140,272 samples...
+2026-01-18 00:58:27,661 | INFO     | src.models.trainer | Training completed in 3.59s
+2026-01-18 00:58:27,916 | INFO     | __main__ | 
+Results:
+2026-01-18 00:58:27,916 | INFO     | __main__ | Accuracy:    0.8957
+Macro F1:    0.8925
+Weighted F1: 0.8944
+G-Mean:      0.8873
+ROC-AUC:     0.9838
+2026-01-18 00:58:27,918 | INFO     | __main__ | Saved metrics to results\metrics\binary_xgb_s1.json
+2026-01-18 00:58:28,330 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_xgb_s1.png
+2026-01-18 00:58:28,330 | INFO     | __main__ | Completed binary_xgb_s1 in 3.85s
+2026-01-18 00:58:28,331 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:58:28,332 | INFO     | __main__ | 
+[9/18] Running binary_xgb_s2a
+2026-01-18 00:58:28,332 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:28,332 | INFO     | __main__ | EXPERIMENT: binary_xgb_s2a
+2026-01-18 00:58:28,332 | INFO     | __main__ |   Task:     binary
+2026-01-18 00:58:28,332 | INFO     | __main__ |   Model:    XGB
+2026-01-18 00:58:28,332 | INFO     | __main__ |   Strategy: S2A
+2026-01-18 00:58:28,332 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:28,778 | INFO     | src.strategies.imbalance | S2a: RandomOverSampler applied
+2026-01-18 00:58:28,790 | INFO     | src.strategies.imbalance |      Expansion ratio: 1.36x
+2026-01-18 00:58:28,791 | INFO     | src.models.trainer | Training XGBClassifier on 190,944 samples...
+2026-01-18 00:58:33,597 | INFO     | src.models.trainer | Training completed in 4.81s
+2026-01-18 00:58:33,835 | INFO     | __main__ | 
+Results:
+2026-01-18 00:58:33,836 | INFO     | __main__ | Accuracy:    0.8931
+Macro F1:    0.8895
+Weighted F1: 0.8916
+G-Mean:      0.8839
+ROC-AUC:     0.9838
+2026-01-18 00:58:33,838 | INFO     | __main__ | Saved metrics to results\metrics\binary_xgb_s2a.json
+2026-01-18 00:58:34,258 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_binary_xgb_s2a.png
+2026-01-18 00:58:34,258 | INFO     | __main__ | Completed binary_xgb_s2a in 5.50s
+2026-01-18 00:58:34,258 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 00:58:34,278 | INFO     | __main__ | 
+[10/18] Running multi_lr_s0
+2026-01-18 00:58:34,278 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:34,278 | INFO     | __main__ | EXPERIMENT: multi_lr_s0
+2026-01-18 00:58:34,278 | INFO     | __main__ |   Task:     multi
+2026-01-18 00:58:34,278 | INFO     | __main__ |   Model:    LR
+2026-01-18 00:58:34,278 | INFO     | __main__ |   Strategy: S0
+2026-01-18 00:58:34,278 | INFO     | __main__ | ============================================================
+2026-01-18 00:58:34,279 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-18 00:58:34,281 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...
+2026-01-18 01:12:42,805 | INFO     | src.models.trainer | Training completed in 848.52s
+2026-01-18 01:12:43,032 | INFO     | __main__ | 
+Results:
+2026-01-18 01:12:43,032 | INFO     | __main__ | Accuracy:    0.6940
+Macro F1:    0.3338
+Weighted F1: 0.7038
+G-Mean:      0.6050
+ROC-AUC:     0.9441
+2026-01-18 01:12:43,033 | INFO     | __main__ | Saved metrics to results\metrics\multi_lr_s0.json
+2026-01-18 01:12:43,621 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_multi_lr_s0.png
+2026-01-18 01:12:43,621 | INFO     | __main__ | Completed multi_lr_s0 in 848.75s
+2026-01-18 01:12:43,621 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 01:12:43,621 | INFO     | __main__ | 
+[11/18] Running multi_lr_s1
+2026-01-18 01:12:43,622 | INFO     | __main__ | ============================================================
+2026-01-18 01:12:43,622 | INFO     | __main__ | EXPERIMENT: multi_lr_s1
+2026-01-18 01:12:43,622 | INFO     | __main__ |   Task:     multi
+2026-01-18 01:12:43,622 | INFO     | __main__ |   Model:    LR
+2026-01-18 01:12:43,622 | INFO     | __main__ |   Strategy: S1
+2026-01-18 01:12:43,622 | INFO     | __main__ | ============================================================
+2026-01-18 01:12:43,622 | INFO     | src.strategies.imbalance | S1: Class weighting enabled. Training size: 140,272
+2026-01-18 01:12:43,623 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...
+2026-01-18 01:27:08,406 | INFO     | src.models.trainer | Training completed in 864.78s
+2026-01-18 01:27:08,689 | INFO     | __main__ | 
+Results:
+2026-01-18 01:27:08,689 | INFO     | __main__ | Accuracy:    0.6138
+Macro F1:    0.3397
+Weighted F1: 0.6772
+G-Mean:      0.7180
+ROC-AUC:     0.9402
+2026-01-18 01:27:08,693 | INFO     | __main__ | Saved metrics to results\metrics\multi_lr_s1.json
+2026-01-18 01:27:09,350 | INFO     | src.evaluation.plots | Saved confusion matrix to results\figures\cm_multi_lr_s1.png
+2026-01-18 01:27:09,351 | INFO     | __main__ | Completed multi_lr_s1 in 865.07s
+2026-01-18 01:27:09,351 | INFO     | __main__ | ------------------------------------------------------------
+2026-01-18 01:27:09,351 | INFO     | __main__ | 
+[12/18] Running multi_lr_s2a
+2026-01-18 01:27:09,351 | INFO     | __main__ | ============================================================
+2026-01-18 01:27:09,352 | INFO     | __main__ | EXPERIMENT: multi_lr_s2a
+2026-01-18 01:27:09,352 | INFO     | __main__ |   Task:     multi
+2026-01-18 01:27:09,352 | INFO     | __main__ |   Model:    LR
+2026-01-18 01:27:09,352 | INFO     | __main__ |   Strategy: S2A
+2026-01-18 01:27:09,352 | INFO     | __main__ | ============================================================
+2026-01-18 01:27:09,912 | INFO     | src.strategies.imbalance | S2a: RandomOverSampler applied
+2026-01-18 01:27:09,933 | INFO     | src.strategies.imbalance |      Expansion ratio: 3.19x
+2026-01-18 01:27:09,937 | INFO     | src.models.trainer | Training LogisticRegression on 448,000 samples...

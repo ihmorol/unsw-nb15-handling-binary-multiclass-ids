@@ -24,7 +24,6 @@ results/processed/*.npy
 results/processed/*.npz
 
 # Logs
-results/logs/
 
 # Hidden docs
 docs_hid/
