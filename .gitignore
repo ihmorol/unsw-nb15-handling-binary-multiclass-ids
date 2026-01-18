@@ -23,18 +23,15 @@ results/models/*.joblib
 results/processed/*.npy
 results/processed/*.npz
 
-# Logs
-
-# Hidden docs
-docs_hid/
-
 # OS files
 .DS_Store
 Thumbs.db
 
 # Large data files that shouldn't be in git
-*.csv.gz
+*.csv.gz    
 *.pkl
 *.pickle
 
+
 persona/
+antigravity/

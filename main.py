@@ -251,9 +251,9 @@ def main():
         # Get data for this task
         X_train, y_train, X_val, y_val, X_test, y_test = preprocessor.get_splits(task)
         
-        # For multiclass, get class names
+        # For multiclass, get class names from LabelEncoder to ensure correct ordering
         if task == 'multi':
-            class_names = multiclass_labels
+            class_names = list(preprocessor.label_encoder.classes_)
         else:
             class_names = ['Normal', 'Attack']
         

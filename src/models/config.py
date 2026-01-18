@@ -15,7 +15,7 @@ MODEL_CONFIGS = {
         'binary': {
             'C': 1.0,
             'solver': 'saga',           # Supports L1/L2/ElasticNet
-            'max_iter': 1000,
+            'max_iter': 500,            # Reduced for faster training
             'penalty': 'l2',
             'n_jobs': -1,
             'verbose': 1                # Show optimization progress
@@ -23,7 +23,7 @@ MODEL_CONFIGS = {
         'multi': {
             'C': 1.0,
             'solver': 'saga',
-            'max_iter': 1000,
+            'max_iter': 500,            # Reduced for faster training
             'penalty': 'l2',
             'multi_class': 'multinomial',  # Softmax regression
             'n_jobs': -1,
@@ -32,8 +32,8 @@ MODEL_CONFIGS = {
     },
     'rf': {
         'binary': {
-            'n_estimators': 200,
-            'max_depth': 20,
+            'n_estimators': 100,        # Reduced for 2x speedup
+            'max_depth': 15,            # Reduced for faster training
             'min_samples_split': 5,
             'min_samples_leaf': 2,
             'max_features': 'sqrt',
@@ -42,8 +42,8 @@ MODEL_CONFIGS = {
             'verbose': 1                # Show tree-building progress
         },
         'multi': {
-            'n_estimators': 200,
-            'max_depth': 20,
+            'n_estimators': 100,        # Reduced for 2x speedup
+            'max_depth': 15,            # Reduced for faster training
             'min_samples_split': 5,
             'min_samples_leaf': 2,
             'max_features': 'sqrt',
@@ -54,7 +54,7 @@ MODEL_CONFIGS = {
     },
     'xgb': {
         'binary': {
-            'n_estimators': 200,
+            'n_estimators': 100,        # Reduced for 2x speedup
             'learning_rate': 0.1,
             'max_depth': 10,
             'min_child_weight': 1,
@@ -67,7 +67,7 @@ MODEL_CONFIGS = {
             'verbosity': 1              # Show training progress
         },
         'multi': {
-            'n_estimators': 200,
+            'n_estimators': 100,        # Reduced for 2x speedup
             'learning_rate': 0.1,
             'max_depth': 10,
             'min_child_weight': 1,
