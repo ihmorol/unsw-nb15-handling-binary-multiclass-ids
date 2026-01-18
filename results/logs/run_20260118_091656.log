@@ -1,0 +1,69 @@
+2026-01-18 09:16:56,085 | INFO     | __main__ | ======================================================================
+2026-01-18 09:16:56,085 | INFO     | __main__ | UNSW-NB15 CLASS IMBALANCE STUDY
+2026-01-18 09:16:56,085 | INFO     | __main__ | ======================================================================
+2026-01-18 09:16:56,086 | INFO     | __main__ | Started at: 2026-01-18T09:16:56.086031
+2026-01-18 09:16:56,086 | INFO     | __main__ | 
+==================================================
+2026-01-18 09:16:56,087 | INFO     | __main__ | PHASE 1: DATA PREPROCESSING
+2026-01-18 09:16:56,087 | INFO     | __main__ | ==================================================
+2026-01-18 09:16:56,087 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-18 09:16:56,087 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-18 09:16:56,511 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-18 09:16:56,511 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-18 09:16:56,751 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-18 09:16:56,752 | INFO     | src.data.preprocessing | ============================================================
+2026-01-18 09:16:56,752 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-18 09:16:56,752 | INFO     | src.data.preprocessing | ============================================================
+2026-01-18 09:16:56,752 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-18 09:16:56,752 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-18 09:16:56,752 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-18 09:16:56,922 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-18 09:16:56,922 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-18 09:16:56,922 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-18 09:16:56,958 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-18 09:16:56,996 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-18 09:16:57,737 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-18 09:16:57,972 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-18 09:16:57,973 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-18 09:16:57,973 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-18 09:16:57,973 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-18 09:16:57,973 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-18 09:16:57,973 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-18 09:16:57,973 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-18 09:16:58,016 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-18 09:16:58,029 | INFO     | src.data.preprocessing | Saved preprocessing metadata to results\processed\preprocessing_metadata.json
+2026-01-18 09:16:58,029 | INFO     | __main__ | 
+==================================================
+2026-01-18 09:16:58,029 | INFO     | __main__ | PHASE 2: RUNNING EXPERIMENTS
+2026-01-18 09:16:58,029 | INFO     | __main__ | ==================================================
+2026-01-18 09:16:58,029 | INFO     | __main__ | Total experiments to run: 18
+2026-01-18 09:16:58,030 | INFO     | __main__ | 
+[1/18] SKIPPING binary_lr_s0 (already completed)
+2026-01-18 09:16:58,030 | INFO     | __main__ | 
+[2/18] SKIPPING binary_lr_s1 (already completed)
+2026-01-18 09:16:58,030 | INFO     | __main__ | 
+[3/18] SKIPPING binary_lr_s2a (already completed)
+2026-01-18 09:16:58,031 | INFO     | __main__ | 
+[4/18] SKIPPING binary_rf_s0 (already completed)
+2026-01-18 09:16:58,031 | INFO     | __main__ | 
+[5/18] SKIPPING binary_rf_s1 (already completed)
+2026-01-18 09:16:58,031 | INFO     | __main__ | 
+[6/18] SKIPPING binary_rf_s2a (already completed)
+2026-01-18 09:16:58,032 | INFO     | __main__ | 
+[7/18] SKIPPING binary_xgb_s0 (already completed)
+2026-01-18 09:16:58,032 | INFO     | __main__ | 
+[8/18] SKIPPING binary_xgb_s1 (already completed)
+2026-01-18 09:16:58,033 | INFO     | __main__ | 
+[9/18] SKIPPING binary_xgb_s2a (already completed)
+2026-01-18 09:16:58,033 | INFO     | __main__ | 
+[10/18] SKIPPING multi_lr_s0 (already completed)
+2026-01-18 09:16:58,034 | INFO     | __main__ | 
+[11/18] Running multi_lr_s1
+2026-01-18 09:16:58,034 | INFO     | __main__ | ============================================================
+2026-01-18 09:16:58,034 | INFO     | __main__ | EXPERIMENT: multi_lr_s1
+2026-01-18 09:16:58,034 | INFO     | __main__ |   Task:     multi
+2026-01-18 09:16:58,034 | INFO     | __main__ |   Model:    LR
+2026-01-18 09:16:58,034 | INFO     | __main__ |   Strategy: S1
+2026-01-18 09:16:58,034 | INFO     | __main__ | ============================================================
+2026-01-18 09:16:58,035 | INFO     | src.strategies.imbalance | S1: Class weighting enabled. Training size: 140,272
+2026-01-18 09:16:58,036 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...

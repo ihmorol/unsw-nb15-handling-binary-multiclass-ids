@@ -1,0 +1,46 @@
+2026-01-18 08:51:59,105 | INFO     | __main__ | Preparing data for task: binary
+2026-01-18 08:51:59,105 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-18 08:51:59,105 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-18 08:51:59,490 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-18 08:51:59,491 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-18 08:51:59,668 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-18 08:51:59,668 | INFO     | src.data.preprocessing | ============================================================
+2026-01-18 08:51:59,668 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-18 08:51:59,668 | INFO     | src.data.preprocessing | ============================================================
+2026-01-18 08:51:59,668 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-18 08:51:59,668 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-18 08:51:59,668 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-18 08:51:59,833 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-18 08:51:59,833 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-18 08:51:59,833 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-18 08:51:59,860 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-18 08:51:59,931 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-18 08:52:00,658 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-18 08:52:00,879 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-18 08:52:00,880 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-18 08:52:00,880 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-18 08:52:00,880 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-18 08:52:00,880 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-18 08:52:00,880 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-18 08:52:00,880 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-18 08:52:00,926 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-18 08:52:00,935 | INFO     | __main__ | Starting Single Experiment: Task=binary, Model=lr, Strategy=S0_NoBalancing
+2026-01-18 08:52:00,935 | INFO     | main | ============================================================
+2026-01-18 08:52:00,935 | INFO     | main | EXPERIMENT: binary_lr_S0_NoBalancing_single
+2026-01-18 08:52:00,935 | INFO     | main |   Task:     binary
+2026-01-18 08:52:00,935 | INFO     | main |   Model:    LR
+2026-01-18 08:52:00,936 | INFO     | main |   Strategy: S0_NOBALANCING
+2026-01-18 08:52:00,936 | INFO     | main | ============================================================
+2026-01-18 08:52:00,936 | ERROR    | __main__ | Experiment failed: Unknown strategy: S0_NoBalancing. Choose from ['s0', 's1', 's2a', 's2b']
+Traceback (most recent call last):
+  File "E:\University\ML\ML_PAPER_REVIEW\runner.py", line 79, in main
+    metrics = run_single_experiment(
+        experiment_id=run_id,
+    ...<9 lines>...
+        class_names=class_names
+    )
+  File "E:\University\ML\ML_PAPER_REVIEW\main.py", line 86, in run_single_experiment
+    strategy = get_strategy(strategy_name, random_state=random_state)
+  File "E:\University\ML\ML_PAPER_REVIEW\src\strategies\imbalance.py", line 296, in get_strategy
+    raise ValueError(f"Unknown strategy: {name}. Choose from {list(strategies.keys())}")
+ValueError: Unknown strategy: S0_NoBalancing. Choose from ['s0', 's1', 's2a', 's2b']

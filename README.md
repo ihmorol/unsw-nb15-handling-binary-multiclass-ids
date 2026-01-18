@@ -168,3 +168,7 @@ This project is for academic research purposes.
 
 - UNSW-NB15 Dataset: Australian Centre for Cyber Security (ACCS)
 - Original Paper: "Handling Class Imbalance in Binary and Multiclass IDS"
+
+## ⚠️ Validation Split Note
+
+The validation split (20%) generated during preprocessing is currently **reserved for future hyperparameter tuning** and is **NOT used during training** (which uses fixed hyperparameters). This ensures strict isolation of the test set and allows for future optimization without data leakage.

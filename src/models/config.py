@@ -15,69 +15,71 @@ MODEL_CONFIGS = {
         'binary': {
             'C': 1.0,
             'solver': 'saga',           # Supports L1/L2/ElasticNet
-            'max_iter': 500,            # Reduced for faster training
+            'max_iter': 1000,           # Restored to contract value
             'penalty': 'l2',
             'n_jobs': -1,
-            'verbose': 1                # Show optimization progress
+            'verbose': 0                # Reduced noise
         },
         'multi': {
             'C': 1.0,
             'solver': 'saga',
-            'max_iter': 500,            # Reduced for faster training
+            'max_iter': 1000,           # Restored to contract value
             'penalty': 'l2',
             'multi_class': 'multinomial',  # Softmax regression
             'n_jobs': -1,
-            'verbose': 1                # Show optimization progress
+            'verbose': 0                # Reduced noise
         }
     },
     'rf': {
         'binary': {
-            'n_estimators': 100,        # Reduced for 2x speedup
-            'max_depth': 15,            # Reduced for faster training
+            'n_estimators': 100,        # Optimized for speed
+            'max_depth': 25,            # Increased for better performance
             'min_samples_split': 5,
             'min_samples_leaf': 2,
             'max_features': 'sqrt',
             'bootstrap': True,
             'n_jobs': -1,
-            'verbose': 1                # Show tree-building progress
+            'verbose': 0                # Reduced noise
         },
         'multi': {
-            'n_estimators': 100,        # Reduced for 2x speedup
-            'max_depth': 15,            # Reduced for faster training
+            'n_estimators': 100,        # Optimized for speed
+            'max_depth': 25,            # Increased for better performance
             'min_samples_split': 5,
             'min_samples_leaf': 2,
             'max_features': 'sqrt',
             'bootstrap': True,
             'n_jobs': -1,
-            'verbose': 1                # Show tree-building progress
+            'verbose': 0                # Reduced noise
         }
     },
     'xgb': {
         'binary': {
-            'n_estimators': 100,        # Reduced for 2x speedup
+            'n_estimators': 100,        # Optimized for speed
             'learning_rate': 0.1,
             'max_depth': 10,
             'min_child_weight': 1,
             'subsample': 0.8,
             'colsample_bytree': 0.8,
             'use_label_encoder': False,
+            'tree_method': 'hist',      # 10x Faster training
             'eval_metric': 'logloss',
             'objective': 'binary:logistic',
             'n_jobs': -1,
-            'verbosity': 1              # Show training progress
+            'verbosity': 0              # Reduced noise
         },
         'multi': {
-            'n_estimators': 100,        # Reduced for 2x speedup
+            'n_estimators': 100,        # Optimized for speed
             'learning_rate': 0.1,
             'max_depth': 10,
             'min_child_weight': 1,
             'subsample': 0.8,
             'colsample_bytree': 0.8,
             'use_label_encoder': False,
+            'tree_method': 'hist',      # 10x Faster training
             'eval_metric': 'mlogloss',
             'objective': 'multi:softprob',
             'n_jobs': -1,
-            'verbosity': 1              # Show training progress
+            'verbosity': 0              # Reduced noise
         }
     }
 }
