@@ -1,0 +1,42 @@
+{
+  "experiment_id": "binary_baseline_stratified",
+  "task": "binary",
+  "model": "baseline",
+  "strategy": "stratified",
+  "timestamp": "2026-01-22T18:40:13.698611",
+  "training_time_seconds": 0.03594779968261719,
+  "total_time_seconds": 0.03594779968261719,
+  "metrics": {
+    "overall": {
+      "accuracy": 0.5164091726181801,
+      "macro_f1": 0.48893021660260283,
+      "weighted_f1": 0.5009230227165722,
+      "g_mean": 0.49804377672475264,
+      "roc_auc": 0.49804377672475264
+    },
+    "per_class": {
+      "Normal": {
+        "precision": 0.44636256240234745,
+        "recall": 0.31656756756756754,
+        "f1": 0.370424250090922,
+        "support": 37000
+      },
+      "Attack": {
+        "precision": 0.5491790126758304,
+        "recall": 0.6795199858819377,
+        "f1": 0.6074361831142837,
+        "support": 45332
+      }
+    },
+    "confusion_matrix": [
+      [
+        11713,
+        25287
+      ],
+      [
+        14528,
+        30804
+      ]
+    ]
+  }
+}

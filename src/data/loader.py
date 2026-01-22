@@ -89,9 +89,6 @@ class DataLoader:
         required_cols.append(self.config['data']['target_binary'])
         required_cols.append(self.config['data']['target_multiclass'])
         
-        # Add drop columns (must exist to be dropped)
-        required_cols.extend(self.config['data']['drop_columns'])
-        
         # Add categorical columns
         required_cols.extend(self.config['data']['categorical_columns'])
         

@@ -9,7 +9,7 @@ We selected the \textbf{UNSW-NB15} dataset for this research \cite{moustafa2015u
 Raw network data cannot be used directly by machine learning algorithms. We applied a consistent preprocessing pipeline to clean and format the data.
 
 \subsection{Feature Cleaning and Selection}
-The first step involved removing data columns that are not useful for detecting attacks. We dropped identifiers such as IP addresses and timestamps. These features are specific to the network setup and do not help the model learn general attack patterns. We utilized feature selection concepts discussed by Janarthanan and Zargari to ensure only relevant information remained \cite{8001537}.
+The version of the UNSW-NB15 dataset used in this study (the train/test partition) already excludes high-cardinality identifiers such as \texttt{srcip}, \texttt{dstip}, \texttt{sport}, \texttt{dsport}, \texttt{stime}, and \texttt{ltime}. These features are specific to the network setup and do not help the model learn general attack patterns. We confirmed their absence in the input files to ensure no leakage of specific IP addresses or timestamps occurs. We utilized feature selection concepts discussed by Janarthanan and Zargari to ensure only relevant information remained \cite{8001537}.
 
 \subsection{Missing Values}
 Real-world data often has gaps. To handle this, we checked for missing values in the dataset. For numerical features, we filled missing entries with the median value of that column. For categorical features, we replaced missing entries with a placeholder category labeled ``missing''.

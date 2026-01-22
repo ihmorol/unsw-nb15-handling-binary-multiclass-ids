@@ -35,7 +35,12 @@ from src.evaluation import (
     compute_all_metrics,
     compute_rare_class_analysis,
     format_metrics_for_logging,
-    plot_confusion_matrix
+    format_metrics_for_logging,
+    plot_confusion_matrix,
+    plot_learning_curves,
+    plot_roc_curve,
+    plot_pr_curve,
+    plot_feature_importance
 )
 from src.utils import load_config, setup_logging
 
@@ -178,23 +183,140 @@ def run_single_experiment(
         'rare_class_analysis': rare_class_analysis
     }
     
+    # Propagate learning curve if available
+    if 'learning_curve' in training_metadata:
+        result['learning_curve'] = training_metadata['learning_curve']
+    
     # Save metrics JSON
     metrics_path = results_dir / 'metrics' / f"{experiment_id}.json"
     metrics_path.parent.mkdir(parents=True, exist_ok=True)
     with open(metrics_path, 'w') as f:
-        json.dump(result, f, indent=2)
-    # logger.info(f"Saved metrics to {metrics_path}")
+        # Exclude learning curve from main metrics file to keep it light
+        result_copy = result.copy()
+        if 'learning_curve' in result_copy:
+            del result_copy['learning_curve']
+        json.dump(result_copy, f, indent=2)
+        
+    # Save learning curves if available
+    if 'learning_curve' in result:
+        lc_dir = results_dir / 'learning_curves'
+        lc_dir.mkdir(parents=True, exist_ok=True)
+        
+        # 1. Save JSON (Raw)
+        lc_json_path = lc_dir / f"{experiment_id}.json"
+        with open(lc_json_path, 'w') as f:
+            json.dump(result['learning_curve'], f, indent=2)
+            
+        # 2. Save CSV (Processed for Visualization)
+        try:
+            lc_data = result['learning_curve']
+            # validation_0 = Train (first in eval_set), validation_1 = Val (second)
+            # We map them to friendly names
+            mapping = {'validation_0': 'train', 'validation_1': 'val'}
+            
+            # Initialize DataFrame with epochs
+            # Get length from arbitrary metric list
+            first_set = next(iter(lc_data.values()))
+            first_metric = next(iter(first_set.values()))
+            epochs = range(1, len(first_metric) + 1)
+            
+            df_lc = pd.DataFrame({'epoch': epochs})
+            
+            for set_key, metrics_dict in lc_data.items():
+                prefix = mapping.get(set_key, set_key)
+                for metric_name, values in metrics_dict.items():
+                    col_name = f"{prefix}_{metric_name}"
+                    df_lc[col_name] = values
+            
+            lc_csv_path = lc_dir / f"{experiment_id}.csv"
+            df_lc.to_csv(lc_csv_path, index=False)
+            logger.info(f"Saved learning curve CSV: {lc_csv_path.name}")
+            
+        except Exception as e:
+            logger.warning(f"Failed to generate learning curve CSV for {experiment_id}: {e}")
+            
+        # 3. Plot Learning Curves
+        try:
+            # Create per-experiment figure folder
+            exp_fig_dir = results_dir / 'figures' / experiment_id
+            exp_fig_dir.mkdir(parents=True, exist_ok=True)
+
+            lc_plot_path = exp_fig_dir / "learning_curve.png"
+            plot_learning_curves(
+                learning_curve_data=result['learning_curve'],
+                save_path=str(lc_plot_path),
+                title=f"Learning Curves: {experiment_id} (Seed {seed})"
+            )
+        except Exception as e:
+            logger.warning(f"Failed to plot learning curves for {experiment_id}: {e}")
     
     # Save confusion matrix plot
     cm = np.array(metrics['confusion_matrix'])
     cm_labels = class_names if task == 'multi' else ['Normal', 'Attack']
-    cm_path = results_dir / 'figures' / f"cm_{experiment_id}.png"
+    
+    # Create per-experiment figure folder (redundant check but safe if LC block skipped)
+    exp_fig_dir = results_dir / 'figures' / experiment_id
+    exp_fig_dir.mkdir(parents=True, exist_ok=True)
+    
+    cm_path = exp_fig_dir / "confusion_matrix.png"
     plot_confusion_matrix(
         cm=cm,
         labels=cm_labels,
         save_path=str(cm_path),
         title=f"Confusion Matrix: {experiment_id.replace('_', ' ').title()} (Seed {seed})"
     )
+    
+    # 5. ROC and PR Curves (Binary only)
+    if task == 'binary':
+        try:
+            # ROC Curve
+            roc_path = exp_fig_dir / "roc_curve.png"
+            # Get positive class probabilities (assuming class 1 is Attack)
+            y_scores = y_pred_proba[:, 1] if y_pred_proba.shape[1] > 1 else y_pred_proba[:, 0]
+            
+            plot_roc_curve(
+                y_true=y_test,
+                y_scores=y_scores,
+                save_path=str(roc_path),
+                title=f"ROC Curve: {experiment_id} (Seed {seed})"
+            )
+            
+            # PR Curve
+            pr_path = exp_fig_dir / "pr_curve.png"
+            plot_pr_curve(
+                y_true=y_test,
+                y_scores=y_scores,
+                save_path=str(pr_path),
+                title=f"Precision-Recall Curve: {experiment_id} (Seed {seed})"
+            )
+        except Exception as e:
+            logger.warning(f"Failed to plot ROC/PR curves for {experiment_id}: {e}")
+
+    # 6. Feature Importance (Tree models only)
+    if hasattr(model, 'feature_importances_'):
+        try:
+            fi_path = exp_fig_dir / "feature_importance.png"
+            # Get feature names from preprocessor if possible, else generic
+            # preprocessor is local in main(), not passed here. 
+            # We construct generic names or try to retrieve.
+            # For now, let's just use indices or passed names if we had them.
+            # We can rely on X_train.shape[1]
+            feat_names = [f"Feature_{i}" for i in range(X_train.shape[1])]
+            
+            # Attempt to get real names if available? 
+            # We don't have easy access to preprocessor here. 
+            # But the user might care. 
+            # Let's check if we can pass them. 
+            # For now, generic names are better than crashing.
+            
+            plot_feature_importance(
+                importances=model.feature_importances_,
+                feature_names=feat_names,
+                save_path=str(fi_path),
+                title=f"Feature Importances: {experiment_id} (Seed {seed})"
+            )
+        except Exception as e:
+             logger.warning(f"Failed to plot feature importance for {experiment_id}: {e}")
     
     logger.info(f"Completed {experiment_id} in {total_time:.2f}s")
     

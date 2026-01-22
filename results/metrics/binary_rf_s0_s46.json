@@ -1,0 +1,46 @@
+{
+  "experiment_id": "binary_rf_s0_s46",
+  "seed": 46,
+  "task": "binary",
+  "model": "rf",
+  "strategy": "s0",
+  "timestamp": "2026-01-22T19:34:03.248686",
+  "training_time_seconds": 23.1159029006958,
+  "total_time_seconds": 28.29084801673889,
+  "train_samples": 140272,
+  "test_samples": 82332,
+  "metrics": {
+    "overall": {
+      "accuracy": 0.8656779866880435,
+      "macro_f1": 0.8587138527114855,
+      "weighted_f1": 0.8618882694899023,
+      "g_mean": 0.8519350342577643,
+      "roc_auc": 0.9823668442553557
+    },
+    "per_class": {
+      "Normal": {
+        "precision": 0.9794477507115662,
+        "recall": 0.7161351351351352,
+        "f1": 0.8273461040076187,
+        "support": 37000
+      },
+      "Attack": {
+        "precision": 0.8100001809005228,
+        "recall": 0.9877349333803935,
+        "f1": 0.8900816014153522,
+        "support": 45332
+      }
+    },
+    "confusion_matrix": [
+      [
+        26497,
+        10503
+      ],
+      [
+        556,
+        44776
+      ]
+    ]
+  },
+  "rare_class_analysis": null
+}

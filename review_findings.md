@@ -21,7 +21,10 @@
 
 ## 3. Major Concerns (Critical for Publication)
 
-### (1) Fatal Methodology Gap: Preprocessing Mismatch (Leakage & Crash Risk)
+### (1) ~~Fatal Methodology Gap: Preprocessing Mismatch (Leakage & Crash Risk)~~ [RESOLVED]
+*   **Status**: **False Positive**. The reviewer assumed the raw dataset contained `srcip`/`dstip`.
+*   **Investigation**: We verified that `dataset/UNSW_NB15_training-set.csv` **does not** contain these columns. The code does not crash because the columns are strictly absent.
+*   **Resolution**: Documentation (Methodology.tex and Data Contract) was updated to clarify that the dataset version used already excludes these identifiers. No code change required.
 *   **Why it matters**: The Paper (Section 3.2.1) and Data Contract (Section 2.1) explicitly state that `srcip`, `dstip`, `sport`, `dsport`, `stime`, and `ltime` are dropped to prevent overfitting/leakage. However, the code (`src/data/preprocessing.py`) and config (`configs/main.yaml`) **DO NOT drop these columns**.
 *   **Consequence**: 
     1.  **Pipeline Crash**: `StandardScaler` will likely fail when it encounters string values in `srcip`/`dstip` (since they are not in `categorical_columns`).
