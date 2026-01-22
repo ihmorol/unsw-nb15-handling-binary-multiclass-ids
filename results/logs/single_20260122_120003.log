@@ -1,0 +1,18 @@
+2026-01-22 12:00:03,011 | INFO     | __main__ | Preparing data for task: binary
+2026-01-22 12:00:03,011 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-22 12:00:03,012 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-22 12:00:03,431 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-22 12:00:03,434 | ERROR    | __main__ | Experiment failed: Training Set schema validation failed. Missing columns: ['srcip', 'dstip', 'sport', 'dsport', 'stime', 'ltime']
+Traceback (most recent call last):
+  File "E:\University\ML\ML_PAPER_REVIEW\runner.py", line 46, in main
+    train_df, test_df = loader.load_all()
+                        ~~~~~~~~~~~~~~~^^
+  File "E:\University\ML\ML_PAPER_REVIEW\src\data\loader.py", line 132, in load_all
+    return self.load_train(), self.load_test()
+           ~~~~~~~~~~~~~~~^^
+  File "E:\University\ML\ML_PAPER_REVIEW\src\data\loader.py", line 66, in load_train
+    self._validate_schema(df, "Training Set")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "E:\University\ML\ML_PAPER_REVIEW\src\data\loader.py", line 102, in _validate_schema
+    raise ValueError(f"{set_name} schema validation failed. Missing columns: {missing}")
+ValueError: Training Set schema validation failed. Missing columns: ['srcip', 'dstip', 'sport', 'dsport', 'stime', 'ltime']
