@@ -1,5 +1,65 @@
 \chapter{Conclusion}
 
+This chapter summarizes the key findings of this research, acknowledges its limitations, and outlines directions for future work.
+
 \section{Summary}
+
+This study systematically evaluated binary and multiclass intrusion detection on the UNSW-NB15 dataset using three classical machine learning models (Logistic Regression, Random Forest, XGBoost) combined with three imbalance handling strategies (No Balancing, Class Weighting, RandomOverSampler). A total of 18 experiments were conducted following a strict reproducibility protocol with fixed hyperparameters and leakage-free preprocessing.
+
+The key findings are:
+
+\begin{enumerate}
+    \item \textbf{Imbalance handling is critical for rare attack detection.} Without any balancing strategy (S0), Logistic Regression achieved 0\% recall on all four rare attack categories (Worms, Shellcode, Backdoor, Analysis). This demonstrates that standard machine learning approaches are fundamentally unsuitable for detecting minority attack types in highly skewed datasets.
+    
+    \item \textbf{Class weighting (S1) provides the optimal trade-off.} This cost-sensitive learning approach achieved performance comparable to or better than RandomOverSampler (S2A) while requiring significantly less computational time. For XGBoost, S1 achieved the best G-Mean (0.792) and near-best Macro-F1 (0.514) for multiclass classification.
+    
+    \item \textbf{XGBoost is the best-performing model.} On the binary task, XGBoost with class weighting achieved 90.8\% accuracy and 0.906 Macro-F1. On the multiclass task, it achieved the highest rare class recall rates: 81.8\% for Worms, 95.8\% for Shellcode, and 65.7\% for Backdoor.
+    
+    \item \textbf{Accuracy is a misleading metric for imbalanced data.} Models achieving 77\% accuracy only attained 51\% Macro-F1, revealing that overall correctness metrics mask poor performance on minority classes. G-Mean and per-class recall provide more meaningful evaluation for security applications.
+    
+    \item \textbf{A precision-recall trade-off exists for rare classes.} While imbalance handling dramatically improved recall for rare attack types, it also reduced precision, leading to increased false positives. Operational deployment must balance detection coverage against false alarm costs.
+\end{enumerate}
+
+These results establish a reproducible baseline for machine learning-based intrusion detection on UNSW-NB15 and provide actionable guidance for practitioners: use class weighting with gradient boosting models, and evaluate using class-balanced metrics rather than accuracy alone.
+
 \section{Limitation}
+
+This study has several limitations that should be considered when interpreting the results:
+
+\begin{enumerate}
+    \item \textbf{Fixed Hyperparameters:} All models used default or minimally tuned hyperparameters to ensure fair comparison. Performance could likely be improved with hyperparameter optimization, but this was outside the scope of establishing a baseline.
+    
+    \item \textbf{Single Dataset:} Experiments were conducted exclusively on UNSW-NB15. While this dataset is a recognized benchmark, results may not generalize to other network environments or attack distributions.
+    
+    \item \textbf{Classical Models Only:} This study focused on classical machine learning (Logistic Regression, Random Forest, XGBoost). Deep learning approaches, which may better capture complex patterns, were not evaluated.
+    
+    \item \textbf{Limited Imbalance Strategies:} Only RandomOverSampler was evaluated for oversampling. Advanced techniques such as SMOTE, ADASYN, or hybrid methods may yield different results.
+    
+    \item \textbf{Static Feature Set:} The original UNSW-NB15 features were used with minimal feature engineering. Domain-specific feature extraction could improve rare class detection.
+    
+    \item \textbf{Computational Constraints:} Due to computational constraints, extensive cross-validation or bootstrapping was not performed. Results are based on the official train-test split.
+\end{enumerate}
+
 \section{Future Work}
+
+Based on the findings and limitations of this study, several directions for future research are identified:
+
+\begin{enumerate}
+    \item \textbf{Hyperparameter Optimization:} Apply Bayesian optimization or grid search to tune model parameters while maintaining reproducibility. This could improve both binary and multiclass performance.
+    
+    \item \textbf{Advanced Oversampling:} Evaluate SMOTE-ENN, SMOTE-Tomek, and ADASYN to compare synthetic minority generation techniques. These may better address the distribution of rare attack classes.
+    
+    \item \textbf{Hierarchical Classification:} Implement a two-stage classifier that first distinguishes Normal from Attack, then categorizes attack types. This may reduce error propagation for rare classes.
+    
+    \item \textbf{Deep Learning Benchmarks:} Compare classical ML results against deep neural networks (CNNs, LSTMs, Transformers) to quantify the trade-off between interpretability and performance.
+    
+    \item \textbf{Cross-Dataset Validation:} Test trained models on other intrusion detection datasets (CSE-CIC-IDS2018, CICIDS2017) to evaluate generalization.
+    
+    \item \textbf{Threshold Optimization:} Adjust classification thresholds post-training to optimize for specific operational objectives (maximum recall, minimum false positives, etc.).
+    
+    \item \textbf{Ensemble Approaches:} Combine multiple models (e.g., stacking RF and XGBoost) to leverage complementary strengths.
+    
+    \item \textbf{Feature Engineering for Rare Classes:} Develop class-specific features or weighted feature selection targeting the most challenging attack categories (Analysis, Backdoor).
+\end{enumerate}
+
+The findings of this research provide a foundation for these extensions and emphasize the importance of rigorous evaluation protocols in intrusion detection research.

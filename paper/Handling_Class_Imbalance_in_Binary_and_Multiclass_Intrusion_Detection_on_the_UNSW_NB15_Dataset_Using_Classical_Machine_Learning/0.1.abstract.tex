@@ -5,6 +5,7 @@
 	\line(1,0){430}
 \end{center}
 
-The abstract should contain a summary of the work presented in this report in a single paragraph. The paragraph should provide a general background of the problem, methodology and results.  
+Network intrusion detection systems are critical for identifying malicious traffic, yet their effectiveness is often compromised by severe class imbalance in training datasets. The UNSW-NB15 dataset, a modern benchmark for intrusion detection, exhibits extreme imbalance where rare attack categories such as Worms, Shellcode, and Backdoor constitute less than 3\% of samples. This study systematically evaluates the impact of class imbalance on intrusion detection by comparing three classical machine learning models (Logistic Regression, Random Forest, XGBoost) combined with three imbalance handling strategies: baseline training (S0), class weighting (S1), and random oversampling (S2A). A total of 18 experiments were conducted following a strict reproducibility protocol. Results demonstrate that without imbalance handling, Logistic Regression achieves 0\% recall on all rare attack classes despite 69\% overall accuracy. Class weighting provides the optimal cost-benefit trade-off, with XGBoost achieving 90.8\% accuracy and 0.906 Macro-F1 for binary classification, and 0.792 G-Mean with 95.8\% Shellcode recall for multiclass classification. These findings establish that imbalance handling is essential—not optional—for rare attack detection, and that accuracy is a misleading metric for skewed datasets. G-Mean and per-class recall provide more actionable insights for security-critical applications.
+
 \clearpage
 \setlength{\headheight}{12pt}
