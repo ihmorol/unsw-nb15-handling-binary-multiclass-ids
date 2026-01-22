@@ -31,3 +31,4 @@ Thumbs.db
 *.csv.gz    
 *.pkl
 *.pickle
+prompts.md
