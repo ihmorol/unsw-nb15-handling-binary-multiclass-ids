@@ -12,12 +12,6 @@ data:
   # These are non-predictive or cause data leakage
   drop_columns:
     - "id"        # Row identifier
-    - "srcip"     # Source IP (Leakage/High Cardinality)
-    - "dstip"     # Destination IP (Leakage/High Cardinality)
-    - "sport"     # Source Port (Noise)
-    - "dsport"    # Destination Port (Noise)
-    - "stime"     # Start Time (Temporal Leakage)
-    - "ltime"     # Last Time (Temporal Leakage)
   
   # Categorical columns for One-Hot Encoding
   categorical_columns:
