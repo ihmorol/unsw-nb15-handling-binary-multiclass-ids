@@ -84,7 +84,9 @@ def main():
             y_test=y_test,
             config=config,
             results_dir=Path(config['results_dir']),
-            class_names=class_names
+            class_names=class_names,
+            X_val=X_val,
+            y_val=y_val
         )
         
         logger.info("Experiment Completed Successfully.")

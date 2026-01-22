@@ -85,6 +85,19 @@ The system follows a structured pipeline from raw data to final evaluation. The 
 \section{Technology Used}
 The implementation was carried out using \textbf{Python}. We utilized the \textbf{scikit-learn} library for preprocessing, Logistic Regression, and Random Forest models. For gradient boosting, we used \textbf{XGBoost}. Oversampling was implemented using the \textbf{imbalanced-learn} library.
 
+\subsection{Model Hyperparameters}
+To establish a reproducible baseline, we used fixed hyperparameters across all experiments rather than performing hyperparameter tuning. This choice ensures fair comparison across strategies and simplifies replication.
+
+\begin{itemize}
+    \item \textbf{Logistic Regression:} $C=1.0$, solver=\texttt{saga}, penalty=\texttt{l2}, max\_iter=1000.
+    \item \textbf{Random Forest:} n\_estimators=100, max\_depth=25, min\_samples\_split=5, min\_samples\_leaf=2.
+    \item \textbf{XGBoost:} n\_estimators=100, learning\_rate=0.1, max\_depth=10, subsample=0.8, colsample\_bytree=0.8.
+\end{itemize}
+
+For XGBoost, we employed \textbf{early stopping} (patience=10 iterations) using the validation set to prevent overfitting. Training terminates if the evaluation metric does not improve for 10 consecutive boosting rounds, selecting the best iteration. This approach reduces overfitting risk without constituting hyperparameter tuning, as the patience value was fixed a priori.
+
+All models were initialized with \texttt{random\_state=42} for reproducibility.
+
 \section{Evaluation Metrics}
 To evaluate the performance of our models, especially for minority attack classes, we used the following metrics:
 \begin{itemize}

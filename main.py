@@ -22,9 +22,10 @@ import time
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 import numpy as np
 import pandas as pd
+from joblib import Parallel, delayed
 
 # Local imports
 from src.data import DataLoader, UNSWPreprocessor
@@ -53,7 +54,10 @@ def run_single_experiment(
     y_test: np.ndarray,
     config: dict,
     results_dir: Path,
-    class_names: List[str]
+    class_names: List[str],
+    X_val: Optional[np.ndarray] = None,
+    y_val: Optional[np.ndarray] = None,
+    seed: int = 42
 ) -> Dict[str, Any]:
     """
     Execute a single experiment and save results.
@@ -68,26 +72,31 @@ def run_single_experiment(
         config: Configuration dictionary
         results_dir: Output directory path
         class_names: List of class names for reporting
+        X_val, y_val: Validation data (optional)
+        seed: Random seed for reproducibility
         
     Returns:
         Experiment results dictionary
     """
     start_time = time.time()
-    random_state = config.get('random_state', 42)
+    
+    # Update seed in config for this run
+    run_config = config.copy()
+    run_config['random_state'] = seed
     
     logger.info("=" * 60)
-    logger.info(f"EXPERIMENT: {experiment_id}")
+    logger.info(f"EXPERIMENT: {experiment_id} (Seed: {seed})")
     logger.info(f"  Task:     {task}")
     logger.info(f"  Model:    {model_name.upper()}")
     logger.info(f"  Strategy: {strategy_name.upper()}")
     logger.info("=" * 60)
     
     # Step 1: Apply imbalance strategy
-    strategy = get_strategy(strategy_name, random_state=random_state)
+    strategy = get_strategy(strategy_name, random_state=seed)
     X_train_balanced, y_train_balanced = strategy.apply(X_train, y_train)
     
     # Step 2: Configure model with appropriate weights
-    trainer = ModelTrainer(config)
+    trainer = ModelTrainer(run_config)
     
     # Get class weight and sample weight based on strategy
     class_weight = strategy.get_class_weight()
@@ -114,11 +123,14 @@ def run_single_experiment(
     )
     
     # Step 3: Train model
+    # Pass validation data if available
     training_metadata = trainer.train(
         model=model,
         X_train=X_train_balanced,
         y_train=y_train_balanced,
-        sample_weight=sample_weight
+        sample_weight=sample_weight,
+        X_val=X_val,
+        y_val=y_val
     )
     
     # Step 4: Predict on TEST set
@@ -145,7 +157,7 @@ def run_single_experiment(
         )
     
     # Log metrics
-    logger.info("\nResults:")
+    logger.info(f"\nResults ({experiment_id}):")
     logger.info(format_metrics_for_logging(metrics, task))
     
     total_time = time.time() - start_time
@@ -153,6 +165,7 @@ def run_single_experiment(
     # Compile results
     result = {
         'experiment_id': experiment_id,
+        'seed': seed,
         'task': task,
         'model': model_name,
         'strategy': strategy_name,
@@ -170,7 +183,7 @@ def run_single_experiment(
     metrics_path.parent.mkdir(parents=True, exist_ok=True)
     with open(metrics_path, 'w') as f:
         json.dump(result, f, indent=2)
-    logger.info(f"Saved metrics to {metrics_path}")
+    # logger.info(f"Saved metrics to {metrics_path}")
     
     # Save confusion matrix plot
     cm = np.array(metrics['confusion_matrix'])
@@ -180,11 +193,10 @@ def run_single_experiment(
         cm=cm,
         labels=cm_labels,
         save_path=str(cm_path),
-        title=f"Confusion Matrix: {experiment_id.replace('_', ' ').title()}"
+        title=f"Confusion Matrix: {experiment_id.replace('_', ' ').title()} (Seed {seed})"
     )
     
     logger.info(f"Completed {experiment_id} in {total_time:.2f}s")
-    logger.info("-" * 60)
     
     return result
 
@@ -193,7 +205,7 @@ def main():
     """
     Main entry point for the experiment pipeline.
     
-    Runs all 18 experiments and generates summary reports.
+    Runs all experiments in parallel with multiple seeds.
     """
     # Load configuration
     config = load_config("configs/main.yaml")
@@ -203,12 +215,11 @@ def main():
     setup_logging(level="INFO", log_file=str(log_path))
     
     logger.info("=" * 70)
-    logger.info("UNSW-NB15 CLASS IMBALANCE STUDY")
+    logger.info("UNSW-NB15 CLASS IMBALANCE STUDY (OPTIMIZED)")
     logger.info("=" * 70)
     logger.info(f"Started at: {datetime.now().isoformat()}")
     
     results_dir = Path(config['results_dir'])
-    random_state = config.get('random_state', 42)
     
     # Create output directories
     for subdir in ['metrics', 'figures', 'models', 'tables', 'logs', 'processed']:
@@ -228,10 +239,6 @@ def main():
     # Save preprocessing metadata
     preprocessor.save_metadata(str(results_dir / 'processed' / 'preprocessing_metadata.json'))
     
-    # Get class names for multiclass
-    multiclass_labels = config['data'].get('multiclass_labels', 
-                                           list(preprocessor.label_mapping.keys()))
-    
     # Step 2: Run experiment grid
     logger.info("\n" + "=" * 50)
     logger.info("PHASE 2: RUNNING EXPERIMENTS")
@@ -240,18 +247,22 @@ def main():
     tasks = config['experiments']['tasks']
     models = config['experiments']['models']
     strategies = config['experiments']['strategies']
+    n_seeds = config['experiments'].get('n_seeds', 1)
+    n_jobs = config['experiments'].get('n_jobs', 1)
     
-    total_experiments = len(tasks) * len(models) * len(strategies)
-    logger.info(f"Total experiments to run: {total_experiments}")
+    seeds = range(42, 42 + n_seeds)
     
-    all_results = []
-    experiment_count = 0
+    experiment_queue = []
+    skipped_results = []
     
     for task in tasks:
-        # Get data for this task
+        # Get data for this task (Large arrays, but shared in memory for threads/processes hopefully)
+        # Joblib with 'loky' backend uses pickling. Large arrays might be slow to copy.
+        # But 'threading' backend shares memory. sklearn models release GIL often.
+        # Let's use default (loky) but be aware of memory.
+        
         X_train, y_train, X_val, y_val, X_test, y_test = preprocessor.get_splits(task)
         
-        # For multiclass, get class names from LabelEncoder to ensure correct ordering
         if task == 'multi':
             class_names = list(preprocessor.label_encoder.classes_)
         else:
@@ -259,94 +270,81 @@ def main():
         
         for model_name in models:
             for strategy_name in strategies:
-                experiment_count += 1
-                experiment_id = f"{task}_{model_name}_{strategy_name}"
-                
-                # Check if experiment already completed (resume capability)
-                metrics_file = results_dir / 'metrics' / f"{experiment_id}.json"
-                if metrics_file.exists():
-                    logger.info(f"\n[{experiment_count}/{total_experiments}] SKIPPING {experiment_id} (already completed)")
-                    with open(metrics_file, 'r') as f:
-                        existing_result = json.load(f)
-                    all_results.append(existing_result)
-                    continue
-                
-                logger.info(f"\n[{experiment_count}/{total_experiments}] Running {experiment_id}")
-                
-                try:
-                    result = run_single_experiment(
-                        experiment_id=experiment_id,
-                        task=task,
-                        model_name=model_name,
-                        strategy_name=strategy_name,
-                        X_train=X_train,
-                        y_train=y_train,
-                        X_test=X_test,
-                        y_test=y_test,
-                        config=config,
-                        results_dir=results_dir,
-                        class_names=class_names
-                    )
-                    all_results.append(result)
+                for seed in seeds:
+                    experiment_id = f"{task}_{model_name}_{strategy_name}_s{seed}"
                     
-                except Exception as e:
-                    logger.error(f"FAILED: {experiment_id}")
-                    logger.error(f"Error: {e}")
-                    import traceback
-                    logger.error(traceback.format_exc())
-                    
-                    # Record failure
-                    all_results.append({
+                    # Check if completed
+                    metrics_file = results_dir / 'metrics' / f"{experiment_id}.json"
+                    if metrics_file.exists():
+                        logger.info(f"Skipping {experiment_id} (found existing metrics)")
+                        try:
+                            with open(metrics_file, 'r') as f:
+                                skipped_results.append(json.load(f))
+                        except Exception:
+                            logger.warning(f"Could not load {metrics_file}, re-running.")
+                            pass
+                        else:
+                            continue
+
+                    experiment_queue.append({
                         'experiment_id': experiment_id,
                         'task': task,
-                        'model': model_name,
-                        'strategy': strategy_name,
-                        'status': 'failed',
-                        'error': str(e)
+                        'model_name': model_name,
+                        'strategy_name': strategy_name,
+                        'X_train': X_train,
+                        'y_train': y_train,
+                        'X_test': X_test,
+                        'y_test': y_test,
+                        'X_val': X_val,
+                        'y_val': y_val,
+                        'config': config,
+                        'results_dir': results_dir,
+                        'class_names': class_names,
+                        'seed': seed
                     })
+
+    logger.info(f"Queued {len(experiment_queue)} experiments. (Skipped {len(skipped_results)})")
     
+    # Run in parallel
+    # Use a try-except wrapper via a helper if needed, but run_single_experiment should be robust enough?
+    # Let's wrap it inline if possible or just rely on joblib handling exceptions
+    
+    if experiment_queue:
+        logger.info(f"Starting parallel execution with n_jobs={n_jobs}...")
+        parallel_results = Parallel(n_jobs=n_jobs, verbose=10)(
+            delayed(run_single_experiment)(**args) for args in experiment_queue
+        )
+        all_results = skipped_results + parallel_results
+    else:
+        all_results = skipped_results
+
     # Step 3: Generate summary reports
     logger.info("\n" + "=" * 50)
     logger.info("PHASE 3: GENERATING REPORTS")
     logger.info("=" * 50)
     
-    # Create experiment log CSV
+    # Save raw log
     log_data = []
     for r in all_results:
         if 'metrics' in r:
             log_data.append({
-                'experiment_id': r['experiment_id'],
-                'task': r['task'],
-                'model': r['model'],
-                'strategy': r['strategy'],
+                'experiment_id': r.get('experiment_id'),
+                'seed': r.get('seed'),
+                'task': r.get('task'),
+                'model': r.get('model'),
+                'strategy': r.get('strategy'),
                 'accuracy': r['metrics']['overall']['accuracy'],
                 'macro_f1': r['metrics']['overall']['macro_f1'],
-                'weighted_f1': r['metrics']['overall']['weighted_f1'],
                 'g_mean': r['metrics']['overall']['g_mean'],
-                'roc_auc': r['metrics']['overall']['roc_auc'],
-                'training_time': r['training_time_seconds'],
-                'total_time': r['total_time_seconds'],
-                'timestamp': r['timestamp']
+                'training_time': r.get('training_time_seconds'),
+                'total_time': r.get('total_time_seconds')
             })
+            
+    pd.DataFrame(log_data).to_csv(results_dir / 'experiment_log_detailed.csv', index=False)
     
-    log_df = pd.DataFrame(log_data)
-    log_path = results_dir / 'experiment_log.csv'
-    log_df.to_csv(log_path, index=False)
-    logger.info(f"Saved experiment log to {log_path}")
-    
-    # Generate summary tables
     generate_summary_tables(all_results, results_dir, config)
     
-    # Final summary
-    logger.info("\n" + "=" * 70)
-    logger.info("EXPERIMENT PIPELINE COMPLETED")
-    logger.info("=" * 70)
-    logger.info(f"Completed at: {datetime.now().isoformat()}")
-    logger.info(f"Total experiments: {len(all_results)}")
-    successful = len([r for r in all_results if 'metrics' in r])
-    logger.info(f"Successful: {successful}")
-    logger.info(f"Failed: {len(all_results) - successful}")
-    logger.info(f"\nResults saved to: {results_dir.absolute()}")
+    logger.info("Pipeline Completed.")
 
 
 def generate_summary_tables(
@@ -354,76 +352,81 @@ def generate_summary_tables(
     results_dir: Path,
     config: dict
 ) -> None:
-    """Generate summary CSV tables from experiment results."""
+    """Generate aggregated summary tables from experiment results."""
     
     tables_dir = results_dir / 'tables'
     tables_dir.mkdir(parents=True, exist_ok=True)
     
-    # 1. Final Summary Table (Overall Metrics)
-    summary_rows = []
+    # Convert to DataFrame for easy aggregation
+    rows = []
     for r in results:
-        if 'metrics' not in r:
-            continue
-        summary_rows.append({
+        if 'metrics' not in r: continue
+        rows.append({
             'Task': r['task'],
             'Model': r['model'].upper(),
             'Strategy': r['strategy'].upper(),
+            'Seed': r.get('seed', 0),
             'Accuracy': r['metrics']['overall']['accuracy'],
             'Macro_F1': r['metrics']['overall']['macro_f1'],
             'Weighted_F1': r['metrics']['overall']['weighted_f1'],
             'G_Mean': r['metrics']['overall']['g_mean'],
-            'ROC_AUC': r['metrics']['overall']['roc_auc']
+            'ROC_AUC': r['metrics']['overall']['roc_auc'],
+            'Training_Time': r['training_time_seconds']
         })
     
-    summary_df = pd.DataFrame(summary_rows)
-    summary_df.to_csv(tables_dir / 'final_summary_tables.csv', index=False)
-    logger.info("Generated final_summary_tables.csv")
+    if not rows:
+        logger.warning("No results to generate tables!")
+        return
+
+    df = pd.DataFrame(rows)
     
-    # 2. Per-Class Metrics Table (Multiclass only)
-    per_class_rows = []
-    for r in results:
-        if r.get('task') != 'multi' or 'metrics' not in r:
-            continue
-        for cls_name, cls_metrics in r['metrics']['per_class'].items():
-            per_class_rows.append({
-                'Experiment': r['experiment_id'],
-                'Model': r['model'].upper(),
-                'Strategy': r['strategy'].upper(),
-                'Class': cls_name,
-                'Precision': cls_metrics['precision'],
-                'Recall': cls_metrics['recall'],
-                'F1': cls_metrics['f1'],
-                'Support': cls_metrics['support']
-            })
+    # 1. Aggregated Summary (Mean +/- Std)
+    summary = df.groupby(['Task', 'Model', 'Strategy']).agg({
+        'Macro_F1': ['mean', 'std'],
+        'G_Mean': ['mean', 'std'],
+        'ROC_AUC': ['mean', 'std'],
+        'Training_Time': ['mean'],
+        'Seed': 'count'
+    }).reset_index()
     
-    if per_class_rows:
-        per_class_df = pd.DataFrame(per_class_rows)
-        per_class_df.to_csv(tables_dir / 'per_class_metrics.csv', index=False)
-        logger.info("Generated per_class_metrics.csv")
+    # Flatten columns
+    summary.columns = ['_'.join(col).strip('_') for col in summary.columns.values]
+    summary.to_csv(tables_dir / 'aggregated_summary.csv', index=False)
+    logger.info("Generated aggregated_summary.csv")
     
-    # 3. Rare Class Report
+    # 2. Detailed results (all seeds)
+    df.to_csv(tables_dir / 'all_runs.csv', index=False)
+    
+    # 3. Rare Class Aggregation (if applicable)
     rare_classes = config.get('rare_classes', [])
     rare_rows = []
     for r in results:
-        if r.get('task') != 'multi' or 'rare_class_analysis' not in r or r['rare_class_analysis'] is None:
+        if r.get('task') != 'multi' or 'rare_class_analysis' not in r or not r['rare_class_analysis']:
             continue
         for cls_name, cls_metrics in r['rare_class_analysis'].items():
             if cls_name in rare_classes:
                 rare_rows.append({
-                    'Experiment': r['experiment_id'],
+                    'Task': r['task'],
                     'Model': r['model'].upper(),
                     'Strategy': r['strategy'].upper(),
+                    'Seed': r.get('seed', 0),
                     'Rare_Class': cls_name,
                     'Precision': cls_metrics['precision'],
                     'Recall': cls_metrics['recall'],
-                    'F1': cls_metrics['f1'],
-                    'Support': cls_metrics['support']
+                    'F1': cls_metrics['f1']
                 })
-    
+                
     if rare_rows:
         rare_df = pd.DataFrame(rare_rows)
-        rare_df.to_csv(tables_dir / 'rare_class_report.csv', index=False)
-        logger.info("Generated rare_class_report.csv")
+        rare_summary = rare_df.groupby(['Task', 'Model', 'Strategy', 'Rare_Class']).agg({
+            'Precision': ['mean', 'std'],
+            'Recall': ['mean', 'std'],
+            'F1': ['mean', 'std']
+        }).reset_index()
+        rare_summary.columns = ['_'.join(col).strip('_') for col in rare_summary.columns.values]
+        rare_summary.to_csv(tables_dir / 'rare_class_aggregated.csv', index=False)
+        logger.info("Generated rare_class_aggregated.csv")
+
 
 
 if __name__ == '__main__':
