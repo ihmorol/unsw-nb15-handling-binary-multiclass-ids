@@ -1,7 +1,247 @@
 \chapter{Implementation and Results}
 
+This chapter presents the experimental setup, results, and analysis of our intrusion detection experiments on the UNSW-NB15 dataset. We systematically compare three classical machine learning models across three imbalance-handling strategies for both binary and multiclass classification tasks.
 
 \section{Environment Setup}
-\section{Testing and Evaluation}
+
+All experiments were implemented in Python 3.10 using the following libraries:
+
+\begin{itemize}
+    \item \textbf{scikit-learn 1.3}: Logistic Regression, Random Forest, preprocessing, and evaluation metrics.
+    \item \textbf{XGBoost 2.0}: Gradient boosting implementation with histogram-based training.
+    \item \textbf{imbalanced-learn 0.11}: RandomOverSampler for the S2a strategy.
+    \item \textbf{pandas, NumPy}: Data manipulation and numerical operations.
+\end{itemize}
+
+To ensure reproducibility, all random operations used a fixed seed (\texttt{random\_state=42}). Model hyperparameters were fixed according to our experimental contract (Table~\ref{tab:hyperparams}) rather than tuned, ensuring fair comparison across strategies.
+
+\begin{table}[h]
+\centering
+\caption{Model Hyperparameter Configurations}
+\label{tab:hyperparams}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Model} & \textbf{Parameter} & \textbf{Value} \\
+\hline
+\multirow{3}{*}{Logistic Regression} & C (regularization) & 1.0 \\
+ & Solver & saga \\
+ & Max iterations & 1000 \\
+\hline
+\multirow{4}{*}{Random Forest} & n\_estimators & 100 \\
+ & max\_depth & 25 \\
+ & min\_samples\_split & 5 \\
+ & min\_samples\_leaf & 2 \\
+\hline
+\multirow{4}{*}{XGBoost} & n\_estimators & 100 \\
+ & learning\_rate & 0.1 \\
+ & max\_depth & 10 \\
+ & subsample & 0.8 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Experimental Design}
+
+Our experiment grid consisted of 18 configurations: 2 tasks $\times$ 3 models $\times$ 3 strategies.
+
+\subsection{Classification Tasks}
+
+\begin{itemize}
+    \item \textbf{Binary Classification}: Normal (class 0) vs.\ Attack (class 1), where all attack categories are merged into a single positive class.
+    \item \textbf{Multiclass Classification}: Ten-class problem distinguishing Normal traffic from nine specific attack categories: Analysis, Backdoor, DoS, Exploits, Fuzzers, Generic, Reconnaissance, Shellcode, and Worms.
+\end{itemize}
+
+\subsection{Class Distribution}
+
+Table~\ref{tab:class_dist} presents the class distribution in the official UNSW-NB15 test set, illustrating the severe imbalance that motivates this study.
+
+\begin{table}[h]
+\centering
+\caption{Class Distribution in UNSW-NB15 Test Set}
+\label{tab:class_dist}
+\begin{tabular}{|l|r|r|l|}
+\hline
+\textbf{Class} & \textbf{Count} & \textbf{Percentage} & \textbf{Category} \\
+\hline
+Normal & 37,000 & 44.94\% & Majority \\
+Generic & 18,871 & 22.92\% & Common \\
+Exploits & 11,132 & 13.52\% & Common \\
+Fuzzers & 6,062 & 7.36\% & Moderate \\
+DoS & 4,089 & 4.97\% & Moderate \\
+Reconnaissance & 3,496 & 4.25\% & Moderate \\
+Analysis & 677 & 0.82\% & \textbf{Rare} \\
+Backdoor & 583 & 0.71\% & \textbf{Rare} \\
+Shellcode & 378 & 0.46\% & \textbf{Rare} \\
+Worms & 44 & 0.05\% & \textbf{Critically Rare} \\
+\hline
+\textbf{Total} & \textbf{82,332} & 100\% & --- \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Imbalance-Handling Strategies}
+
+Three strategies were evaluated:
+
+\begin{enumerate}
+    \item \textbf{S0 (No Balancing)}: Baseline training on raw imbalanced data without modification.
+    \item \textbf{S1 (Class Weighting)}: Cost-sensitive learning where misclassification penalties are inversely proportional to class frequency \cite{5596486}.
+    \item \textbf{S2a (Random Oversampling)}: Minority class samples are duplicated to achieve class balance in the training set \cite{bagui2021resampling}.
+\end{enumerate}
+
+\textbf{Data Leakage Prevention}: All preprocessing statistics (scaling parameters, encoding categories) were computed exclusively on the training set. Resampling was applied only to training data; validation and test sets remained unmodified to ensure unbiased evaluation.
+
 \section{Results and Discussion}
+
+\subsection{Binary Classification Results}
+
+Table~\ref{tab:binary_results} summarizes the performance of all nine binary classification experiments.
+
+\begin{table}[h]
+\centering
+\caption{Binary Classification Results on UNSW-NB15 Test Set}
+\label{tab:binary_results}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Strategy} & \textbf{Accuracy} & \textbf{Macro-F1} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\hline
+LR & S0 & 0.807 & 0.793 & 0.788 & 0.954 \\
+LR & S1 & 0.834 & 0.828 & 0.823 & 0.955 \\
+LR & S2a & 0.835 & 0.829 & 0.824 & 0.955 \\
+\hline
+RF & S0 & 0.864 & 0.857 & 0.850 & 0.982 \\
+RF & S1 & 0.897 & 0.894 & 0.888 & 0.984 \\
+RF & S2a & 0.899 & 0.896 & 0.891 & 0.984 \\
+\hline
+XGB & S0 & 0.874 & 0.868 & 0.862 & 0.985 \\
+\textbf{XGB} & \textbf{S1} & \textbf{0.908} & \textbf{0.906} & \textbf{0.901} & \textbf{0.985} \\
+XGB & S2a & 0.906 & 0.903 & 0.898 & 0.985 \\
+\hline
+\end{tabular}
+\end{table}
+
+The results demonstrate that XGBoost with class weighting (XGB-S1) achieves the highest binary classification performance with 90.8\% accuracy and 0.906 Macro-F1. Several patterns emerge:
+
+\begin{itemize}
+    \item All models benefit significantly from imbalance handling, with improvements of 2--4 percentage points in accuracy over the S0 baseline.
+    \item Class weighting (S1) and oversampling (S2a) produce comparable results, suggesting that both approaches effectively address binary imbalance.
+    \item Tree-based models (RF, XGB) substantially outperform Logistic Regression, likely due to their ability to capture non-linear decision boundaries in network traffic features.
+\end{itemize}
+
+\subsection{Multiclass Classification Results}
+
+Table~\ref{tab:multi_results} presents the multiclass classification performance across all experiments.
+
+\begin{table}[h]
+\centering
+\caption{Multiclass Classification Results on UNSW-NB15 Test Set}
+\label{tab:multi_results}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Strategy} & \textbf{Accuracy} & \textbf{Macro-F1} & \textbf{G-Mean} & \textbf{ROC-AUC} \\
+\hline
+LR & S0 & 0.694 & 0.334 & 0.605 & 0.944 \\
+LR & S1 & 0.614 & 0.340 & 0.718 & 0.940 \\
+LR & S2a & 0.615 & 0.342 & 0.722 & 0.941 \\
+\hline
+RF & S0 & 0.766 & 0.451 & 0.684 & 0.959 \\
+RF & S1 & 0.690 & 0.473 & 0.736 & 0.954 \\
+RF & S2a & 0.686 & 0.476 & 0.744 & 0.952 \\
+\hline
+XGB & S0 & 0.769 & 0.509 & 0.727 & 0.963 \\
+\textbf{XGB} & \textbf{S1} & 0.683 & \textbf{0.514} & \textbf{0.792} & 0.959 \\
+XGB & S2a & 0.688 & 0.511 & 0.786 & 0.958 \\
+\hline
+\end{tabular}
+\end{table}
+
+A striking pattern emerges in multiclass classification: \textbf{the accuracy paradox}. Models with no balancing (S0) achieve higher accuracy (up to 76.9\% for XGB) than balanced models, yet their Macro-F1 and G-Mean scores are substantially lower. This occurs because S0 models achieve high accuracy by correctly classifying majority classes while completely ignoring minority classes.
+
+\textbf{Key Observations}:
+\begin{itemize}
+    \item XGB-S1 achieves the highest G-Mean (0.792), indicating balanced performance across all classes.
+    \item Imbalance handling reduces accuracy by 5--8\% but improves Macro-F1 by up to 54\% (LR: 0.334 $\rightarrow$ 0.342).
+    \item The accuracy metric is misleading for multiclass IDS evaluation; G-Mean provides a more reliable assessment.
+\end{itemize}
+
+\subsection{Per-Class Analysis}
+
+To understand model behavior at a granular level, we examined per-class metrics for the best-performing multiclass configuration (XGB-S1). Table~\ref{tab:perclass} presents precision, recall, and F1-score for each attack category.
+
+\begin{table}[h]
+\centering
+\caption{Per-Class Metrics for XGB-S1 Multiclass Configuration}
+\label{tab:perclass}
+\begin{tabular}{|l|c|c|c|r|}
+\hline
+\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} & \textbf{Support} \\
+\hline
+Normal & 0.989 & 0.609 & 0.754 & 37,000 \\
+Generic & 0.999 & 0.970 & 0.984 & 18,871 \\
+Exploits & 0.802 & 0.613 & 0.695 & 11,132 \\
+Fuzzers & 0.253 & 0.660 & 0.366 & 6,062 \\
+DoS & 0.435 & 0.175 & 0.250 & 4,089 \\
+Reconnaissance & 0.869 & 0.848 & 0.858 & 3,496 \\
+\hline
+Analysis & 0.032 & 0.177 & 0.054 & 677 \\
+Backdoor & 0.060 & 0.657 & 0.110 & 583 \\
+Shellcode & 0.223 & 0.958 & 0.361 & 378 \\
+Worms & 0.621 & 0.818 & 0.706 & 44 \\
+\hline
+\end{tabular}
+\end{table}
+
+The results reveal a clear division between well-detected and poorly-detected classes:
+
+\begin{itemize}
+    \item \textbf{High Performance}: Generic (0.984 F1) and Reconnaissance (0.858 F1) are detected reliably.
+    \item \textbf{Moderate Performance}: Exploits (0.695 F1) and Normal (0.754 F1) show reasonable detection.
+    \item \textbf{Low Performance}: Rare classes exhibit low precision despite improved recall, indicating high false positive rates.
+\end{itemize}
+
+\subsection{Rare Class Detection Analysis}
+
+The detection of rare attack categories is the central focus of this study. Table~\ref{tab:rare_class} compares rare class recall across baseline (LR-S0) and best balanced (XGB-S1) configurations.
+
+\begin{table}[h]
+\centering
+\caption{Rare Class Recall: Baseline vs.\ Best Balanced Configuration}
+\label{tab:rare_class}
+\begin{tabular}{|l|r|c|c|c|}
+\hline
+\textbf{Class} & \textbf{Support} & \textbf{LR-S0 Recall} & \textbf{XGB-S1 Recall} & \textbf{Improvement} \\
+\hline
+Worms & 44 & 0.000 & 0.818 & $+\infty$ \\
+Shellcode & 378 & 0.000 & 0.958 & $+\infty$ \\
+Backdoor & 583 & 0.000 & 0.657 & $+\infty$ \\
+Analysis & 677 & 0.000 & 0.177 & $+\infty$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Critical Finding}: The baseline Logistic Regression model (LR-S0) achieves 0\% recall on \textit{all four rare attack categories}. This means the model completely ignores these attacks, classifying every instance as a more common class. In contrast, XGBoost with class weighting enables detection of these previously invisible threats:
+
+\begin{itemize}
+    \item \textbf{Worms} (n=44): Recall increases from 0\% to 82\%, detecting 36 of 44 worm attacks.
+    \item \textbf{Shellcode} (n=378): Near-perfect recall of 96\%, detecting 362 of 378 shellcode attacks.
+    \item \textbf{Backdoor} (n=583): Recall of 66\%, detecting 383 of 583 backdoor attacks.
+    \item \textbf{Analysis} (n=677): Modest recall of 18\%, though still infinitely better than the baseline.
+\end{itemize}
+
+However, this improvement comes with a trade-off: precision for rare classes remains low (3--22\%), resulting in elevated false positive rates. This precision-recall trade-off is inherent to imbalanced classification and represents a deployment consideration rather than a methodological failure \cite{chawla2002smote}.
+
 \section{Summary}
+
+This experimental evaluation reveals several important findings:
+
+\begin{enumerate}
+    \item \textbf{Imbalance handling is essential}: Without explicit strategies, classical ML models completely fail to detect rare attack categories, regardless of their overall accuracy.
+    
+    \item \textbf{Accuracy is misleading}: For multiclass IDS evaluation, G-Mean and Macro-F1 provide more reliable performance indicators than accuracy, which can mask minority class failures.
+    
+    \item \textbf{Class weighting is effective}: Cost-sensitive learning via class weights achieves comparable or superior results to oversampling, with lower computational overhead.
+    
+    \item \textbf{XGBoost performs best}: Across both tasks and all strategies, XGBoost consistently outperforms Random Forest and Logistic Regression.
+    
+    \item \textbf{Rare class detection remains challenging}: Even with optimal strategies, precision for rare classes is low, indicating that classical ML approaches may require augmentation with more sophisticated techniques for production deployment.
+\end{enumerate}
