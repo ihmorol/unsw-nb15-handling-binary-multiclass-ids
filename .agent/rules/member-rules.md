@@ -18,8 +18,10 @@ trigger: always_on
     strategies:
       S0_none: "No imbalance handling (raw training distribution)"
       S1_class_weight: "Cost-sensitive learning via class weights (train-time only)"
-      S2_smote: "SMOTE oversampling applied to training split only"
+      S2a_ros: "RandomOverSampler applied to training split only (default)"
+      S2b_smote: "SMOTE oversampling applied to training split only (optional)"
     primary_metrics:
+
       - "macro_f1"
       - "per_class_precision_recall_f1"
       - "confusion_matrix"
@@ -37,33 +39,22 @@ trigger: always_on
   artifact_contract:
     required_directories:
       - "results/"
-      - "results/runs/"
+      - "results/metrics/"
+      - "results/figures/"
       - "results/tables/"
       - "results/logs/"
       - "results/processed/"
-    per_run_required_files:
-      - "results/runs/<run_id>/config.yaml"
-      - "results/runs/<run_id>/predictions.csv"
-      - "results/runs/<run_id>/metrics.csv"
-      - "results/runs/<run_id>/confusion_matrix.csv"
-      - "results/runs/<run_id>/per_class_metrics.csv"
-      - "results/runs/<run_id>/run.log"
+    per_experiment_required_files:
+      - "results/metrics/{exp_id}.json"
+      - "results/figures/cm_{exp_id}.png"
     global_required_files:
       - "results/experiment_log.csv"
       - "results/tables/final_summary_tables.csv"
       - "results/tables/per_class_metrics.csv"
       - "results/tables/rare_class_report.csv"
     processed_required_files:
-      - "results/processed/X_train_enc.csv"
-      - "results/processed/X_val_enc.csv"
-      - "results/processed/X_test_enc.csv"
-      - "results/processed/y_train_binary.csv"
-      - "results/processed/y_val_binary.csv"
-      - "results/processed/y_test_binary.csv"
-      - "results/processed/y_train_multi.csv"
-      - "results/processed/y_val_multi.csv"
-      - "results/processed/y_test_multi.csv"
       - "results/processed/preprocessing_metadata.json"
+
 
   # Non-negotiable experimental protocol (matches Methodology.md)
   protocol:
@@ -82,10 +73,11 @@ trigger: always_on
         - "One-hot encode categorical features (handle_unknown=ignore)."
         - "Scale numeric features with StandardScaler (for consistency across models)."
     imbalance_handling:
-      allowed_strategies: ["S0_none", "S1_class_weight", "S2_smote"]
+      allowed_strategies: ["S0_none", "S1_class_weight", "S2a_ros"]
+      optional_strategies: ["S2b_smote"]
       rule: "Apply S1/S2 only on training split; never on validation/test."
     experiment_matrix:
       tasks: ["binary", "multi"]
       models: ["LR", "RF", "XGB"]
-      strategies: ["S0_none", "S1_class_weight", "S2_smote"]
+      strategies: ["S0_none", "S1_class_weight", "S2a_ros"]
       expected_total_runs: 18
