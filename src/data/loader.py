@@ -34,6 +34,7 @@ class DataLoader:
         """
         self.train_path = Path(config['data']['train_path'])
         self.test_path = Path(config['data']['test_path'])
+        self.config = config
         self._validate_paths()
     
     def _validate_paths(self) -> None:
@@ -60,7 +61,47 @@ class DataLoader:
         logger.info(f"Loading training data from {self.train_path}")
         df = pd.read_csv(self.train_path)
         logger.info(f"Loaded {len(df):,} training samples with {len(df.columns)} columns")
+        
+        # Auditor T001: Schema Validation
+        self._validate_schema(df, "Training Set")
+        
         return df
+    
+    def _validate_schema(self, df: pd.DataFrame, set_name: str) -> None:
+        """
+        Validate that the dataframe contains all required columns from config.
+        
+        Args:
+            df: DataFrame to validate
+            set_name: Name of the dataset for logging
+            
+        Raises:
+            ValueError: If required columns are missing
+        """
+        # 1. Check target columns
+        required = [
+            self.train_path.parent / '../configs/main.yaml' # This is just path logic, wrong place for config
+        ]
+        # Better: use the config passed in init
+        
+        required_cols = []
+        # Add targets
+        required_cols.append(self.config['data']['target_binary'])
+        required_cols.append(self.config['data']['target_multiclass'])
+        
+        # Add drop columns (must exist to be dropped)
+        required_cols.extend(self.config['data']['drop_columns'])
+        
+        # Add categorical columns
+        required_cols.extend(self.config['data']['categorical_columns'])
+        
+        # Check for missing columns
+        missing = [col for col in required_cols if col not in df.columns]
+        
+        if missing:
+            raise ValueError(f"{set_name} schema validation failed. Missing columns: {missing}")
+        
+        logger.info(f"{set_name} schema validated successfully (all required columns present).")
     
     def load_test(self) -> pd.DataFrame:
         """
@@ -75,6 +116,10 @@ class DataLoader:
         logger.info(f"Loading test data from {self.test_path}")
         df = pd.read_csv(self.test_path)
         logger.info(f"Loaded {len(df):,} test samples with {len(df.columns)} columns")
+        
+        # Auditor T001: Schema Validation
+        self._validate_schema(df, "Test Set")
+        
         return df
     
     def load_all(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
