@@ -106,7 +106,7 @@ sequenceDiagram
 ## Sources of Truth
 1.  `results/tables/*.csv` - For creating charts from experiment data.
 2.  `results/metrics/*.json` - For metric visualization.
-3.  `results/runs/<run_id>/confusion_matrix.csv` - For confusion matrix heatmaps.
+3.  `results/figures/` - For confusion matrix heatmaps and saved figures.
 4.  `docs/` - For understanding methodology to diagram.
 5.  Any data files provided by the user.
 

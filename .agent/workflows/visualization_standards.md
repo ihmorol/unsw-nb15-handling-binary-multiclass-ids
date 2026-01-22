@@ -179,7 +179,7 @@ ax.set_ylabel('Macro-F1 Score', fontsize=14)
 ax.set_title('Strategy S1 Performance', fontsize=16, fontweight='bold')
 ax.grid(axis='y', alpha=0.3, linestyle='--')
 ax.spines['top'].set_visible(False)
-ax.spines('right'].set_visible(False)
+ax.spines['right'].set_visible(False)
 plt.tight_layout()
 ```
 

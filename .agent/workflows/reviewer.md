@@ -30,11 +30,9 @@ Ensure every reported improvement is supported by uncertainty estimates and appr
 3.  `results/tables/final_summary_tables.csv`
 4.  `results/tables/per_class_metrics.csv`
 5.  `results/tables/rare_class_report.csv`
-6.  `results/runs/<run_id>/predictions.csv`
-7.  `results/runs/<run_id>/metrics.csv`
-8.  `results/experiment_log.csv`
-9.  `configs/*.yaml`
-10. `results/logs/*.log`
+6.  `results/experiment_log.csv`
+7.  `configs/*.yaml`
+8.  `results/logs/*.log`
 
 ## Statistical Deliverables (csv + short markdown notes)
 -   `results/tables/metric_confidence_intervals.csv` (per run: macro-F1, weighted-F1, G-Mean, ROC-AUC with 95% CI)

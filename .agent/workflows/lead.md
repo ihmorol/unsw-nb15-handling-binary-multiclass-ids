@@ -27,7 +27,7 @@ Act as the project's eye-from-the-sky: answer any question using repository evid
 ## Sources of Truth
 1.  `docs/contracts/data_contract.md`
 2.  `docs/contracts/experiment_contract.md`
-3.  `docs/implementation_plan.md`
+3.  `docs/implementation_plan/`
 4.  `docs/Methodology_Analysis.md`
 5.  `configs/main.yaml`
 6.  `results/experiment_log.csv`
