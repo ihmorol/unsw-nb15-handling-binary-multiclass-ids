@@ -31,6 +31,7 @@ MODEL_CONFIGS = {
             'solver': 'lbfgs',          # Optimized from saga
             'max_iter': 1000,
             'penalty': 'l2',
+            'warm_start': True,         # Required for iterative learning curves
             # 'n_jobs': -1,             # Removed deprecated
             'verbose': 0
         },
@@ -39,6 +40,7 @@ MODEL_CONFIGS = {
             'solver': 'lbfgs',          # Optimized from saga
             'max_iter': 1000,
             'penalty': 'l2',
+            'warm_start': True,         # Required for iterative learning curves
             # 'multi_class': 'multinomial', # Removed deprecated
             # 'n_jobs': -1,             # Removed deprecated
             'verbose': 0
@@ -55,6 +57,7 @@ MODEL_CONFIGS = {
             'class_weight': 'balanced_subsample', # Optimized
             'bootstrap': True,
             'oob_score': True,          # Added validation
+            'warm_start': True,         # Required for iterative learning curves
             'n_jobs': -1,
             'verbose': 0
         },
@@ -68,6 +71,7 @@ MODEL_CONFIGS = {
             'class_weight': 'balanced_subsample', # Optimized
             'bootstrap': True,
             'oob_score': True,          # Added validation
+            'warm_start': True,         # Required for iterative learning curves
             'n_jobs': -1,
             'verbose': 0
         }
@@ -85,7 +89,7 @@ MODEL_CONFIGS = {
             'reg_alpha': 0.5,           # New
             'use_label_encoder': False,
             'tree_method': get_xgb_device(),
-            'eval_metric': 'logloss',
+            'eval_metric': ['logloss', 'error', 'auc'],
             'objective': 'binary:logistic',
             'n_jobs': -1,
             'verbosity': 0
@@ -102,7 +106,7 @@ MODEL_CONFIGS = {
             'reg_alpha': 0.5,           # New
             'use_label_encoder': False,
             'tree_method': get_xgb_device(),
-            'eval_metric': 'mlogloss',
+            'eval_metric': ['mlogloss', 'merror', 'auc'], # Multi-metric tracking
             'objective': 'multi:softprob',
             'n_jobs': -1,
             'verbosity': 0

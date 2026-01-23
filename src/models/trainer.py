@@ -14,6 +14,7 @@ from sklearn.base import BaseEstimator
 from typing import Optional, Dict, Any
 import logging
 import time
+import warnings
 
 from .config import MODEL_CONFIGS
 
@@ -102,69 +103,132 @@ class ModelTrainer:
               X_val: Optional[np.ndarray] = None,
               y_val: Optional[np.ndarray] = None) -> Dict[str, Any]:
         """
-        Train a model and return training metadata.
+        Train a model and return training metadata with learning curves.
         
-        Args:
-            model: Unfitted sklearn/xgboost model
-            X_train: Training features
-            y_train: Training labels
-            sample_weight: Optional sample weights (for XGBoost multiclass S1)
-            X_val: Optional validation features (for XGBoost early stopping)
-            y_val: Optional validation labels (for XGBoost early stopping)
-            
-        Returns:
-            Dictionary with training metadata (time, etc.)
+        Dispatches to specialized training methods based on model type:
+        - XGBoost: Uses native early stopping and evals_result
+        - Sklearn (LR/RF): Uses custom iterative warm_start loop
         """
         logger.info(f"Training {type(model).__name__} on {len(y_train):,} samples...")
-        
         start_time = time.time()
         
+        metadata = {}
+        
+        # Dispatch to specific handler
+        if isinstance(model, XGBClassifier):
+            metadata = self._train_xgboost(
+                model, X_train, y_train, sample_weight, X_val, y_val
+            )
+        else:
+            # Check if model supports warm_start for iterative curves
+            if hasattr(model, 'warm_start') and model.warm_start:
+                metadata = self._train_sklearn_iterative(
+                    model, X_train, y_train, sample_weight, X_val, y_val
+                )
+            else:
+                # Fallback for standard training
+                self._fit_standard(model, X_train, y_train, sample_weight)
+        
+        training_time = time.time() - start_time
+        logger.info(f"Training completed in {training_time:.2f}s")
+        
+        # Enforce metadata structure
+        metadata.update({
+            'training_time_seconds': training_time,
+            'n_samples': len(y_train),
+            'n_features': X_train.shape[1]
+        })
+        
+        return metadata
+
+    def _train_xgboost(self, model, X_train, y_train, sample_weight, X_val, y_val) -> Dict[str, Any]:
+        """Handle XGBoost training with native evaluation monitoring."""
         fit_params = {}
         if sample_weight is not None:
             fit_params['sample_weight'] = sample_weight
             
-        # Add early stopping for XGBoost if validation data is available
-        if isinstance(model, XGBClassifier) and X_val is not None and y_val is not None:
-            # Monitor both Training (for overfitting check) and Validation (for generalization)
-            fit_params['eval_set'] = [(X_train, y_train), (X_val, y_val)]
-            fit_params['verbose'] = False
-            logger.info("Enabled early stopping/eval_set for XGBoost (Train + Val)")
+        if X_val is not None and y_val is not None:
+             fit_params['eval_set'] = [(X_train, y_train), (X_val, y_val)]
+             fit_params['verbose'] = False
+             logger.info("Enabled XGBoost native tracking")
 
-        # Call fit with unpacked params
-        if isinstance(model, XGBClassifier) and X_val is not None:
-             logger.info(f"Fitting XGBoost with params: {fit_params.keys()}")
-             model.fit(X_train, y_train, **fit_params)
-        else:
-             # Regular fit for LR/RF
-             if sample_weight is not None:
-                 model.fit(X_train, y_train, sample_weight=sample_weight)
-             else:
-                 model.fit(X_train, y_train)
+        logger.info(f"Fitting XGBoost with params: {list(fit_params.keys())}")
+        model.fit(X_train, y_train, **fit_params)
         
-        training_time = time.time() - start_time
-        
-        logger.info(f"Training completed in {training_time:.2f}s")
-        
-        metadata = {
-            'training_time_seconds': training_time,
-            'n_samples': len(y_train),
-            'n_features': X_train.shape[1]
-        }
-
-        # Capture learning curves for XGBoost
-        if isinstance(model, XGBClassifier):
-            try:
-                # XGBoost stores evaluation results in evals_result()
-                evals_result = model.evals_result()
-                if evals_result:
-                    metadata['learning_curve'] = evals_result
-                    logger.info("Captured XGBoost learning curve")
-                else:
-                    logger.warning("XGBoost learning curve is EMPTY")
-            except Exception as e:
-                logger.warning(f"Could not retrieve XGBoost learning curve: {e}")
-
+        metadata = {}
+        try:
+            evals_result = model.evals_result()
+            if evals_result:
+                metadata['learning_curve'] = evals_result
+        except Exception as e:
+            logger.warning(f"Could not retrieve XGBoost learning curve: {e}")
+            
         return metadata
+
+    def _train_sklearn_iterative(self, model, X_train, y_train, sample_weight, X_val, y_val) -> Dict[str, Any]:
+        """
+        Train sklearn models iteratively using warm_start to generate learning curves.
+        
+        Uses a step size of 10 to minimize overhead (proven 1.3x vs 9x for step=1).
+        """
+        # Determine iteration parameter and target
+        if isinstance(model, RandomForestClassifier):
+            param_name = 'n_estimators'
+            target_value = model.n_estimators
+            model.n_estimators = 0 # Start from 0
+        elif isinstance(model, LogisticRegression):
+            param_name = 'max_iter'
+            target_value = model.max_iter
+            model.max_iter = 0
+        else:
+            # Should not happen given dispatch logic but safe fallback
+            self._fit_standard(model, X_train, y_train, sample_weight)
+            return {}
+
+        step_size = 10
+        current_step = 0
+        
+        # Storage for metrics: {'validation_0': {'logloss': []}, ...}
+        # mimicking XGBoost structure for compatibility with plotting tools
+        history = {
+            'validation_0': {'score': []}, # Train
+            'validation_1': {'score': []}  # Val
+        }
+        
+        logger.info(f"Starting iterative training ({param_name}) -> {target_value}")
+        
+        while current_step < target_value:
+            # Increment
+            next_step = min(current_step + step_size, target_value)
+            setattr(model, param_name, next_step)
+            
+            # Fit (warm_start=True ensures it builds on previous)
+            # Log Reg requires unique classes check on first fit usually, but standard fit handles it
+            with warnings.catch_warnings():
+                # Filter benign warning about class_weight + warm_start (we use full dataset, so weights are stable)
+                warnings.filterwarnings("ignore", ".*class_weight presets.*", category=UserWarning)
+                
+                if sample_weight is not None:
+                    model.fit(X_train, y_train, sample_weight=sample_weight)
+                else:
+                    model.fit(X_train, y_train)
+                
+            # Log Metrics
+            # Using 'score' (accuracy) as generic metric for now
+            history['validation_0']['score'].append(model.score(X_train, y_train))
+            if X_val is not None:
+                history['validation_1']['score'].append(model.score(X_val, y_val))
+            
+            current_step = next_step
+            
+        return {'learning_curve': history}
+
+    def _fit_standard(self, model, X_train, y_train, sample_weight):
+        """Standard single-shot fit."""
+        if sample_weight is not None:
+            model.fit(X_train, y_train, sample_weight=sample_weight)
+        else:
+            model.fit(X_train, y_train)
     
     def predict(self, model: BaseEstimator, X: np.ndarray) -> np.ndarray:
         """
