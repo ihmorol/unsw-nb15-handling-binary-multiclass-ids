@@ -32,10 +32,12 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [src]
+          paths: ["."]
           options:
             show_root_heading: true
             show_source: true
+            show_if_no_docstring: false
+            docstring_style: google
 
 nav:
   - Home: index.md
@@ -59,7 +61,9 @@ nav:
     - Evaluation: api/evaluation.md
     - Strategies: api/strategies.md
     - Utils: api/utils.md
+  - Guides:
+    - Colab Run Guide: guides/colab_run_guide.md
+  - Plans:
+    - Strategic Engineering Plan: plans/strategic_engineering_plan.md
   - Artifacts:
-    - Plans:
-      - Implementation Plan: artifacts/implementation_plan.md
     - Reports: artifacts/reports.md
