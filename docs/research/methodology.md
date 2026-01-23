@@ -82,13 +82,13 @@ Resampling modifies the training data distribution *before* training.
 
 ## 3. Models
 
-We evaluate three classical machine learning models with fixed hyperparameters (see [Experiment Contract](../contracts/experiment_contract.md)).
+We evaluate three classical machine learning models with optimized hyperparameters (see [Experiment Contract](../contracts/experiment_contract.md) for full details).
 
 | Model | Description | Key Hyperparameters |
 |-------|-------------|---------------------|
-| **Logistic Regression (LR)** | Linear model; serves as a baseline. | `solver='lbfgs'`, `max_iter=1000` |
-| **Random Forest (RF)** | Ensemble of decision trees (bagging). | `n_estimators=200`, `max_depth=20` |
-| **XGBoost (XGB)** | Gradient boosting method. | `n_estimators=200`, `max_depth=6`, `learning_rate=0.1` |
+| **Logistic Regression (LR)** | Linear model; serves as a baseline. | `solver='lbfgs'`, `max_iter=1000`, `C=1.0` |
+| **Random Forest (RF)** | Ensemble of decision trees (bagging). | `n_estimators=300`, `max_depth=None`, `class_weight='balanced_subsample'` |
+| **XGBoost (XGB)** | Gradient boosting method. | `n_estimators=150`, `max_depth=15`, `learning_rate=0.05`, `gamma=1.0` |
 
 ---
 

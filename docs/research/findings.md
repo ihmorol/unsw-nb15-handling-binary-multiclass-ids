@@ -13,8 +13,8 @@ The rigorous evaluation of the UNSW-NB15 dataset reveals a fundamental dichotomy
 ### Visual Summary (Strategy Trade-offs)
 The radar charts illustrate the trade-offs between strategies (S0 vs S1 vs S2a) for XGBoost:
 
-![Binary Task Radar](../../results/figures_final/radar_binary_xgb.png)
-![Multi Task Radar](../../results/figures_final/radar_multi_xgb.png)
+![Binary Task Radar](../../results/figures/radar_binary_xgb.png)
+![Multi Task Radar](../../results/figures/radar_multi_xgb.png)
 
 ---
 
@@ -87,7 +87,7 @@ The radar charts illustrate the trade-offs between strategies (S0 vs S1 vs S2a) 
 ### Rare Class Analysis (Worms, Shellcode, Backdoor)
 The impact of strategies on the detection of rare classes is substantial. As shown below, **S2a** and **S1** dramatically improve Recall for the most difficult classes compared to the baseline.
 
-![Rare Class Analysis](../../results/figures_final/rare_class_recall_comparison.png)
+![Rare Class Analysis](../../results/figures/rare_class_recall_comparison.png)
 
 ---
 
