@@ -24,18 +24,18 @@ To ensure reproducibility, all random operations used a fixed seed (\texttt{rand
 \textbf{Model} & \textbf{Parameter} & \textbf{Value} \\
 \hline
 \multirow{3}{*}{Logistic Regression} & C (regularization) & 1.0 \\
- & Solver & saga \\
+ & Solver & lbfgs \\
  & Max iterations & 1000 \\
 \hline
-\multirow{4}{*}{Random Forest} & n\_estimators & 100 \\
- & max\_depth & 25 \\
- & min\_samples\_split & 5 \\
- & min\_samples\_leaf & 2 \\
+\multirow{4}{*}{Random Forest} & n\_estimators & 300 \\
+ & max\_depth & None \\
+ & min\_samples\_split & 2 \\
+ & min\_samples\_leaf & 1 \\
 \hline
-\multirow{4}{*}{XGBoost} & n\_estimators & 100 \\
- & learning\_rate & 0.1 \\
- & max\_depth & 10 \\
- & subsample & 0.8 \\
+\multirow{4}{*}{XGBoost} & n\_estimators & 150 \\
+ & learning\_rate & 0.05 \\
+ & max\_depth & 15 \\
+ & subsample & 0.85 \\
 \hline
 \end{tabular}
 \end{table}
@@ -93,10 +93,10 @@ Three strategies were evaluated:
 
 \section{Results and Detailed Analysis}
 
-\subsection{Statistical Proof of Performance}
+\subsection{Statistical Performance Validation}
 To rigorously validate our findings and reject the null hypothesis that performance differences are due to random variance, we employed a \textbf{Statistical Validation Protocol} consisting of Parametric Bootstrapping ($n=1000$) and the Friedman Rank Test.
 
-\subsubsection{Proof 1: Stability Analysis via Bootstrapping}
+\subsubsection{Evidence 1: Stability Analysis via Bootstrapping}
 We generated 95\% Confidence Intervals (CI) for the Macro-F1 score by resampling the test set confusion matrices. As presented in Table~\ref{tab:ci_results}, the error margins ($\pm \delta$) demonstrate the high precision of our estimates.
 
 \begin{table}[h]
@@ -114,10 +114,10 @@ XGB & S2a (ROS) & Macro-F1 & $0.897 \pm 0.002$ & Significant \\
 \end{tabular}
 \end{table}
 
-\textbf{Conclusion:} The non-overlapping confidence intervals between S0 ([0.865, 0.870]) and S1 ([0.900, 0.904]) provide \textbf{statistical proof} that the Cost-Sensitive strategy yields a genuine performance improvement distinct from noise.
+\textbf{Conclusion:} The non-overlapping confidence intervals between S0 ([0.865, 0.870]) and S1 ([0.900, 0.904]) provide \textbf{statistical evidence} that the Cost-Sensitive strategy yields a genuine performance improvement distinct from noise.
 
-\subsubsection{Proof 2: Strategy Ranking (Friedman Test)}
-To prove that S1 and S2a consistently outperform S0 across the diverse attack landscape (10 classes), we conducted a Friedman Test on the per-class F1 scores.
+\subsubsection{Evidence 2: Strategy Ranking (Friedman Test)}
+To demonstrate that S1 and S2a consistently outperform S0 across the diverse attack landscape (10 classes), we conducted a Friedman Test on the per-class F1 scores.
 \begin{itemize}
     \item \textbf{Null Hypothesis ($H_0$)}: There is no difference between strategies.
     \item \textbf{Result}: $p = 0.00026$ ($p \ll 0.05$).
@@ -147,7 +147,7 @@ We present the trade-off inherent in detecting \textit{Shellcode} as a quantifia
     \item \textbf{Recall Gain}: S1 increases detection from 0/378 (S0) to 356/378.
     \item \textbf{Precision Cost}: This introduces 300+ false positives from \textit{Fuzzers} and \textit{Normal} traffic.
 \end{itemize}
-This empirically proves the specific "No Free Lunch" cost for this dataset: detecting Shellcode requires accepting a false positive rate that includes distinct subsets of Fuzzer traffic.
+This empirically demonstrates the specific "No Free Lunch" cost for this dataset: detecting Shellcode requires accepting a false positive rate that includes distinct subsets of Fuzzer traffic.
 
 \subsection{Feature-Level Classification Results}
 
@@ -223,6 +223,13 @@ A striking pattern emerges in multiclass classification: \textbf{the accuracy pa
     \item The accuracy metric is misleading for multiclass IDS evaluation; G-Mean provides a more reliable assessment.
 \end{itemize}
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{figures/radar_multi_xgb.png}
+\caption{Radar Chart Comparison: XGBoost Performance Across Metrics (S0 vs S1 vs S2a). The balanced strategies (S1, S2a) show superior G-Mean and Macro-F1 coverage compared to the skewed baseline (S0).}
+\label{fig:radar_multi}
+\end{figure}
+
 \subsection{Per-Class Analysis}
 
 To understand model behavior at a granular level, we examined per-class metrics for the best-performing multiclass configuration (XGB-S1). Table~\ref{tab:perclass} presents precision, recall, and F1-score for each attack category.
@@ -288,6 +295,13 @@ Analysis & 677 & 0.031 & 0.254 & $+719\%$ \\
 \end{itemize}
 
 However, this improvement comes with a trade-off: precision for rare classes remains low (3--22\%), resulting in elevated false positive rates. This precision-recall trade-off is inherent to imbalanced classification and represents a deployment consideration rather than a methodological failure \cite{chawla2002smote}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\linewidth]{figures/rare_class_f1_comparison.png}
+\caption{Rare Class F1-Score Comparison. The baseline model (Blue) completely fails to detect rare classes. Imbalance handling (Green/Red) restores visibility for Worms and Shellcode.}
+\label{fig:rare_class_f1}
+\end{figure}
 
 \section{Summary}
 
