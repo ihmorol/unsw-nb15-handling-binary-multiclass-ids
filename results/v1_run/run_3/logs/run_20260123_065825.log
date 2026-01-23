@@ -1,0 +1,77 @@
+2026-01-23 06:58:25,772 | INFO     | __main__ | ======================================================================
+2026-01-23 06:58:25,772 | INFO     | __main__ | UNSW-NB15 CLASS IMBALANCE STUDY (OPTIMIZED)
+2026-01-23 06:58:25,772 | INFO     | __main__ | ======================================================================
+2026-01-23 06:58:25,772 | INFO     | __main__ | Started at: 2026-01-23T06:58:25.772899
+2026-01-23 06:58:25,773 | INFO     | __main__ | 
+==================================================
+2026-01-23 06:58:25,773 | INFO     | __main__ | PHASE 1: DATA PREPROCESSING
+2026-01-23 06:58:25,773 | INFO     | __main__ | ==================================================
+2026-01-23 06:58:25,774 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-23 06:58:25,774 | INFO     | src.data.loader | Loading training data from dataset/UNSW_NB15_training-set.csv
+2026-01-23 06:58:26,563 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-23 06:58:26,564 | INFO     | src.data.loader | Training Set schema validated successfully (all required columns present).
+2026-01-23 06:58:26,564 | INFO     | src.data.loader | Loading test data from dataset/UNSW_NB15_testing-set.csv
+2026-01-23 06:58:26,930 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-23 06:58:26,931 | INFO     | src.data.loader | Test Set schema validated successfully (all required columns present).
+2026-01-23 06:58:26,932 | INFO     | src.data.preprocessing | ============================================================
+2026-01-23 06:58:26,932 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-23 06:58:26,932 | INFO     | src.data.preprocessing | ============================================================
+2026-01-23 06:58:26,933 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-23 06:58:26,933 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-23 06:58:26,933 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-23 06:58:27,248 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-23 06:58:27,248 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-23 06:58:27,248 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-23 06:58:27,305 | INFO     | src.data.preprocessing | Label mapping: {'Analysis': 0, 'Backdoor': 1, 'DoS': 2, 'Exploits': 3, 'Fuzzers': 4, 'Generic': 5, 'Normal': 6, 'Reconnaissance': 7, 'Shellcode': 8, 'Worms': 9}
+2026-01-23 06:58:27,412 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-23 06:58:28,928 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-23 06:58:29,443 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-23 06:58:29,485 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-23 06:58:29,490 | INFO     | src.data.preprocessing | Saved preprocessing metadata to results/processed/preprocessing_metadata.json
+2026-01-23 06:58:29,490 | INFO     | __main__ | 
+==================================================
+2026-01-23 06:58:29,491 | INFO     | __main__ | PHASE 2: RUNNING EXPERIMENTS
+2026-01-23 06:58:29,491 | INFO     | __main__ | ==================================================
+2026-01-23 06:58:29,491 | INFO     | __main__ | Skipping binary_lr_s2a_s44 (found existing metrics)
+2026-01-23 06:58:29,491 | INFO     | __main__ | Skipping binary_lr_s2a_s45 (found existing metrics)
+2026-01-23 06:58:29,491 | INFO     | __main__ | Skipping binary_lr_s2a_s46 (found existing metrics)
+2026-01-23 06:58:29,493 | INFO     | __main__ | Queued 87 experiments. (Skipped 3)
+2026-01-23 06:58:29,493 | INFO     | __main__ | Starting parallel execution with n_jobs=1...
+2026-01-23 06:58:29,493 | INFO     | __main__ | ============================================================
+2026-01-23 06:58:29,493 | INFO     | __main__ | EXPERIMENT: binary_lr_s0_s42 (Seed: 42)
+2026-01-23 06:58:29,493 | INFO     | __main__ |   Task:     binary
+2026-01-23 06:58:29,493 | INFO     | __main__ |   Model:    LR
+2026-01-23 06:58:29,493 | INFO     | __main__ |   Strategy: S0
+2026-01-23 06:58:29,494 | INFO     | __main__ | ============================================================
+2026-01-23 06:58:29,494 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-23 06:58:29,494 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...
+2026-01-23 06:58:29,495 | INFO     | src.models.trainer | Starting iterative training (max_iter) -> 1000
+2026-01-23 06:59:18,202 | INFO     | src.models.trainer | Training completed in 48.71s
+2026-01-23 06:59:18,391 | INFO     | __main__ | 
+Results (binary_lr_s0_s42):
+2026-01-23 06:59:18,391 | INFO     | __main__ | Accuracy:    0.8089
+Macro F1:    0.7948
+Weighted F1: 0.8002
+G-Mean:      0.7905
+ROC-AUC:     0.9559
+2026-01-23 06:59:18,396 | INFO     | __main__ | Saved learning curve CSV: binary_lr_s0_s42.csv
+2026-01-23 06:59:18,844 | INFO     | src.evaluation.plots | Saved learning curve plot to results/figures/binary_lr_s0_s42/learning_curve.png
+2026-01-23 06:59:19,477 | INFO     | src.evaluation.plots | Saved confusion matrix to results/figures/binary_lr_s0_s42/confusion_matrix.png
+2026-01-23 06:59:20,070 | INFO     | src.evaluation.plots | Saved ROC curve to results/figures/binary_lr_s0_s42/roc_curve.png
+2026-01-23 06:59:20,674 | INFO     | src.evaluation.plots | Saved PR curve to results/figures/binary_lr_s0_s42/pr_curve.png
+2026-01-23 06:59:20,675 | INFO     | __main__ | Completed binary_lr_s0_s42 in 48.90s
+2026-01-23 06:59:20,675 | INFO     | __main__ | ============================================================
+2026-01-23 06:59:20,675 | INFO     | __main__ | EXPERIMENT: binary_lr_s0_s43 (Seed: 43)
+2026-01-23 06:59:20,675 | INFO     | __main__ |   Task:     binary
+2026-01-23 06:59:20,675 | INFO     | __main__ |   Model:    LR
+2026-01-23 06:59:20,675 | INFO     | __main__ |   Strategy: S0
+2026-01-23 06:59:20,675 | INFO     | __main__ | ============================================================
+2026-01-23 06:59:20,675 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-23 06:59:20,676 | INFO     | src.models.trainer | Training LogisticRegression on 140,272 samples...
+2026-01-23 06:59:20,676 | INFO     | src.models.trainer | Starting iterative training (max_iter) -> 1000

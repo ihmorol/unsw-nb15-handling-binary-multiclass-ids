@@ -1,0 +1,13 @@
+2026-01-22 19:25:59,509 | INFO | ============================================================
+2026-01-22 19:25:59,510 | INFO | STARTING FULL EXPERIMENTAL GRID (18 Runs)
+2026-01-22 19:25:59,510 | INFO | ============================================================
+2026-01-22 19:25:59,510 | INFO | Executing: E:\University\ML\ML_PAPER_REVIEW\.venv\Scripts\python.exe main.py
+2026-01-22 21:58:16,334 | INFO | ============================================================
+2026-01-22 21:58:16,334 | INFO | STARTING FULL EXPERIMENTAL GRID (18 Runs)
+2026-01-22 21:58:16,334 | INFO | ============================================================
+2026-01-22 21:58:16,334 | INFO | Executing: C:\Users\User\AppData\Local\Programs\Python\Python313\python.exe main.py
+2026-01-22 22:09:22,044 | WARNING | Execution interrupted by user.
+2026-01-22 23:32:11,346 | INFO | ============================================================
+2026-01-22 23:32:11,347 | INFO | STARTING FULL EXPERIMENTAL GRID (18 Runs)
+2026-01-22 23:32:11,347 | INFO | ============================================================
+2026-01-22 23:32:11,361 | INFO | Executing: E:\University\ML\ML_PAPER_REVIEW\.venv\Scripts\python.exe main.py --config configs/fast.yaml

@@ -9,6 +9,7 @@
     - [x] Define "Golden Grid" (Single consistent configuration)
     - [x] Define Execution Strategy (Local vs Colab vs Hybrid)
     - [x] Define SOTA Artifacts (CD Diagrams, SHAP)
+    - [x] **Workflow Setup** (`/data_scientist`)
 
 ## Phase 2: The "Golden Grid" Execution
 - [x] **Environment Setup**

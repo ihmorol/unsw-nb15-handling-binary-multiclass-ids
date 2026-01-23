@@ -1,0 +1,46 @@
+2026-01-23 11:45:48,350 | INFO     | __main__ | ============================================================
+2026-01-23 11:45:48,350 | INFO     | __main__ | RUNNING REMAINING MULTICLASS EXPERIMENTS
+2026-01-23 11:45:48,350 | INFO     | __main__ | Target Seeds: [43, 44, 45, 46]
+2026-01-23 11:45:48,350 | INFO     | __main__ | Target Strategies: ['s0', 's1', 's2a']
+2026-01-23 11:45:48,350 | INFO     | __main__ | ============================================================
+2026-01-23 11:45:48,350 | INFO     | __main__ | Loading Data...
+2026-01-23 11:45:48,351 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-23 11:45:48,351 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-23 11:45:48,879 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-23 11:45:48,880 | INFO     | src.data.loader | Training Set schema validated successfully (all required columns present).
+2026-01-23 11:45:48,880 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-23 11:45:49,091 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-23 11:45:49,091 | INFO     | src.data.loader | Test Set schema validated successfully (all required columns present).
+2026-01-23 11:45:49,092 | INFO     | src.data.preprocessing | ============================================================
+2026-01-23 11:45:49,092 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-23 11:45:49,092 | INFO     | src.data.preprocessing | ============================================================
+2026-01-23 11:45:49,092 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-23 11:45:49,092 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-23 11:45:49,092 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-23 11:45:49,234 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-23 11:45:49,234 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-23 11:45:49,234 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-23 11:45:49,265 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-23 11:45:49,302 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-23 11:45:49,921 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-23 11:45:50,116 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-23 11:45:50,116 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-23 11:45:50,117 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-23 11:45:50,117 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-23 11:45:50,117 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-23 11:45:50,117 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-23 11:45:50,117 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-23 11:45:50,157 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-23 11:45:50,169 | INFO     | __main__ | Skipping multi_lr_s0_s43 (Done)
+2026-01-23 11:45:50,169 | INFO     | __main__ | Skipping multi_lr_s0_s44 (Done)
+2026-01-23 11:45:50,169 | INFO     | __main__ | Skipping multi_lr_s0_s45 (Done)
+2026-01-23 11:45:50,170 | INFO     | __main__ | Skipping multi_lr_s0_s46 (Done)
+2026-01-23 11:45:50,170 | INFO     | __main__ | Skipping multi_lr_s1_s43 (Done)
+2026-01-23 11:45:50,170 | INFO     | __main__ | Skipping multi_lr_s1_s44 (Done)
+2026-01-23 11:45:50,170 | INFO     | __main__ | Skipping multi_lr_s1_s45 (Done)
+2026-01-23 11:45:50,170 | INFO     | __main__ | Skipping multi_lr_s1_s46 (Done)
+2026-01-23 11:45:50,171 | INFO     | __main__ | Skipping multi_rf_s0_s43 (Done)
+2026-01-23 11:45:50,171 | INFO     | __main__ | Skipping multi_rf_s0_s44 (Done)
+2026-01-23 11:45:50,172 | INFO     | __main__ | Skipping multi_rf_s0_s45 (Done)
+2026-01-23 11:45:50,173 | INFO     | __main__ | Queued 25 experiments (Skipped 11)
+2026-01-23 11:45:50,173 | INFO     | __main__ | Starting execution with n_jobs=-1

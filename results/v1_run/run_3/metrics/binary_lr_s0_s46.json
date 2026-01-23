@@ -1,0 +1,46 @@
+{
+  "experiment_id": "binary_lr_s0_s46",
+  "seed": 46,
+  "task": "binary",
+  "model": "lr",
+  "strategy": "s0",
+  "timestamp": "2026-01-23T07:29:42.050230",
+  "training_time_seconds": 47.3038170337677,
+  "total_time_seconds": 47.46590971946716,
+  "train_samples": 140272,
+  "test_samples": 82332,
+  "metrics": {
+    "overall": {
+      "accuracy": 0.8088956906184716,
+      "macro_f1": 0.7948036402034219,
+      "weighted_f1": 0.8002455647519106,
+      "g_mean": 0.7904706811726577,
+      "roc_auc": 0.9558646955435095
+    },
+    "per_class": {
+      "Normal": {
+        "precision": 0.9475921872369085,
+        "recall": 0.6084054054054054,
+        "f1": 0.7410296925406544,
+        "support": 37000
+      },
+      "Attack": {
+        "precision": 0.7526461349358099,
+        "recall": 0.97253595693991,
+        "f1": 0.8485775878661893,
+        "support": 45332
+      }
+    },
+    "confusion_matrix": [
+      [
+        22511,
+        14489
+      ],
+      [
+        1245,
+        44087
+      ]
+    ]
+  },
+  "rare_class_analysis": null
+}

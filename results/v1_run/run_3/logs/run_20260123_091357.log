@@ -1,0 +1,82 @@
+2026-01-23 09:13:57,291 | INFO     | __main__ | ======================================================================
+2026-01-23 09:13:57,291 | INFO     | __main__ | UNSW-NB15 CLASS IMBALANCE STUDY (OPTIMIZED)
+2026-01-23 09:13:57,291 | INFO     | __main__ | ======================================================================
+2026-01-23 09:13:57,291 | INFO     | __main__ | Started at: 2026-01-23T09:13:57.291296
+2026-01-23 09:13:57,291 | INFO     | __main__ | 
+==================================================
+2026-01-23 09:13:57,291 | INFO     | __main__ | PHASE 1: DATA PREPROCESSING
+2026-01-23 09:13:57,292 | INFO     | __main__ | ==================================================
+2026-01-23 09:13:57,292 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-23 09:13:57,292 | INFO     | src.data.loader | Loading training data from dataset/UNSW_NB15_training-set.csv
+2026-01-23 09:13:57,876 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-23 09:13:57,876 | INFO     | src.data.loader | Training Set schema validated successfully (all required columns present).
+2026-01-23 09:13:57,876 | INFO     | src.data.loader | Loading test data from dataset/UNSW_NB15_testing-set.csv
+2026-01-23 09:13:58,133 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-23 09:13:58,134 | INFO     | src.data.loader | Test Set schema validated successfully (all required columns present).
+2026-01-23 09:13:58,134 | INFO     | src.data.preprocessing | ============================================================
+2026-01-23 09:13:58,134 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-23 09:13:58,134 | INFO     | src.data.preprocessing | ============================================================
+2026-01-23 09:13:58,134 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-23 09:13:58,134 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-23 09:13:58,134 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-23 09:13:58,330 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-23 09:13:58,330 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-23 09:13:58,331 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-23 09:13:58,373 | INFO     | src.data.preprocessing | Label mapping: {'Analysis': 0, 'Backdoor': 1, 'DoS': 2, 'Exploits': 3, 'Fuzzers': 4, 'Generic': 5, 'Normal': 6, 'Reconnaissance': 7, 'Shellcode': 8, 'Worms': 9}
+2026-01-23 09:13:58,428 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-23 09:13:59,782 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-23 09:14:00,311 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-23 09:14:00,312 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-23 09:14:00,312 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-23 09:14:00,312 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-23 09:14:00,312 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-23 09:14:00,312 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-23 09:14:00,312 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-23 09:14:00,363 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-23 09:14:00,371 | INFO     | src.data.preprocessing | Saved preprocessing metadata to results/processed/preprocessing_metadata.json
+2026-01-23 09:14:00,372 | INFO     | __main__ | 
+==================================================
+2026-01-23 09:14:00,372 | INFO     | __main__ | PHASE 2: RUNNING EXPERIMENTS
+2026-01-23 09:14:00,372 | INFO     | __main__ | ==================================================
+2026-01-23 09:14:00,373 | INFO     | __main__ | Skipping binary_lr_s0_s42 (found existing metrics)
+2026-01-23 09:14:00,373 | INFO     | __main__ | Skipping binary_lr_s0_s43 (found existing metrics)
+2026-01-23 09:14:00,373 | INFO     | __main__ | Skipping binary_lr_s0_s44 (found existing metrics)
+2026-01-23 09:14:00,374 | INFO     | __main__ | Skipping binary_lr_s0_s45 (found existing metrics)
+2026-01-23 09:14:00,374 | INFO     | __main__ | Skipping binary_lr_s0_s46 (found existing metrics)
+2026-01-23 09:14:00,374 | INFO     | __main__ | Skipping binary_lr_s1_s42 (found existing metrics)
+2026-01-23 09:14:00,374 | INFO     | __main__ | Skipping binary_lr_s1_s43 (found existing metrics)
+2026-01-23 09:14:00,374 | INFO     | __main__ | Skipping binary_lr_s1_s44 (found existing metrics)
+2026-01-23 09:14:00,375 | INFO     | __main__ | Skipping binary_lr_s1_s45 (found existing metrics)
+2026-01-23 09:14:00,375 | INFO     | __main__ | Skipping binary_lr_s1_s46 (found existing metrics)
+2026-01-23 09:14:00,375 | INFO     | __main__ | Skipping binary_lr_s2a_s42 (found existing metrics)
+2026-01-23 09:14:00,376 | INFO     | __main__ | Skipping binary_lr_s2a_s43 (found existing metrics)
+2026-01-23 09:14:00,377 | INFO     | __main__ | Skipping binary_lr_s2a_s44 (found existing metrics)
+2026-01-23 09:14:00,377 | INFO     | __main__ | Skipping binary_lr_s2a_s45 (found existing metrics)
+2026-01-23 09:14:00,377 | INFO     | __main__ | Skipping binary_lr_s2a_s46 (found existing metrics)
+2026-01-23 09:14:00,377 | INFO     | __main__ | Skipping binary_rf_s0_s42 (found existing metrics)
+2026-01-23 09:14:00,378 | INFO     | __main__ | Skipping binary_rf_s0_s43 (found existing metrics)
+2026-01-23 09:14:00,378 | INFO     | __main__ | Skipping binary_rf_s0_s44 (found existing metrics)
+2026-01-23 09:14:00,378 | INFO     | __main__ | Skipping binary_rf_s0_s45 (found existing metrics)
+2026-01-23 09:14:00,379 | INFO     | __main__ | Skipping binary_rf_s0_s46 (found existing metrics)
+2026-01-23 09:14:00,379 | INFO     | __main__ | Skipping binary_rf_s1_s42 (found existing metrics)
+2026-01-23 09:14:00,380 | INFO     | __main__ | Skipping binary_rf_s1_s43 (found existing metrics)
+2026-01-23 09:14:00,380 | INFO     | __main__ | Skipping binary_rf_s1_s44 (found existing metrics)
+2026-01-23 09:14:00,380 | INFO     | __main__ | Skipping binary_rf_s1_s45 (found existing metrics)
+2026-01-23 09:14:00,381 | INFO     | __main__ | Skipping binary_rf_s1_s46 (found existing metrics)
+2026-01-23 09:14:00,381 | INFO     | __main__ | Skipping binary_rf_s2a_s42 (found existing metrics)
+2026-01-23 09:14:00,381 | INFO     | __main__ | Skipping binary_rf_s2a_s43 (found existing metrics)
+2026-01-23 09:14:00,382 | INFO     | __main__ | Skipping binary_rf_s2a_s44 (found existing metrics)
+2026-01-23 09:14:00,382 | INFO     | __main__ | Skipping binary_rf_s2a_s45 (found existing metrics)
+2026-01-23 09:14:00,382 | INFO     | __main__ | Skipping binary_rf_s2a_s46 (found existing metrics)
+2026-01-23 09:14:00,384 | INFO     | __main__ | Queued 60 experiments. (Skipped 30)
+2026-01-23 09:14:00,385 | INFO     | __main__ | Starting parallel execution with n_jobs=1...
+2026-01-23 09:14:00,385 | INFO     | __main__ | ============================================================
+2026-01-23 09:14:00,385 | INFO     | __main__ | EXPERIMENT: binary_xgb_s0_s42 (Seed: 42)
+2026-01-23 09:14:00,385 | INFO     | __main__ |   Task:     binary
+2026-01-23 09:14:00,385 | INFO     | __main__ |   Model:    XGB
+2026-01-23 09:14:00,385 | INFO     | __main__ |   Strategy: S0
+2026-01-23 09:14:00,385 | INFO     | __main__ | ============================================================
+2026-01-23 09:14:00,385 | INFO     | src.strategies.imbalance | S0: No balancing applied. Training size: 140,272
+2026-01-23 09:14:00,387 | INFO     | src.models.trainer | Training XGBClassifier on 140,272 samples...
+2026-01-23 09:14:00,387 | INFO     | src.models.trainer | Enabled XGBoost native tracking
+2026-01-23 09:14:00,387 | INFO     | src.models.trainer | Fitting XGBoost with params: ['eval_set', 'verbose']
