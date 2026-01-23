@@ -148,9 +148,9 @@ RF & S0 & 0.766 & 0.451 & 0.684 & 0.959 \\
 RF & S1 & 0.690 & 0.473 & 0.736 & 0.954 \\
 RF & S2a & 0.686 & 0.476 & 0.744 & 0.952 \\
 \hline
-XGB & S0 & 0.769 & 0.509 & 0.727 & 0.963 \\
-\textbf{XGB} & \textbf{S1} & 0.683 & \textbf{0.514} & \textbf{0.792} & 0.959 \\
-XGB & S2a & 0.688 & 0.511 & 0.786 & 0.958 \\
+XGB & S0 & 0.768 & 0.507 & 0.725 & 0.963 \\
+\textbf{XGB} & \textbf{S1} & 0.686 & 0.513 & \textbf{0.795} & 0.959 \\
+XGB & S2a & 0.699 & \textbf{0.516} & 0.787 & 0.958 \\
 \hline
 \end{tabular}
 \end{table}
@@ -211,10 +211,10 @@ The detection of rare attack categories is the central focus of this study. Tabl
 \hline
 \textbf{Class} & \textbf{Support} & \textbf{LR-S0 Recall} & \textbf{XGB-S1 Recall} & \textbf{Improvement} \\
 \hline
-Worms & 44 & 0.000 & 0.818 & $+\infty$ \\
-Shellcode & 378 & 0.000 & 0.958 & $+\infty$ \\
-Backdoor & 583 & 0.000 & 0.657 & $+\infty$ \\
-Analysis & 677 & 0.000 & 0.177 & $+\infty$ \\
+Worms & 44 & 0.000 & 0.841 & $+\infty$ \\
+Shellcode & 378 & 0.000 & 0.942 & $+\infty$ \\
+Backdoor & 583 & 0.000 & 0.606 & $+\infty$ \\
+Analysis & 677 & 0.031 & 0.254 & $+719\%$ \\
 \hline
 \end{tabular}
 \end{table}
@@ -222,10 +222,10 @@ Analysis & 677 & 0.000 & 0.177 & $+\infty$ \\
 \textbf{Critical Finding}: The baseline Logistic Regression model (LR-S0) achieves 0\% recall on \textit{all four rare attack categories}. This means the model completely ignores these attacks, classifying every instance as a more common class. In contrast, XGBoost with class weighting enables detection of these previously invisible threats:
 
 \begin{itemize}
-    \item \textbf{Worms} (n=44): Recall increases from 0\% to 82\%, detecting 36 of 44 worm attacks.
-    \item \textbf{Shellcode} (n=378): Near-perfect recall of 96\%, detecting 362 of 378 shellcode attacks.
-    \item \textbf{Backdoor} (n=583): Recall of 66\%, detecting 383 of 583 backdoor attacks.
-    \item \textbf{Analysis} (n=677): Modest recall of 18\%, though still infinitely better than the baseline.
+    \item \textbf{Worms} (n=44): Recall increases from 0\% to 84\%, detecting 37 of 44 worm attacks.
+    \item \textbf{Shellcode} (n=378): Near-perfect recall of 94\%, detecting 356 of 378 shellcode attacks.
+    \item \textbf{Backdoor} (n=583): Recall of 61\%, detecting 353 of 583 backdoor attacks.
+    \item \textbf{Analysis} (n=677): Improved recall of 25\%, detecting 172 of 677 analysis attacks.
 \end{itemize}
 
 However, this improvement comes with a trade-off: precision for rare classes remains low (3--22\%), resulting in elevated false positive rates. This precision-recall trade-off is inherent to imbalanced classification and represents a deployment consideration rather than a methodological failure \cite{chawla2002smote}.

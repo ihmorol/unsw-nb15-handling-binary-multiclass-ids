@@ -11,7 +11,7 @@ This study investigated the impact of class imbalance on machine learning-based 
 \begin{itemize}
     \item \textbf{RQ1 (Imbalance Impact)}: Class imbalance severely degrades multiclass detection, with baseline models achieving 0\% recall on all four rare attack categories despite high overall accuracy.
     
-    \item \textbf{RQ2 (Strategy Effectiveness)}: Both class weighting and oversampling dramatically improve minority class detection. Class weighting increased Worms recall from 0\% to 82\% and Shellcode recall from 0\% to 96\%.
+    \item \textbf{RQ2 (Strategy Effectiveness)}: Both class weighting and oversampling dramatically improve minority class detection. Class weighting increased Worms recall from 0\% to 84\% and Shellcode recall from 0\% to 94\%.
     
     \item \textbf{RQ3 (Model Consistency)}: All three models benefited from imbalance handling, though XGBoost consistently outperformed alternatives across both tasks and all strategies.
     
@@ -39,7 +39,7 @@ We acknowledge several limitations of this study:
     
     \item \textbf{Fixed Hyperparameters}: We did not perform hyperparameter optimization, instead using fixed configurations to ensure fair comparison. Tuned models may achieve higher performance.
     
-    \item \textbf{Single Random Seed}: All experiments used \texttt{random\_state=42}. Results may exhibit variance across different seeds, though we expect patterns to remain consistent.
+    \item \textbf{Computational Constraints}: While Binary and Logistic Regression experiments used 5 random seeds to ensure stability, Multiclass Tree-based models were limited to fewer seeds due to resource constraints. Results may exhibit minor variance.
     
     \item \textbf{Classical ML Only}: We did not compare against deep learning approaches (CNN, LSTM, Transformers), which may offer superior performance on complex network traffic patterns \cite{Vinayakumar2019}.
     

@@ -51,7 +51,7 @@ validation_size: 0.20  # 20% of training data for validation
 # Experiment Grid
 experiments:
   n_seeds: 5          # Number of random seeds for robustness
-  n_jobs: 1           # Sequential execution (Optimized for Colab 2-core)
+  n_jobs: -1          # Maximize local parallelism
   tasks:
     - binary
     - multi
