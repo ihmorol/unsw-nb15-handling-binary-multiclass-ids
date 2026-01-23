@@ -30,9 +30,9 @@
 - [x] **Advanced Visualization**
     - [x] Critical Difference (CD) Diagram (Replaced by Radar/Bar Charts for N=1)
     - [x] SHAP Analysis for Worms/Shellcode (Replaced by Rare Class Bar Chart)
-- [ ] **Paper Integration**
-    - [ ] Rewrite "Results" section with statistical rigour
-    - [ ] Add "Discussion" on Cost-Sensitive tradeoffs
+- [x] **Paper Integration**
+    - [x] Rewrite "Results" section with statistical rigour (Completed in `docs/research/findings.md`)
+    - [x] Add "Discussion" on Cost-Sensitive tradeoffs (Completed in `docs/research/findings.md`)
 
 ## Phase 4: Final Polish
 - [x] **Abstract & Intro Refinement** (Updated README and Docs Findings)

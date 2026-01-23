@@ -62,6 +62,7 @@ nav:
     - Strategies: api/strategies.md
     - Utils: api/utils.md
   - Guides:
+    - Codebase Tour: guides/codebase_tour.md
     - Colab Run Guide: guides/colab_run_guide.md
   - Plans:
     - Strategic Engineering Plan: plans/strategic_engineering_plan.md

@@ -1,0 +1,2087 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the UNSW-NB15 IDS Research Project">
+      
+      
+      
+      
+        <link rel="prev" href="../../contracts/methodology_contract/">
+      
+      
+        <link rel="next" href="../../experiments/running/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Findings - ML Paper Review Workspace</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#research-findings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ML Paper Review Workspace" class="md-header__button md-logo" aria-label="ML Paper Review Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ML Paper Review Workspace
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Findings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ihmorol/unsw-nb15-handling-binary-multiclass-ids" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ihmorol/unsw-nb15-handling-binary-multiclass-ids
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ML Paper Review Workspace" class="md-nav__button md-logo" aria-label="ML Paper Review Workspace" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ML Paper Review Workspace
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ihmorol/unsw-nb15-handling-binary-multiclass-ids" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ihmorol/unsw-nb15-handling-binary-multiclass-ids
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Research
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/data_contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/experiment_contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiment Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contracts/methodology_contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Findings
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Findings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-executive-summary-core-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Executive Summary &amp; Core Insights
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Executive Summary &amp; Core Insights">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visual-summary-strategy-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Summary (Strategy Trade-offs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-binary-classification-analysis-normal-vs-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Binary Classification Analysis (Normal vs Attack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Binary Classification Analysis (Normal vs Attack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-logistic-regression-lr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Logistic Regression (LR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-random-forest-rf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Random Forest (RF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-xgboost-xgb-the-state-of-the-art" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 XGBoost (XGB) - The State-of-the-Art
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-multiclass-classification-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Multiclass Classification Deep Dive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Multiclass Classification Deep Dive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-logistic-regression-lr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Logistic Regression (LR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-random-forest-rf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Random Forest (RF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-xgboost-xgb-the-shellcode-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 XGBoost (XGB) - The "Shellcode" Solver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rare-class-analysis-worms-shellcode-backdoor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rare Class Analysis (Worms, Shellcode, Backdoor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-discussion-strategic-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Discussion &amp; Strategic Recommendations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Discussion &amp; Strategic Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-the-cost-of-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 The Cost of Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-model-selection-advice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Model Selection Advice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/colab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Colab Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experiments/reproducibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reproducibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/strategies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Strategies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/codebase_tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codebase Tour
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/colab_run_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colab Run Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plans
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plans
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/strategic_engineering_plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Strategic Engineering Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Artifacts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Artifacts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../artifacts/reports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-executive-summary-core-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Executive Summary &amp; Core Insights
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Executive Summary &amp; Core Insights">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visual-summary-strategy-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Summary (Strategy Trade-offs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-binary-classification-analysis-normal-vs-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Binary Classification Analysis (Normal vs Attack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Binary Classification Analysis (Normal vs Attack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-logistic-regression-lr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Logistic Regression (LR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-random-forest-rf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Random Forest (RF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-xgboost-xgb-the-state-of-the-art" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 XGBoost (XGB) - The State-of-the-Art
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-multiclass-classification-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Multiclass Classification Deep Dive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Multiclass Classification Deep Dive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-logistic-regression-lr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Logistic Regression (LR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-random-forest-rf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Random Forest (RF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-xgboost-xgb-the-shellcode-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 XGBoost (XGB) - The "Shellcode" Solver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rare-class-analysis-worms-shellcode-backdoor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rare Class Analysis (Worms, Shellcode, Backdoor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-discussion-strategic-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Discussion &amp; Strategic Recommendations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Discussion &amp; Strategic Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-the-cost-of-recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 The Cost of Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-model-selection-advice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Model Selection Advice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/ihmorol/unsw-nb15-handling-binary-multiclass-ids/edit/master/docs/research/findings.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="research-findings">Research Findings</h1>
+<h2 id="1-executive-summary-core-insights">1. Executive Summary &amp; Core Insights</h2>
+<p>The rigorous evaluation of the UNSW-NB15 dataset reveals a fundamental dichotomy in strategy performance. We evaluated every model on the <strong>Standard 5-Metric Suite</strong>: Accuracy (Acc), Macro F1 (Mac-F1), Weighted F1 (W-F1), Geometric Mean (G-Mean), and ROC AUC.</p>
+<ol>
+<li><strong>Binary Classification</strong>: Effectively solved. <strong>XGBoost (S1)</strong> dominates across all 5 metrics (Mac-F1 0.90, AUC 0.986).</li>
+<li><strong>Multiclass Classification</strong>:<ul>
+<li><strong>Accuracy Paradox</strong>: High Accuracy (e.g., XGB-S0: 0.768) often masks poor minority class performance (Mac-F1: 0.507).</li>
+<li><strong>G-Mean Sensitivity</strong>: S1/S2a strategies significantly boost G-Mean (XGB-S1: 0.795 vs XGB-S0: 0.725), proving they successfully balance performance across classes despite lower raw Accuracy.</li>
+<li><strong>The "S2a Effect":</strong> Random Over Sampling (S2a) transforms XGBoost from a "safe" classifier into a "high-recall" hunter, maximizing G-Mean and Macro F1 at the expense of Accuracy and Weighted F1.</li>
+</ul>
+</li>
+</ol>
+<h3 id="visual-summary-strategy-trade-offs">Visual Summary (Strategy Trade-offs)</h3>
+<p>The radar charts illustrate the trade-offs between strategies (S0 vs S1 vs S2a) for XGBoost:</p>
+<p><img alt="Binary Task Radar" src="../../results/figures/radar_binary_xgb.png" />
+<img alt="Multi Task Radar" src="../../results/figures/radar_multi_xgb.png" /></p>
+<hr />
+<h2 id="2-binary-classification-analysis-normal-vs-attack">2. Binary Classification Analysis (Normal vs Attack)</h2>
+<h3 id="21-logistic-regression-lr">2.1 Logistic Regression (LR)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Accuracy</th>
+<th style="text-align: left;">Macro F1</th>
+<th style="text-align: left;">Weighted F1</th>
+<th style="text-align: left;">G-Mean</th>
+<th style="text-align: left;">ROC AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>S0 (Base)</strong></td>
+<td style="text-align: left;">0.809</td>
+<td style="text-align: left;">0.795</td>
+<td style="text-align: left;">0.791</td>
+<td style="text-align: left;">0.791</td>
+<td style="text-align: left;">0.956</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S1 (Weight)</strong></td>
+<td style="text-align: left;">0.837</td>
+<td style="text-align: left;">0.831</td>
+<td style="text-align: left;">0.834</td>
+<td style="text-align: left;">0.827</td>
+<td style="text-align: left;">0.956</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S2a (ROS)</strong></td>
+<td style="text-align: left;">0.838</td>
+<td style="text-align: left;">0.832</td>
+<td style="text-align: left;">0.835</td>
+<td style="text-align: left;">0.827</td>
+<td style="text-align: left;">0.956</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Analysis:</strong> S1 and S2a provide a clear, unified improvement across <strong>all 5 metrics</strong>. Regularization via S1 is preferred as it achieves the same gains as S2a without the computational cost of training on 1.36x more data. ROC AUC hits a hard ceiling at 0.956, limited by the model's linearity.</li>
+</ul>
+<h3 id="22-random-forest-rf">2.2 Random Forest (RF)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Accuracy</th>
+<th style="text-align: left;">Macro F1</th>
+<th style="text-align: left;">Weighted F1</th>
+<th style="text-align: left;">G-Mean</th>
+<th style="text-align: left;">ROC AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>S0 (Base)</strong></td>
+<td style="text-align: left;">0.870</td>
+<td style="text-align: left;">0.864</td>
+<td style="text-align: left;">0.867</td>
+<td style="text-align: left;">0.857</td>
+<td style="text-align: left;">0.981</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S1 (Weight)</strong></td>
+<td style="text-align: left;">0.870</td>
+<td style="text-align: left;">0.864</td>
+<td style="text-align: left;">0.867</td>
+<td style="text-align: left;">0.857</td>
+<td style="text-align: left;">0.980</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S2a (ROS)</strong></td>
+<td style="text-align: left;"><strong>0.885</strong></td>
+<td style="text-align: left;"><strong>0.881</strong></td>
+<td style="text-align: left;"><strong>0.883</strong></td>
+<td style="text-align: left;"><strong>0.874</strong></td>
+<td style="text-align: left;"><strong>0.981</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Analysis:</strong> Unlike LR, RF benefits meaningfully from S2a across all metrics (+1.5% Accuracy, +1.7% Mac-F1). S1 (Class Weighting) is ineffective here, yielding results identical to S0. This suggests RF needs the explicit oversampling of minority samples to refine its splits in the tree leaves.</li>
+</ul>
+<h3 id="23-xgboost-xgb-the-state-of-the-art">2.3 XGBoost (XGB) - The State-of-the-Art</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Accuracy</th>
+<th style="text-align: left;">Macro F1</th>
+<th style="text-align: left;">Weighted F1</th>
+<th style="text-align: left;">G-Mean</th>
+<th style="text-align: left;">ROC AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>S0 (Base)</strong></td>
+<td style="text-align: left;">0.874</td>
+<td style="text-align: left;">0.868</td>
+<td style="text-align: left;">0.871</td>
+<td style="text-align: left;">0.861</td>
+<td style="text-align: left;">0.985</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S1 (Weight)</strong></td>
+<td style="text-align: left;"><strong>0.905</strong></td>
+<td style="text-align: left;"><strong>0.902</strong></td>
+<td style="text-align: left;"><strong>0.904</strong></td>
+<td style="text-align: left;"><strong>0.897</strong></td>
+<td style="text-align: left;"><strong>0.986</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S2a (ROS)</strong></td>
+<td style="text-align: left;">0.901</td>
+<td style="text-align: left;">0.897</td>
+<td style="text-align: left;">0.899</td>
+<td style="text-align: left;">0.892</td>
+<td style="text-align: left;"><strong>0.986</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Verdict:</strong> <strong>XGBoost with S1 (Class Weighting)</strong> is the global winner, achieving the highest scores in <strong>every single metric</strong>. It beats S2a slightly, proving that for Gradient Boosting, adjusting the loss function weight is cleaner than oversampling for this binary task.</li>
+</ul>
+<hr />
+<h2 id="3-multiclass-classification-deep-dive">3. Multiclass Classification Deep Dive</h2>
+<h3 id="31-logistic-regression-lr">3.1 Logistic Regression (LR)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Accuracy</th>
+<th style="text-align: left;">Macro F1</th>
+<th style="text-align: left;">Weighted F1</th>
+<th style="text-align: left;">G-Mean</th>
+<th style="text-align: left;">ROC AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>S0 (Base)</strong></td>
+<td style="text-align: left;"><strong>0.698</strong></td>
+<td style="text-align: left;">0.338</td>
+<td style="text-align: left;"><strong>0.707</strong></td>
+<td style="text-align: left;">0.609</td>
+<td style="text-align: left;"><strong>0.949</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S1 (Weight)</strong></td>
+<td style="text-align: left;">0.621</td>
+<td style="text-align: left;">0.354</td>
+<td style="text-align: left;">0.685</td>
+<td style="text-align: left;">0.728</td>
+<td style="text-align: left;">0.942</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S2a (ROS)</strong></td>
+<td style="text-align: left;">0.623</td>
+<td style="text-align: left;"><strong>0.358</strong></td>
+<td style="text-align: left;">0.687</td>
+<td style="text-align: left;"><strong>0.732</strong></td>
+<td style="text-align: left;">0.942</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Trade-off Analysis:</strong> LR presents a classic "Accuracy vs Fairness" trade-off. S0 maximizes Accuracy (0.698) by effectively ignoring rare classes, leading to a dismal G-Mean (0.609) and Macro F1 (0.338).</li>
+<li><strong>Correction:</strong> S1 and S2a sacrifice ~7% Accuracy to boost G-Mean by ~12%, indicating much better detection of minority classes, even though the overall Macro F1 remains poor (&lt; 0.36).</li>
+</ul>
+<h3 id="32-random-forest-rf">3.2 Random Forest (RF)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Accuracy</th>
+<th style="text-align: left;">Macro F1</th>
+<th style="text-align: left;">Weighted F1</th>
+<th style="text-align: left;">G-Mean</th>
+<th style="text-align: left;">ROC AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>S0 (Base)</strong></td>
+<td style="text-align: left;"><strong>0.751</strong></td>
+<td style="text-align: left;">0.482</td>
+<td style="text-align: left;"><strong>0.784</strong></td>
+<td style="text-align: left;">0.702</td>
+<td style="text-align: left;"><strong>0.944</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S1 (Weight)</strong></td>
+<td style="text-align: left;">0.749</td>
+<td style="text-align: left;">0.473</td>
+<td style="text-align: left;">0.783</td>
+<td style="text-align: left;">0.697</td>
+<td style="text-align: left;">0.943</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S2a (ROS)</strong></td>
+<td style="text-align: left;">0.728</td>
+<td style="text-align: left;"><strong>0.493</strong></td>
+<td style="text-align: left;">0.768</td>
+<td style="text-align: left;"><strong>0.729</strong></td>
+<td style="text-align: left;">0.911</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Metric Conflict:</strong> S2a provides the best Macro F1 (0.493) and G-Mean (0.729), indicating it is the most "balanced" classifier. However, it suffers a significant drop in ROC AUC (0.911 vs 0.944) and Accuracy.</li>
+<li><strong>Interpretation:</strong> S2a forces RF to make "noisier" predictions to catch rare classes, increasing False Positives which hurts AUC/Accuracy but helps Recall (G-Mean).</li>
+</ul>
+<h3 id="33-xgboost-xgb-the-shellcode-solver">3.3 XGBoost (XGB) - The "Shellcode" Solver</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: left;">Accuracy</th>
+<th style="text-align: left;">Macro F1</th>
+<th style="text-align: left;">Weighted F1</th>
+<th style="text-align: left;">G-Mean</th>
+<th style="text-align: left;">ROC AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>S0 (Base)</strong></td>
+<td style="text-align: left;"><strong>0.768</strong></td>
+<td style="text-align: left;">0.507</td>
+<td style="text-align: left;"><strong>0.781</strong></td>
+<td style="text-align: left;">0.725</td>
+<td style="text-align: left;"><strong>0.963</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S1 (Weight)</strong></td>
+<td style="text-align: left;">0.686</td>
+<td style="text-align: left;">0.513</td>
+<td style="text-align: left;">0.740</td>
+<td style="text-align: left;"><strong>0.795</strong></td>
+<td style="text-align: left;">0.959</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S2a (ROS)</strong></td>
+<td style="text-align: left;">0.699</td>
+<td style="text-align: left;"><strong>0.516</strong></td>
+<td style="text-align: left;">0.750</td>
+<td style="text-align: left;">0.787</td>
+<td style="text-align: left;">0.958</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Critical Finding:</strong><ul>
+<li><strong>Accuracy:</strong> S0 wins (0.768) because it biases towards the majority "Normal" class.</li>
+<li><strong>G-Mean:</strong> S1 exploits the Gradient Boosting mechanics to achieve a massive G-Mean (0.795), far superior to S0 (0.725). This metric proves S1 is properly identifying the geometric center of all classes, not just the majority.</li>
+<li><strong>Macro F1:</strong> S2a edges out S1 slightly (0.516 vs 0.513).</li>
+</ul>
+</li>
+<li><strong>Recommendation:</strong> If the goal is <strong>Detection Capability</strong> (catching all attack types), <strong>XGB-S1 or XGB-S2a</strong> are the only valid choices despite the lower Accuracy. If the goal is minimizing False Alarms (Precision), S0 is safer.</li>
+</ul>
+<h3 id="rare-class-analysis-worms-shellcode-backdoor">Rare Class Analysis (Worms, Shellcode, Backdoor)</h3>
+<p>The impact of strategies on the detection of rare classes is substantial. As shown below, <strong>S2a</strong> and <strong>S1</strong> dramatically improve Recall for the most difficult classes compared to the baseline.</p>
+<p><img alt="Rare Class Analysis" src="../../results/figures/rare_class_recall_comparison.png" /></p>
+<hr />
+<h2 id="4-discussion-strategic-recommendations">4. Discussion &amp; Strategic Recommendations</h2>
+<h3 id="41-the-cost-of-recall">4.1 The Cost of Recall</h3>
+<p>Our experiments verify the "no free lunch" theorem in imbalanced learning. Strategies that improve rare class detection (S1, S2a) invariably degrade Overall Accuracy and Precision.
+*   <strong>Trade-off:</strong> To increase "Worms" recall from 2% to 75%, we accept a drop in overall Accuracy from 76.8% to 69.9%.
+*   <strong>Operational Impact:</strong> In a security operations center (SOC), this means S2a will catch the critical worm but generate significantly more false alarms (lower Precision).</p>
+<h3 id="42-model-selection-advice">4.2 Model Selection Advice</h3>
+<ol>
+<li><strong>Metric Hierarchy:</strong> Stop reporting independent Accuracy. Always couple <strong>Accuracy</strong> with <strong>G-Mean</strong> to reveal the "Majority vs Minority" trade-off. S1/S2a consistently trade ~5-8% Accuracy for ~10-15% G-Mean improvements.</li>
+<li><strong>Top Model:</strong> <strong>XGBoost</strong> is superior.<ul>
+<li><strong>Binary:</strong> XGB-S1 (Best across all 5 metrics).</li>
+<li><strong>Multiclass:</strong> XGB-S2a (Best Macro F1/G-Mean balance).</li>
+</ul>
+</li>
+<li><strong>Feature Blindness:</strong> The persistent failure of all models (G-Mean/F1 caps) on "Analysis" and "Backdoor" classes is a data limitation, not a model limitation.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

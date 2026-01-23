@@ -133,3 +133,44 @@ We explicitly report Recall (Sensitivity/True Positive Rate) for critical rare c
 3.  **Strategy Application**: Apply S1 or S2 *only* to the training set.
 4.  **Training**: Train model with fixed hyperparameters.
 5.  **Evaluation**: Compute metrics on the **untouched official test set**.
+
+---
+
+## 6. Codebase Structure & Scripts
+
+The implementation is modularized to ensure reproducibility and extensibility. Below is a guide to the key scripts and their roles in the methodology.
+
+### 6.1 Core Execution Scripts (Root)
+
+| Script | Purpose | When to Use |
+|--------|---------|-------------|
+| `main.py` | **Orchestrator**: Runs the full 18-experiment grid (or subsets if configured). Manages parallel execution, logging, and result saving. | To run the full study reproduction. |
+| `runner.py` | **Single Experiment Runner**: Runs an isolated experiment (e.g., `binary lr s0`) without affecting the main grid results. Uses `_single` suffix. | For debugging, smoke testing, or quick validation. |
+| `run_full_grid.py` | **Optimized Grid Runner**: A wrapper around `main.py` that forces sequential execution (n_jobs=1) to prevent resource exhaustion on constrained environments (e.g., Colab). | When running on Colab or limited hardware. |
+
+### 6.2 Source Modules (`src/`)
+
+#### Data Handling (`src/data/`)
+*   **`loader.py`**: Manages loading of CSVs, column naming, and basic cleaning.
+*   **`preprocessing.py`**: Implements the strict `UNSWPreprocessor`. Handles splitting, imputation, one-hot encoding, and scaling. Enforces the "fit on train only" rule.
+
+#### Modeling (`src/models/`)
+*   **`trainer.py`**: Contains the `ModelTrainer` class. Unified interface for LR, RF, and XGB. Handles class weighting application and training loops.
+*   **`config.py`**: Central repository for model hyperparameters (fixed random states, solver parameters, tree depths).
+
+#### Strategies (`src/strategies/`)
+*   **`imbalance.py`**: Implements the `ImbalanceStrategy` abstract base class and concrete strategies (`S0`, `S1`, `S2a`, `S2b`). Contains the logic for resampling and weight calculation.
+
+#### Evaluation (`src/evaluation/`)
+*   **`metrics.py`**: Calculates all performance metrics (Macro-F1, G-Mean, Recalls).
+*   **`plots.py`**: Generates visual artifacts (Confusion Matrices, ROC/PR Curves, Learning Curves).
+
+### 6.3 Analysis Scripts (`scripts/`)
+
+| Script | Purpose |
+|--------|---------|
+| `generate_statistics.py` | Conducts statistical significance tests (Friedman, Nemenyi) and generates Critical Difference (CD) diagrams. |
+| `generate_publication_figures.py` | Produces high-resolution, publication-ready composite figures (e.g., Radar Charts, Bar Plots). |
+| `generate_report.py` | Compiles JSON metrics into readable CSV summary tables (`aggregated_summary.csv`, `rare_class_report.csv`). |
+| `deep_audit.py` | Scans the codebase and results to verify compliance with contracts (Leakage checks, Seed verification). |
+

@@ -11,7 +11,7 @@ def test_smoke_end_to_end_binary(synthetic_data, mock_config, tmp_path):
     preprocessor = UNSWPreprocessor(mock_config)
     preprocessor.fit_transform(synthetic_data, synthetic_data)
     
-    results_dir = tmp_path / "results"
+    results_dir = tmp_path / "results/smoke_test/"
     
     # Run Experiment
     result = run_single_experiment(
