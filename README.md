@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Data](https://img.shields.io/badge/dataset-UNSW--NB15-orange)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1234567890)
 
 > **World-Class Baseline for Intrusion Detection Systems (IDS)**
 > A rigorous, reproducible study evaluating the impact of class imbalance strategies (Class Weighting, Random OverSampling, SMOTE) on Binary and Multiclass IDS performance.
@@ -51,36 +52,44 @@
 
 ## ⚡ Quick Start
 
-### 1. Installation
-```bash
-pip install -r requirements.txt
-```
+### Option A: Run in Google Colab (Recommended)
+The easiest way to reproduce our full 18-experiment grid is via Google Colab.
 
-### 2. Run Full Experiment Grid
-To execute the complete 18-experiment suite (approx. 4-6 hours):
-```bash
-python scripts/run_full_grid.py --config configs/main.yaml
-```
+1.  Click the **Open in Colab** badge above.
+2.  Run the provided `UNSW_NB15_Full_Grid.ipynb` notebook.
+3.  Results will be automatically saved to your Google Drive.
 
-### 3. Generate "Wow" Report
-After experiments complete, generate the final analysis and visualizations:
-```bash
-python scripts/generate_report.py
-```
-View the results in `reports/final_results.md`.
+### Option B: Run Locally
+1.  **Installation**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2.  **Run Full Experiment Grid**
+    To execute the complete suite (approx. 4-6 hours):
+    ```bash
+    python scripts/run_full_grid.py --config configs/main.yaml
+    ```
+
+3.  **Generate "Wow" Report**
+    After experiments complete, generate the final analysis and visualizations:
+    ```bash
+    python scripts/generate_report.py
+    ```
+    View the results in `reports/final_results.md`.
 
 ---
 
 ## 📊 Results Summary
 
-The following results are derived from the 18-experiment grid execution.
+The following results are derived from the rigorous 18-experiment grid execution.
 
 | Metric | Best Strategy | Best Model | Score (G-Mean) |
 | :--- | :--- | :--- | :--- |
 | **Binary** | **S1 (Class Weighting)** | **XGBoost** | **0.897** |
 | **Multiclass** | **S1 (Class Weighting)** | **XGBoost** | **0.795** |
 
-> **Key Finding**: Class Weighting (S1) consistently outperforms Random Oversampling (S2a) across most metrics while being computationally cheaper.
+> **Key Finding**: Class Weighting (S1) consistently outperforms Random Oversampling (S2a) across most metrics while being computationally cheaper. XGBoost with S1 achieves state-of-the-art performance, effectively solving the Binary task and significantly improving minority class detection in the Multiclass task.
 
 ---
 

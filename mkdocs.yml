@@ -1,0 +1,65 @@
+site_name: ML Paper Review Workspace
+site_description: Documentation for the UNSW-NB15 IDS Research Project
+repo_url: https://github.com/ihmorol/unsw-nb15-handling-binary-multiclass-ids
+repo_name: ihmorol/unsw-nb15-handling-binary-multiclass-ids
+
+theme:
+  name: material
+  features:
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_root_heading: true
+            show_source: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Introduction: getting-started/index.md
+    - Installation: getting-started/installation.md
+    - Quickstart: getting-started/quickstart.md
+  - Research:
+    - Methodology: research/methodology.md
+    - Data Contract: contracts/data_contract.md
+    - Experiment Contract: contracts/experiment_contract.md
+    - Methodology Contract: contracts/methodology_contract.md
+    - Findings: research/findings.md
+  - Experiments:
+    - Running Experiments: experiments/running.md
+    - Google Colab Guide: experiments/colab.md
+    - Reproducibility: experiments/reproducibility.md
+  - API Reference:
+    - Data: api/data.md
+    - Models: api/models.md
+    - Evaluation: api/evaluation.md
+    - Strategies: api/strategies.md
+    - Utils: api/utils.md
+  - Artifacts:
+    - Plans:
+      - Implementation Plan: artifacts/implementation_plan.md
+    - Reports: artifacts/reports.md

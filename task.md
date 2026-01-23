@@ -35,5 +35,5 @@
     - [ ] Add "Discussion" on Cost-Sensitive tradeoffs
 
 ## Phase 4: Final Polish
-- [ ] Abstract & Intro Refinement
-- [ ] Code Cleanup for Repository Release
+- [x] **Abstract & Intro Refinement** (Updated README and Docs Findings)
+- [x] **Code Cleanup for Repository Release** (Verified Colab scripts and structure)
