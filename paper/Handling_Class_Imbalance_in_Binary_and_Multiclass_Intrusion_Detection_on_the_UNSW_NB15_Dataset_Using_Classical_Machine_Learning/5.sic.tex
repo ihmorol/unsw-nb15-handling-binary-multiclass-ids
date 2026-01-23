@@ -1,0 +1,74 @@
+\chapter{Security, Implications, and Considerations}
+
+This chapter discusses the practical implications of our findings for the deployment of machine learning-based intrusion detection systems, along with security and ethical considerations.
+
+\section{Deployment Considerations}
+
+The experimental results presented in Chapter 4 have direct implications for practitioners deploying IDS in production environments.
+
+\subsection{Model Selection Trade-offs}
+
+The choice of model and imbalance-handling strategy depends on the specific operational context:
+
+\begin{itemize}
+    \item \textbf{High-Security Environments} (e.g., critical infrastructure): Prioritize recall over precision. XGBoost with class weighting achieves 82--96\% recall on rare attacks, ensuring that most malicious traffic is flagged for review, even at the cost of increased false positives.
+    
+    \item \textbf{High-Volume Networks} (e.g., enterprise networks): Consider the trade-off between detection rate and alert fatigue. Random Forest with class weighting offers a balance between detection capability (G-Mean 0.736) and precision, reducing the burden on security operations teams.
+    
+    \item \textbf{Resource-Constrained Environments}: Logistic Regression, despite lower performance, offers faster inference times and lower memory requirements, making it suitable for edge deployments where computational resources are limited.
+\end{itemize}
+
+\subsection{Computational Costs}
+
+Training times varied significantly across our experiments. Oversampling (S2a) approximately doubled training time compared to class weighting (S1) due to the expanded training set. For real-time applications requiring frequent model updates, class weighting is preferable as it achieves comparable performance without additional data generation overhead.
+
+\section{Security Implications}
+
+\subsection{Risks of False Negatives}
+
+Our baseline experiments (S0) demonstrate the critical danger of deploying models without imbalance handling: \textit{zero detection} of rare attacks. In operational terms, this means:
+
+\begin{itemize}
+    \item Worm propagation could proceed undetected, potentially compromising entire network segments.
+    \item Shellcode injection attacks---often used as initial access vectors---would bypass detection entirely.
+    \item Backdoor installations would establish persistent access for attackers without alerting defenders.
+\end{itemize}
+
+These rare attacks, while infrequent, often carry the highest impact. A single undetected backdoor can compromise an entire organization \cite{ring2019survey}.
+
+\subsection{Cost of False Positives}
+
+While improved recall is desirable, the low precision observed for rare classes (3--22\%) implies elevated false positive rates. In practice, this creates:
+
+\begin{itemize}
+    \item \textbf{Alert Fatigue}: Security analysts may become desensitized to frequent false alarms, potentially missing genuine threats.
+    \item \textbf{Operational Overhead}: Each alert requires investigation, consuming analyst time and organizational resources.
+\end{itemize}
+
+Balancing these trade-offs requires careful calibration to the organization's risk tolerance and available resources.
+
+\section{Ethical Considerations}
+
+\subsection{Dual-Use Concerns}
+
+The techniques and findings presented in this research have potential dual-use implications. Understanding how IDS models fail to detect certain attack categories could, in principle, inform adversarial strategies for evading detection. We have mitigated this risk by:
+
+\begin{itemize}
+    \item Focusing on well-documented public datasets rather than proprietary threat intelligence.
+    \item Presenting findings in terms of model improvement rather than evasion techniques.
+    \item Publishing reproducible methodology to enable defensive research.
+\end{itemize}
+
+\subsection{Privacy in Network Monitoring}
+
+Intrusion detection inherently involves monitoring network traffic, which may contain sensitive information. Organizations deploying IDS solutions must:
+
+\begin{itemize}
+    \item Ensure compliance with applicable privacy regulations (e.g., GDPR, CCPA).
+    \item Implement appropriate data retention and access control policies.
+    \item Consider privacy-preserving techniques such as differential privacy or federated learning for sensitive environments \cite{abdelmoumin2022survey}.
+\end{itemize}
+
+\subsection{Bias in Detection}
+
+Our analysis reveals that models trained without imbalance handling systematically ignore minority classes. This represents a form of algorithmic bias: the model ``learns'' that certain attack types do not exist, simply because they are rare in the training data. This finding underscores the importance of explicitly addressing class imbalance to ensure equitable detection across all threat categories.

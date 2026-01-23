@@ -1,7 +1,7 @@
 # Experiment Contract: UNSW-NB15 Imbalance Study
 
-> **Document Version:** 2.0  
-> **Last Updated:** 2026-01-17  
+> **Document Version:** 3.0  
+> **Last Updated:** 2026-01-22  
 > **Status:** APPROVED
 
 ---
@@ -133,11 +133,10 @@ Tasks (2) × Models (3) × Strategies (4) = 24 Total Experiments
 ```python
 LogisticRegression(
     C=1.0,                    # Regularization strength
-    solver='saga',            # Supports L1/L2
+    solver='lbfgs',           # Optimized: Faster than saga
     max_iter=1000,            # Convergence iterations
     penalty='l2',             # Regularization type
     class_weight=None,        # S0: None, S1: 'balanced'
-    n_jobs=-1,
     random_state=42
 )
 ```
@@ -147,12 +146,11 @@ LogisticRegression(
 ```python
 LogisticRegression(
     C=1.0,
-    solver='saga',
+    solver='lbfgs',
     max_iter=1000,
     penalty='l2',
-    multi_class='multinomial',  # Multiclass handling
+    # multi_class='multinomial', # Removed: auto-handled by sklearn/deprecated
     class_weight=None,          # S0: None, S1: 'balanced'
-    n_jobs=-1,
     random_state=42
 )
 ```
@@ -161,13 +159,15 @@ LogisticRegression(
 
 ```python
 RandomForestClassifier(
-    n_estimators=200,         # Number of trees
-    max_depth=20,             # Maximum tree depth
-    min_samples_split=5,      # Min samples to split node
-    min_samples_leaf=2,       # Min samples in leaf
-    max_features='sqrt',      # Features per split
-    class_weight=None,        # S0: None, S1: 'balanced'
+    n_estimators=300,         # Optimized (was 200)
+    max_depth=None,           # Optimized: Unbounded (was 20)
+    min_samples_split=2,      # Optimized (was 5)
+    min_samples_leaf=1,       # Optimized (was 2)
+    max_features='sqrt',
+    criterion='gini',         # Explicit
+    class_weight='balanced_subsample', # Optimized (was S1: 'balanced')
     bootstrap=True,
+    oob_score=True,           # Added validation
     n_jobs=-1,
     random_state=42
 )
@@ -177,12 +177,15 @@ RandomForestClassifier(
 
 ```python
 XGBClassifier(
-    n_estimators=200,
-    learning_rate=0.1,
-    max_depth=10,
-    min_child_weight=1,
-    subsample=0.8,
-    colsample_bytree=0.8,
+    n_estimators=150,         # Optimized (was 200)
+    learning_rate=0.05,       # Optimized (was 0.1)
+    max_depth=15,             # Optimized (was 10)
+    min_child_weight=2,       # Optimized (was 1)
+    subsample=0.85,           # Optimized (was 0.8)
+    colsample_bytree=0.85,    # Optimized (was 0.8)
+    gamma=1.0,                # New regularization
+    reg_lambda=1.0,           # New regularization
+    reg_alpha=0.5,            # New regularization
     scale_pos_weight=None,    # S0: None, S1: computed ratio
     use_label_encoder=False,
     eval_metric='logloss',
@@ -197,12 +200,15 @@ XGBClassifier(
 
 ```python
 XGBClassifier(
-    n_estimators=200,
-    learning_rate=0.1,
-    max_depth=10,
-    min_child_weight=1,
-    subsample=0.8,
-    colsample_bytree=0.8,
+    n_estimators=150,         # Optimized (was 200)
+    learning_rate=0.05,       # Optimized (was 0.1)
+    max_depth=15,             # Optimized (was 10)
+    min_child_weight=2,       # Optimized (was 1)
+    subsample=0.85,           # Optimized (was 0.8)
+    colsample_bytree=0.85,    # Optimized (was 0.8)
+    gamma=1.0,                # New regularization
+    reg_lambda=1.0,           # New regularization
+    reg_alpha=0.5,            # New regularization
     use_label_encoder=False,
     eval_metric='mlogloss',
     objective='multi:softprob',

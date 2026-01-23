@@ -341,3 +341,184 @@ def plot_metric_comparison_grid(
     Path(save_path).parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(save_path, bbox_inches='tight', facecolor='white')
     plt.close()
+
+
+def plot_learning_curves(
+    learning_curve_data: Dict[str, Dict[str, List[float]]],
+    save_path: str,
+    title: str = 'Learning Curves'
+) -> None:
+    """
+    Plot learning curves (Training vs Validation) for available metrics.
+
+    Args:
+        learning_curve_data: Nested dict {set_name: {metric_name: [values]}}
+                             e.g. {'validation_0': {'logloss': [...]}, ...}
+        save_path: Path to save figure
+        title: Plot title
+    """
+    set_plot_style()
+    
+    # Identify metrics available
+    first_set = next(iter(learning_curve_data.values()))
+    metrics = list(first_set.keys())
+    
+    fig, axes = plt.subplots(1, len(metrics), figsize=(7 * len(metrics), 5))
+    if len(metrics) == 1:
+        axes = [axes]
+        
+    mapping = {'validation_0': 'Train', 'validation_1': 'Validation'}
+    colors = {'validation_0': '#3498DB', 'validation_1': '#E74C3C'}
+    
+    for i, metric in enumerate(metrics):
+        ax = axes[i]
+        
+        for set_key, metrics_dict in learning_curve_data.items():
+            if metric in metrics_dict:
+                values = metrics_dict[metric]
+                epochs = range(1, len(values) + 1)
+                label = mapping.get(set_key, set_key)
+                
+                ax.plot(epochs, values, label=label, linewidth=2, 
+                        color=colors.get(set_key, f'C{i}'))
+        
+        ax.set_xlabel('Epochs')
+        ax.set_ylabel(metric.title())
+        ax.set_title(f'{metric.title()}')
+        ax.legend()
+        ax.grid(True, linestyle='--', alpha=0.3)
+
+    plt.suptitle(title, fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    
+    Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(save_path, bbox_inches='tight', facecolor='white')
+    plt.close()
+    
+    logger.info(f"Saved learning curve plot to {save_path}")
+
+
+def plot_roc_curve(
+    y_true: np.ndarray,
+    y_scores: np.ndarray,
+    save_path: str,
+    title: str = 'ROC Curve'
+) -> None:
+    """
+    Plot Receiver Operating Characteristic (ROC) curve.
+    
+    Args:
+        y_true: True binary labels
+        y_scores: Predicted probabilities for the positive class
+        save_path: Path to save figure
+        title: Plot title
+    """
+    from sklearn.metrics import roc_curve, auc
+    
+    set_plot_style()
+    fpr, tpr, _ = roc_curve(y_true, y_scores)
+    roc_auc = auc(fpr, tpr)
+    
+    fig, ax = plt.subplots(figsize=(8, 8))
+    
+    ax.plot(fpr, tpr, color='#2ECC71', lw=2,
+            label=f'ROC curve (area = {roc_auc:.3f})')
+    ax.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    
+    ax.set_xlim([0.0, 1.0])
+    ax.set_ylim([0.0, 1.05])
+    ax.set_xlabel('False Positive Rate', fontweight='bold')
+    ax.set_ylabel('True Positive Rate', fontweight='bold')
+    ax.set_title(title, fontsize=14, fontweight='bold')
+    ax.legend(loc="lower right")
+    
+    plt.tight_layout()
+    Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(save_path, bbox_inches='tight', facecolor='white')
+    plt.close()
+    logger.info(f"Saved ROC curve to {save_path}")
+
+
+def plot_pr_curve(
+    y_true: np.ndarray,
+    y_scores: np.ndarray,
+    save_path: str,
+    title: str = 'Precision-Recall Curve'
+) -> None:
+    """
+    Plot Precision-Recall curve (crucial for imbalanced data).
+    
+    Args:
+        y_true: True binary labels
+        y_scores: Predicted probabilities for the positive class
+        save_path: Path to save figure
+        title: Plot title
+    """
+    from sklearn.metrics import precision_recall_curve, average_precision_score
+    
+    set_plot_style()
+    precision, recall, _ = precision_recall_curve(y_true, y_scores)
+    average_precision = average_precision_score(y_true, y_scores)
+    
+    fig, ax = plt.subplots(figsize=(8, 8))
+    
+    ax.plot(recall, precision, color='#9B59B6', lw=2,
+            label=f'AP = {average_precision:.3f}')
+    
+    ax.set_xlabel('Recall', fontweight='bold')
+    ax.set_ylabel('Precision', fontweight='bold')
+    ax.set_title(title, fontsize=14, fontweight='bold')
+    ax.legend(loc="lower left")
+    ax.set_ylim([0.0, 1.05])
+    ax.set_xlim([0.0, 1.0])
+    
+    plt.tight_layout()
+    Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(save_path, bbox_inches='tight', facecolor='white')
+    plt.close()
+    logger.info(f"Saved PR curve to {save_path}")
+
+
+def plot_feature_importance(
+    importances: np.ndarray,
+    feature_names: List[str],
+    save_path: str,
+    title: str = 'Feature Importance',
+    top_n: int = 20
+) -> None:
+    """
+    Plot top N feature importances.
+    
+    Args:
+        importances: Array of feature importance scores
+        feature_names: List of feature names
+        save_path: Path to save figure
+        title: Plot title
+        top_n: Number of top features to show
+    """
+    set_plot_style()
+    
+    # Sort importances
+    indices = np.argsort(importances)[::-1]
+    
+    # Select top N
+    top_indices = indices[:top_n]
+    top_importances = importances[top_indices]
+    top_names = [feature_names[i] for i in top_indices]
+    
+    fig, ax = plt.subplots(figsize=(10, 8))
+    
+    y_pos = np.arange(len(top_names))
+    ax.barh(y_pos, top_importances, align='center', color='#34495E')
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(top_names)
+    ax.invert_yaxis()  # labels read top-to-bottom
+    
+    ax.set_xlabel('Importance Score', fontweight='bold')
+    ax.set_title(title, fontsize=14, fontweight='bold')
+    
+    plt.tight_layout()
+    Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(save_path, bbox_inches='tight', facecolor='white')
+    plt.close()
+    logger.info(f"Saved feature importance plot to {save_path}")

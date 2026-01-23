@@ -18,7 +18,7 @@ trigger: always_on
 - **Source:** `docs/contracts/experiment_contract.md`
 - **Key Constraints:**
     - Run the full 18-experiment grid (2 tasks × 3 models × 3 strategies).
-    - Use fixed hyperparameters defined in `configs/main.yaml`.
+    - Use optimized hyperparameters defined in `configs/main.yaml` (aligned with Experiment Contract v3.0).
     - Report G-Mean, Macro-F1, and per-class Recall.
     - **Rare Class Focus:** Worms, Shellcode, Backdoor, Analysis.
 

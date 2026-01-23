@@ -1,0 +1,46 @@
+{
+  "experiment_id": "binary_xgb_s1_s46",
+  "seed": 46,
+  "task": "binary",
+  "model": "xgb",
+  "strategy": "s1",
+  "timestamp": "2026-01-22T22:07:32.898541",
+  "training_time_seconds": 19.283601999282837,
+  "total_time_seconds": 21.01504611968994,
+  "train_samples": 140272,
+  "test_samples": 82332,
+  "metrics": {
+    "overall": {
+      "accuracy": 0.9093669533109848,
+      "macro_f1": 0.906977292514781,
+      "weighted_f1": 0.9084861325991982,
+      "g_mean": 0.9023885889330608,
+      "roc_auc": 0.9861315534518901
+    },
+    "per_class": {
+      "Normal": {
+        "precision": 0.9595780433159073,
+        "recall": 0.8334324324324325,
+        "f1": 0.8920678083776904,
+        "support": 37000
+      },
+      "Attack": {
+        "precision": 0.8772212925332696,
+        "recall": 0.9713447454336892,
+        "f1": 0.9218867766518717,
+        "support": 45332
+      }
+    },
+    "confusion_matrix": [
+      [
+        30837,
+        6163
+      ],
+      [
+        1299,
+        44033
+      ]
+    ]
+  },
+  "rare_class_analysis": null
+}

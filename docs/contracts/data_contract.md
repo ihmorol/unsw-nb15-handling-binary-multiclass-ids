@@ -44,7 +44,7 @@ The dataset must contain the following features (after header normalization):
 | `ltime` | Float | Last Timestamp | Temporal leakage |
 
 > [!NOTE]
-> These 7 columns are dropped during preprocessing. The remaining 42 predictive features are retained.
+> These 7 columns are **already removed** in the source dataset files used for this project (`dataset/UNSW_NB15_training-set.csv` and `testing-set.csv`). The code does not need to drop them explicitly as they are absent. The remaining 42 predictive features are retained.
 
 ### 2.2 Categorical Features (One-Hot Encoded)
 

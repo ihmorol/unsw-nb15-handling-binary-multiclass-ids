@@ -9,7 +9,11 @@ from .plots import (
     plot_strategy_comparison,
     plot_rare_class_recall,
     plot_class_distribution,
-    set_plot_style
+    set_plot_style,
+    plot_learning_curves,
+    plot_roc_curve,
+    plot_pr_curve,
+    plot_feature_importance
 )
 
 __all__ = [
@@ -20,5 +24,9 @@ __all__ = [
     'plot_strategy_comparison',
     'plot_rare_class_recall',
     'plot_class_distribution',
-    'set_plot_style'
+    'set_plot_style',
+    'plot_learning_curves',
+    'plot_roc_curve',
+    'plot_pr_curve',
+    'plot_feature_importance'
 ]
