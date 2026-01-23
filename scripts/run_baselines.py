@@ -86,7 +86,12 @@ def run_baseline(task, strategy, X_train, y_train, X_test, y_test, results_dir, 
     return result
 
 def main():
-    config = load_config("configs/main.yaml")
+    import argparse
+    parser = argparse.ArgumentParser(description="Run Baselines")
+    parser.add_argument("--config", type=str, default="configs/main.yaml", help="Path to config file")
+    args = parser.parse_args()
+
+    config = load_config(args.config)
     results_dir = Path(config['results_dir'])
     setup_logging(level="INFO", log_file=str(results_dir / 'logs' / 'baselines.log'))
     

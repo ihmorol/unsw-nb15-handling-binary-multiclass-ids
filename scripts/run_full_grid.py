@@ -40,6 +40,16 @@ def main():
     start_time = time.time()
     
     cmd = [sys.executable, "main.py"]
+    
+    # Propagate config argument if present
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="configs/main.yaml")
+    args, unknown = parser.parse_known_args()
+    
+    if args.config:
+        cmd.extend(["--config", args.config])
+        
     logger.info(f"Executing: {' '.join(cmd)}")
     
     try:

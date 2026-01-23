@@ -4,9 +4,9 @@
   "task": "binary",
   "model": "lr",
   "strategy": "s1",
-  "timestamp": "2026-01-22T19:33:05.532697",
-  "training_time_seconds": 413.3928689956665,
-  "total_time_seconds": 413.6057720184326,
+  "timestamp": "2026-01-22T22:05:06.228186",
+  "training_time_seconds": 398.0773169994354,
+  "total_time_seconds": 398.3683543205261,
   "train_samples": 140272,
   "test_samples": 82332,
   "metrics": {
@@ -15,7 +15,7 @@
       "macro_f1": 0.8277555736818323,
       "weighted_f1": 0.8310909738711377,
       "g_mean": 0.8231277636941627,
-      "roc_auc": 0.9548003581981347
+      "roc_auc": 0.9548003581981346
     },
     "per_class": {
       "Normal": {

@@ -48,5 +48,5 @@ Implement the plan exactly and produce research-grade artifacts for every stage 
 ## References
 - Config: `configs/main.yaml`
 - Data contract: `docs/contracts/data_contract.md`
-- Experiment contract: `docs/contracts/experiment_contract.md`
+- Experiment contract: `docs/contracts/experiment_contract.md` (v3.0)
 - Antigravity rules: `.agent/antigravity/`

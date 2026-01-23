@@ -4,9 +4,9 @@
   "task": "binary",
   "model": "xgb",
   "strategy": "s0",
-  "timestamp": "2026-01-22T19:35:19.733319",
-  "training_time_seconds": 31.67182683944702,
-  "total_time_seconds": 34.00165009498596,
+  "timestamp": "2026-01-22T22:07:02.251179",
+  "training_time_seconds": 19.011465549468994,
+  "total_time_seconds": 20.20932626724243,
   "train_samples": 140272,
   "test_samples": 82332,
   "metrics": {

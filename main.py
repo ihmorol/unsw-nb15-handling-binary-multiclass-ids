@@ -329,8 +329,13 @@ def main():
     
     Runs all experiments in parallel with multiple seeds.
     """
+    import argparse
+    parser = argparse.ArgumentParser(description="Run UNSW-NB15 Experiment Grid")
+    parser.add_argument("--config", type=str, default="configs/main.yaml", help="Path to configuration file")
+    args = parser.parse_args()
+
     # Load configuration
-    config = load_config("configs/main.yaml")
+    config = load_config(args.config)
     
     # Setup logging
     log_path = Path(config['results_dir']) / 'logs' / f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
