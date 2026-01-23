@@ -4,18 +4,22 @@ This chapter discusses the practical implications of our findings for the deploy
 
 \section{Deployment Considerations}
 
-The experimental results presented in Chapter 4 have direct implications for practitioners deploying IDS in production environments.
+The experimental findings underscore a fundamental \textbf{``No Free Lunch''} theorem in NIDS methodology: optimizing for the recall of rare attacks (e.g., Shellcode) inherently incurs a cost in precision.
 
-\subsection{Model Selection Trade-offs}
+\subsection{The Precision-Recall Trade-off}
 
-The choice of model and imbalance-handling strategy depends on the specific operational context:
-
+Our analysis of the \textit{Shellcode} sink (94\% Recall, 22\% Precision) presents a distinct operational choice:
 \begin{itemize}
-    \item \textbf{High-Security Environments} (e.g., critical infrastructure): Prioritize recall over precision. XGBoost with class weighting achieves 82--96\% recall on rare attacks, ensuring that most malicious traffic is flagged for review, even at the cost of increased false positives.
-    
-    \item \textbf{High-Volume Networks} (e.g., enterprise networks): Consider the trade-off between detection rate and alert fatigue. Random Forest with class weighting offers a balance between detection capability (G-Mean 0.736) and precision, reducing the burden on security operations teams.
-    
-    \item \textbf{Resource-Constrained Environments}: Logistic Regression, despite lower performance, offers faster inference times and lower memory requirements, making it suitable for edge deployments where computational resources are limited.
+    \item \textbf{Type 1 Security (High Recall)}: Deploying XGB-S1 ensures that 19 out of 20 Shellcode attacks are caught. However, 80\% of alerts will be false alarms (exploit noise, fuzzers). This fits environments where the cost of a breach is catastrophic (e.g., Critical Infrastructure).
+    \item \textbf{Type 2 Security (High Precision)}: Deploying RF-S0 reduces false alarms but misses 50\% of attacks. This is suitable only for environments with limited analyst capacity where alert fatigue must be minimized.
+\end{itemize}
+
+\subsection{The Feature Engineering Imperative}
+
+The confounding of \textit{Analysis} and \textit{Backdoor} traffic (Confusion Ratio 2.37) demonstrates that current feature sets (NetFlow/Packet header derivatives) are insufficient to distinguish these attack topologies. Relying on ``better models'' (hyperparameter tuning) is futile here. Future deployments must incorporate:
+\begin{itemize}
+    \item \textbf{Payload Inspection}: Deep Packet Inspection (DPI) features may resolve the ambiguity between Analysis probing and Backdoor channels.
+    \item \textbf{Temporal Sequencing}: Analyzing the sequence of packets rather than individual flows could differentiate the persistent nature of a Backdoor from the bursty nature of Analysis scans.
 \end{itemize}
 
 \subsection{Computational Costs}

@@ -34,7 +34,11 @@ def load_data():
     df_class = pd.read_csv('results/tables/per_class_metrics.csv')
     df_rare = pd.read_csv('results/tables/rare_class_report.csv')
     df_log = pd.read_csv('results/experiment_log.csv')
-    return df_summary, df_class, df_rare, df_log
+    try:
+        df_dump = pd.read_csv('results/tables/per_class_metrics_dump.csv')
+    except FileNotFoundError:
+        df_dump = pd.DataFrame()
+    return df_summary, df_class, df_rare, df_log, df_dump
 
 # Helper: Save Figure
 def save_fig(fig, name):
@@ -224,15 +228,77 @@ def plot_radar(df):
     
     save_fig(fig, "radar_rf_s0_s2a_multi")
 
+def plot_rank_comparison(df):
+    """Horizontal Bar Chart of Average Ranks (Friedman Test Visualization)"""
+    if df.empty:
+        print("Skipping Rank Comparison (No Data)")
+        return
+        
+    from scipy.stats import rankdata
+    
+    # Pivot: Index=Class, Columns=Treatment, Values=F1
+    pivot = df.pivot(index='Class', columns='Treatment', values='F1')
+    
+    # Rank: "Higher F1 is better". Rankdata gives 1 to smallest.
+    # So we want Rank 1 to be best.
+    # Let's rank descending: -F1
+    ranks = pivot.apply(lambda x: rankdata(-x), axis=1, result_type='expand')
+    ranks.columns = pivot.columns
+    
+    # Calculate Average Rank per Treatment
+    avg_ranks = ranks.mean().sort_values()
+    
+    # Prepare Plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    y_pos = np.arange(len(avg_ranks))
+    colors = []
+    
+    for idx in avg_ranks.index:
+        strat = idx.split('_')[-1] # Extract strategy (e.g. S0, S1)
+        colors.append(STRATEGY_COLORS.get(strat, 'gray'))
+        
+    ax.barh(y_pos, avg_ranks.values, color=colors, edgecolor='black')
+    
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(avg_ranks.index, fontsize=FONT_SIZES['tick_label'])
+    ax.invert_yaxis()  # Best rank (1) at top
+    
+    ax.set_xlabel('Average Rank (Lower is Better)', fontsize=FONT_SIZES['axis_label'])
+    ax.set_title('Critical Difference: Average Ranks (Friedman Analysis)', fontsize=FONT_SIZES['title'], fontweight='bold')
+    
+    # Add counts
+    for i, v in enumerate(avg_ranks.values):
+        ax.text(v + 0.1, i, f"{v:.2f}", va='center', fontweight='bold')
+        
+    ax.grid(axis='x', alpha=0.3, linestyle='--')
+    
+    # Add Friedman Check Note
+    friedman_file = 'results/tables/friedman_test.csv'
+    if os.path.exists(friedman_file):
+        try:
+            f_res = pd.read_csv(friedman_file)
+            p_val = f_res['P_Value'].iloc[0]
+            sig = "Significant" if p_val < 0.05 else "Not Significant"
+            ax.text(0.95, 0.05, f"Friedman Test: p={p_val:.1e}\n({sig})", 
+                    transform=ax.transAxes, ha='right', bbox=dict(facecolor='white', alpha=0.8))
+        except:
+            pass
+            
+    save_fig(fig, "rank_comparison")
+
 # ==========================================
 # 3. MAIN EXECUTION
 # ==========================================
 
 if __name__ == "__main__":
     print("Loading data...")
-    df_sum, df_cls, df_rare, df_log = load_data()
+    df_sum, df_cls, df_rare, df_log, df_dump = load_data()
     
     print("Generating figures...")
+    
+    # 0. Rank Comparison (New)
+    plot_rank_comparison(df_dump)
     
     # 1. Summary Bars
     plot_performance_comparison(df_sum)

@@ -1,0 +1,120 @@
+2026-01-22 17:30:41,197 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-22 17:30:41,197 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-22 17:30:41,585 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-22 17:30:41,585 | INFO     | src.data.loader | Training Set schema validated successfully (all required columns present).
+2026-01-22 17:30:41,586 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-22 17:30:41,787 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-22 17:30:41,787 | INFO     | src.data.loader | Test Set schema validated successfully (all required columns present).
+2026-01-22 17:30:41,787 | INFO     | src.data.preprocessing | ============================================================
+2026-01-22 17:30:41,788 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-22 17:30:41,788 | INFO     | src.data.preprocessing | ============================================================
+2026-01-22 17:30:41,788 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-22 17:30:41,788 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-22 17:30:41,788 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-22 17:30:41,950 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-22 17:30:41,950 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-22 17:30:41,950 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-22 17:30:41,977 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-22 17:30:42,014 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-22 17:30:42,674 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-22 17:30:42,866 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-22 17:30:42,866 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-22 17:30:42,866 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-22 17:30:42,867 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-22 17:30:42,867 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-22 17:30:42,867 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-22 17:30:42,867 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-22 17:30:42,910 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-22 17:30:42,918 | INFO     | __main__ | 
+Processing Task: binary
+2026-01-22 17:30:42,918 | INFO     | __main__ | Running Baseline: binary_baseline_zeror
+2026-01-22 17:30:42,948 | INFO     | __main__ | Results (binary_baseline_zeror):
+Accuracy:    0.5506
+Macro F1:    0.3551
+Weighted F1: 0.3910
+G-Mean:      0.5000
+ROC-AUC:     0.5000
+2026-01-22 17:30:42,949 | INFO     | __main__ | Running Baseline: binary_baseline_stratified
+2026-01-22 17:30:42,987 | INFO     | __main__ | Results (binary_baseline_stratified):
+Accuracy:    0.5164
+Macro F1:    0.4889
+Weighted F1: 0.5009
+G-Mean:      0.4980
+ROC-AUC:     0.4980
+2026-01-22 17:30:42,988 | INFO     | __main__ | 
+Processing Task: multi
+2026-01-22 17:30:42,988 | INFO     | __main__ | Running Baseline: multi_baseline_zeror
+2026-01-22 17:30:43,053 | INFO     | __main__ | Results (multi_baseline_zeror):
+Accuracy:    0.4494
+Macro F1:    0.0620
+Weighted F1: 0.2787
+G-Mean:      0.3000
+ROC-AUC:     0.5000
+2026-01-22 17:30:43,054 | INFO     | __main__ | Running Baseline: multi_baseline_stratified
+2026-01-22 17:30:43,158 | INFO     | __main__ | Results (multi_baseline_stratified):
+Accuracy:    0.2341
+Macro F1:    0.0974
+Weighted F1: 0.2513
+G-Mean:      0.2994
+ROC-AUC:     0.4996
+2026-01-22 17:30:43,163 | INFO     | __main__ | Updated results\experiment_log.csv with baseline results.
+2026-01-22 18:40:11,872 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-22 18:40:11,872 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-22 18:40:12,278 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-22 18:40:12,278 | INFO     | src.data.loader | Training Set schema validated successfully (all required columns present).
+2026-01-22 18:40:12,278 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-22 18:40:12,462 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-22 18:40:12,463 | INFO     | src.data.loader | Test Set schema validated successfully (all required columns present).
+2026-01-22 18:40:12,463 | INFO     | src.data.preprocessing | ============================================================
+2026-01-22 18:40:12,463 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-22 18:40:12,463 | INFO     | src.data.preprocessing | ============================================================
+2026-01-22 18:40:12,463 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-22 18:40:12,463 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-22 18:40:12,463 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-22 18:40:12,639 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-22 18:40:12,639 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-22 18:40:12,640 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-22 18:40:12,666 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-22 18:40:12,705 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-22 18:40:13,385 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-22 18:40:13,579 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-22 18:40:13,579 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-22 18:40:13,579 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-22 18:40:13,580 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-22 18:40:13,580 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-22 18:40:13,580 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-22 18:40:13,580 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-22 18:40:13,623 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-22 18:40:13,631 | INFO     | __main__ | 
+Processing Task: binary
+2026-01-22 18:40:13,632 | INFO     | __main__ | Running Baseline: binary_baseline_zeror
+2026-01-22 18:40:13,661 | INFO     | __main__ | Results (binary_baseline_zeror):
+Accuracy:    0.5506
+Macro F1:    0.3551
+Weighted F1: 0.3910
+G-Mean:      0.5000
+ROC-AUC:     0.5000
+2026-01-22 18:40:13,662 | INFO     | __main__ | Running Baseline: binary_baseline_stratified
+2026-01-22 18:40:13,698 | INFO     | __main__ | Results (binary_baseline_stratified):
+Accuracy:    0.5164
+Macro F1:    0.4889
+Weighted F1: 0.5009
+G-Mean:      0.4980
+ROC-AUC:     0.4980
+2026-01-22 18:40:13,699 | INFO     | __main__ | 
+Processing Task: multi
+2026-01-22 18:40:13,699 | INFO     | __main__ | Running Baseline: multi_baseline_zeror
+2026-01-22 18:40:13,764 | INFO     | __main__ | Results (multi_baseline_zeror):
+Accuracy:    0.4494
+Macro F1:    0.0620
+Weighted F1: 0.2787
+G-Mean:      0.3000
+ROC-AUC:     0.5000
+2026-01-22 18:40:13,765 | INFO     | __main__ | Running Baseline: multi_baseline_stratified
+2026-01-22 18:40:13,871 | INFO     | __main__ | Results (multi_baseline_stratified):
+Accuracy:    0.2341
+Macro F1:    0.0974
+Weighted F1: 0.2513
+G-Mean:      0.2994
+ROC-AUC:     0.4996
+2026-01-22 18:40:13,880 | INFO     | __main__ | Updated results\experiment_log.csv with baseline results.

@@ -1,0 +1,49 @@
+2026-01-22 23:26:55,881 | INFO     | __main__ | ======================================================================
+2026-01-22 23:26:55,882 | INFO     | __main__ | UNSW-NB15 CLASS IMBALANCE STUDY (OPTIMIZED)
+2026-01-22 23:26:55,882 | INFO     | __main__ | ======================================================================
+2026-01-22 23:26:55,882 | INFO     | __main__ | Started at: 2026-01-22T23:26:55.882493
+2026-01-22 23:26:55,883 | INFO     | __main__ | 
+==================================================
+2026-01-22 23:26:55,883 | INFO     | __main__ | PHASE 1: DATA PREPROCESSING
+2026-01-22 23:26:55,883 | INFO     | __main__ | ==================================================
+2026-01-22 23:26:55,883 | INFO     | src.data.loader | Dataset files validated successfully
+2026-01-22 23:26:55,884 | INFO     | src.data.loader | Loading training data from dataset\UNSW_NB15_training-set.csv
+2026-01-22 23:26:56,289 | INFO     | src.data.loader | Loaded 175,341 training samples with 45 columns
+2026-01-22 23:26:56,291 | INFO     | src.data.loader | Training Set schema validated successfully (all required columns present).
+2026-01-22 23:26:56,291 | INFO     | src.data.loader | Loading test data from dataset\UNSW_NB15_testing-set.csv
+2026-01-22 23:26:56,491 | INFO     | src.data.loader | Loaded 82,332 test samples with 45 columns
+2026-01-22 23:26:56,492 | INFO     | src.data.loader | Test Set schema validated successfully (all required columns present).
+2026-01-22 23:26:56,492 | INFO     | src.data.preprocessing | ============================================================
+2026-01-22 23:26:56,492 | INFO     | src.data.preprocessing | Starting preprocessing pipeline
+2026-01-22 23:26:56,492 | INFO     | src.data.preprocessing | ============================================================
+2026-01-22 23:26:56,492 | INFO     | src.data.preprocessing | Identified 39 numerical features
+2026-01-22 23:26:56,492 | INFO     | src.data.preprocessing | Identified 3 categorical features
+2026-01-22 23:26:56,492 | INFO     | src.data.preprocessing | Creating 80%/20% train/val split
+2026-01-22 23:26:56,642 | INFO     | src.data.preprocessing | Training samples: 140,272
+2026-01-22 23:26:56,643 | INFO     | src.data.preprocessing | Validation samples: 35,069
+2026-01-22 23:26:56,643 | INFO     | src.data.preprocessing | Test samples: 82,332
+2026-01-22 23:26:56,676 | INFO     | src.data.preprocessing | Label mapping: {np.str_('Analysis'): 0, np.str_('Backdoor'): 1, np.str_('DoS'): 2, np.str_('Exploits'): 3, np.str_('Fuzzers'): 4, np.str_('Generic'): 5, np.str_('Normal'): 6, np.str_('Reconnaissance'): 7, np.str_('Shellcode'): 8, np.str_('Worms'): 9}
+2026-01-22 23:26:56,714 | INFO     | src.data.preprocessing | Fitting preprocessor on training data...
+2026-01-22 23:26:57,396 | INFO     | src.data.preprocessing | Transforming validation and test data...
+2026-01-22 23:26:57,607 | INFO     | src.data.preprocessing | Extracted 194 feature names
+2026-01-22 23:26:57,607 | INFO     | src.data.preprocessing | ----------------------------------------
+2026-01-22 23:26:57,607 | INFO     | src.data.preprocessing | Preprocessing complete!
+2026-01-22 23:26:57,608 | INFO     | src.data.preprocessing | X_train shape: (140272, 194)
+2026-01-22 23:26:57,608 | INFO     | src.data.preprocessing | X_val shape: (35069, 194)
+2026-01-22 23:26:57,608 | INFO     | src.data.preprocessing | X_test shape: (82332, 194)
+2026-01-22 23:26:57,608 | INFO     | src.data.preprocessing | Total features: 194
+2026-01-22 23:26:57,647 | INFO     | src.data.preprocessing | [OK] Data leakage validation passed
+2026-01-22 23:26:57,657 | INFO     | src.data.preprocessing | Saved preprocessing metadata to results_fast\processed\preprocessing_metadata.json
+2026-01-22 23:26:57,657 | INFO     | __main__ | 
+==================================================
+2026-01-22 23:26:57,657 | INFO     | __main__ | PHASE 2: RUNNING EXPERIMENTS
+2026-01-22 23:26:57,657 | INFO     | __main__ | ==================================================
+2026-01-22 23:26:57,658 | INFO     | __main__ | Queued 18 experiments. (Skipped 0)
+2026-01-22 23:26:57,658 | INFO     | __main__ | Starting parallel execution with n_jobs=-1...
+2026-01-22 23:37:08,142 | INFO     | __main__ | 
+==================================================
+2026-01-22 23:37:08,145 | INFO     | __main__ | PHASE 3: GENERATING REPORTS
+2026-01-22 23:37:08,145 | INFO     | __main__ | ==================================================
+2026-01-22 23:37:08,258 | INFO     | __main__ | Generated aggregated_summary.csv
+2026-01-22 23:37:08,268 | INFO     | __main__ | Generated rare_class_aggregated.csv
+2026-01-22 23:37:08,268 | INFO     | __main__ | Pipeline Completed.

@@ -509,7 +509,9 @@ def generate_summary_tables(
     
     # 1. Aggregated Summary (Mean +/- Std)
     summary = df.groupby(['Task', 'Model', 'Strategy']).agg({
+        'Accuracy': ['mean', 'std'],
         'Macro_F1': ['mean', 'std'],
+        'Weighted_F1': ['mean', 'std'],
         'G_Mean': ['mean', 'std'],
         'ROC_AUC': ['mean', 'std'],
         'Training_Time': ['mean'],

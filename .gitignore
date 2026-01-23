@@ -19,9 +19,9 @@ env/
 *.swo
 
 # Results (optional - keep experiment_log.csv, exclude large files)
-results/models/*.joblib
-results/processed/*.npy
-results/processed/*.npz
+# results/models/*.joblib
+# results/processed/*.npy
+# results/processed/*.npz
 
 # OS files
 .DS_Store
