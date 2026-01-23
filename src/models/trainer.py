@@ -15,6 +15,7 @@ from typing import Optional, Dict, Any
 import logging
 import time
 import warnings
+from sklearn.exceptions import ConvergenceWarning
 
 from .config import MODEL_CONFIGS
 
@@ -207,6 +208,8 @@ class ModelTrainer:
             with warnings.catch_warnings():
                 # Filter benign warning about class_weight + warm_start (we use full dataset, so weights are stable)
                 warnings.filterwarnings("ignore", ".*class_weight presets.*", category=UserWarning)
+                # Filter convergence warnings as we are incrementally training
+                warnings.filterwarnings("ignore", category=ConvergenceWarning)
                 
                 if sample_weight is not None:
                     model.fit(X_train, y_train, sample_weight=sample_weight)

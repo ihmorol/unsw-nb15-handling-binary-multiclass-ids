@@ -78,12 +78,7 @@ class DataLoader:
         Raises:
             ValueError: If required columns are missing
         """
-        # 1. Check target columns
-        required = [
-            self.train_path.parent / '../configs/main.yaml' # This is just path logic, wrong place for config
-        ]
-        # Better: use the config passed in init
-        
+        # 1. Check target columns        
         required_cols = []
         # Add targets
         required_cols.append(self.config['data']['target_binary'])

@@ -35,7 +35,7 @@ from src.evaluation import (
     compute_all_metrics,
     compute_rare_class_analysis,
     format_metrics_for_logging,
-    format_metrics_for_logging,
+
     plot_confusion_matrix,
     plot_learning_curves,
     plot_roc_curve,

@@ -20,6 +20,8 @@ def get_xgb_device():
     try:
         subprocess.check_output('nvidia-smi')
         logger.info("NVIDIA GPU detected. Using 'gpu_hist' for XGBoost.")
+        # Explicit confirmation for Colab user
+        logger.info(f"✅ XGBoost using GPU: {subprocess.check_output('nvidia-smi --query-gpu=name --format=csv,noheader', shell=True).decode().strip()}")
         return 'gpu_hist'
     except Exception:
         return 'hist'
@@ -32,7 +34,6 @@ MODEL_CONFIGS = {
             'max_iter': 1000,
             'penalty': 'l2',
             'warm_start': True,         # Required for iterative learning curves
-            # 'n_jobs': -1,             # Removed deprecated
             'verbose': 0
         },
         'multi': {
@@ -41,8 +42,6 @@ MODEL_CONFIGS = {
             'max_iter': 1000,
             'penalty': 'l2',
             'warm_start': True,         # Required for iterative learning curves
-            # 'multi_class': 'multinomial', # Removed deprecated
-            # 'n_jobs': -1,             # Removed deprecated
             'verbose': 0
         }
     },
@@ -114,18 +113,4 @@ MODEL_CONFIGS = {
     }
 }
 
-# Optional: Hyperparameter tuning grids
-TUNING_GRIDS = {
-    'lr': {
-        'C': [0.01, 0.1, 1.0, 10.0]
-    },
-    'rf': {
-        'n_estimators': [100, 200],
-        'max_depth': [10, 20, None]
-    },
-    'xgb': {
-        'n_estimators': [100, 200],
-        'learning_rate': [0.01, 0.1],
-        'max_depth': [5, 10]
-    }
-}
+

@@ -214,12 +214,12 @@ class UNSWPreprocessor:
         # Step 4: Create and fit preprocessor on TRAINING ONLY
         logger.info("Fitting preprocessor on training data...")
         self.preprocessor = self._create_preprocessor()
-        self.X_train = self.preprocessor.fit_transform(X_train_raw)
+        self.X_train = self.preprocessor.fit_transform(X_train_raw).astype(np.float32)
         
         # Step 5: Transform validation and test (NO fitting!)
         logger.info("Transforming validation and test data...")
-        self.X_val = self.preprocessor.transform(X_val_raw)
-        self.X_test = self.preprocessor.transform(X_test_raw)
+        self.X_val = self.preprocessor.transform(X_val_raw).astype(np.float32)
+        self.X_test = self.preprocessor.transform(X_test_raw).astype(np.float32)
         
         # Step 6: Extract feature names
         self._extract_feature_names()
