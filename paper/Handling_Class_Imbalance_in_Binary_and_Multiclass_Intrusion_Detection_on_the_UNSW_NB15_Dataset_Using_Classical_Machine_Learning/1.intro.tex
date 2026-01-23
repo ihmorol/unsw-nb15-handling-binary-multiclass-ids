@@ -1,36 +1,38 @@
 \chapter{Introduction}
 
-This chapter establishes the foundation of the study by outlining the context of network intrusion detection and the specific challenges addressed in this research.
+This chapter establishes the foundation of the study by outlining the context of network intrusion detection, the specific challenges posed by class imbalance, and the research objectives addressed in this work.
 
 \section{Background}
-Network security has become a critical priority as cyber threats continue to evolve in complexity and frequency. To counter these threats, Machine Learning (ML) is widely employed to design Intrusion Detection Systems (IDS) capable of identifying malicious traffic. The efficacy of these systems relies heavily on the quality of the datasets used for training. While older datasets like KDD99 and NSL-KDD were once standard, they are now considered outdated because they contain duplicate records and lack modern attack patterns \cite{bagui2021resampling, 2019arXiv190302460R}.
+Network security has become a critical priority as cyber threats continue to evolve in complexity and frequency. To counter these threats, Machine Learning (ML) is widely employed to design Intrusion Detection Systems (IDS) capable of identifying malicious traffic. The efficacy of these systems relies heavily on the quality of the datasets used for training. While older datasets like KDD99 and NSL-KDD were once standard, they are now considered outdated because they contain duplicate records and lack modern attack patterns \cite{moustafa2015unsw, ring2019survey}.
 
 Consequently, the UNSW-NB15 dataset has emerged as a modern benchmark for evaluating IDSs. Developed by the Australian Centre for Cyber Security, this dataset reflects real-world network traffic and includes nine contemporary attack types \cite{moustafa2015unsw}. Statistical analysis demonstrates that this dataset is significantly more complex and harder to classify than its predecessors due to its non-linear distribution \cite{moustafa2016evaluation}.
 
 \section{Problem Statement}
-The primary challenge in developing effective IDSs using the UNSW-NB15 dataset is the severe class imbalance \cite{shanmugam2024addressing}. In this dataset, normal traffic heavily outnumbers malicious traffic, and specific attack categories—such as Worms, Shellcode, and Backdoors—appear in extremely small quantities.
+The primary challenge in developing effective IDSs using the UNSW-NB15 dataset is the severe class imbalance \cite{shanmugam2024addressing}. In this dataset, normal traffic heavily outnumbers malicious traffic, and specific attack categories---such as Worms, Shellcode, and Backdoors---appear in extremely small quantities. For instance, the Worms category contains only 130 samples in the training set (0.07\%), while Normal traffic comprises over 56,000 samples.
 
-Most standard machine learning algorithms are designed to maximize overall accuracy. When applied to imbalanced data, these models tend to bias toward the majority class (Normal traffic) while failing to detect minority attack types \cite{bagui2021resampling}. While dimensionality reduction methods like PCA and Autoencoders improve computational efficiency, they do not directly solve this imbalance problem \cite{electronics8030322}. Furthermore, Cost-Sensitive Learning provides higher penalties for misclassifying minority classes, but its performance depends heavily on classifier tuning \cite{5596486}.
-
-To address these limitations, synthetic oversampling techniques such as SMOTE have been introduced to generate new minority samples rather than simply duplicating existing ones, making them more effective for imbalanced data \cite{chawla2002smote, 8993711}.
+Most standard machine learning algorithms are designed to maximize overall accuracy. When applied to such imbalanced data, these models tend to bias toward the majority class while failing to detect minority attack types \cite{bagui2021resampling}. While dimensionality reduction methods like PCA and Autoencoders improve computational efficiency, they do not directly solve this imbalance problem \cite{electronics8030322}. Furthermore, Cost-Sensitive Learning provides higher penalties for misclassifying minority classes, but its performance depends heavily on classifier tuning \cite{5596486}.
 
 \section{Motivation}
-The motivation for this study arises from the limitations observed in current literature. Many recent studies report binary accuracy rates exceeding 99\% using ensemble methods. For instance, Primartha and Tama reported high accuracy using Random Forest \cite{primartha2017anomaly}, and Amin et al. achieved 99.28\% accuracy in cloud environments \cite{amin2021ensemble}. Similarly, More et al. demonstrated state-of-the-art binary accuracy using optimized feature selection \cite{more2024enhanced}.
+The motivation for this study arises from the limitations observed in current literature. Many recent studies report binary accuracy rates exceeding 99\% using ensemble methods. For instance, Primartha and Tama reported high accuracy using Random Forest \cite{primartha2017anomaly}, and Amin et al.\ achieved 99.28\% accuracy in cloud environments \cite{amin2021ensemble}. Similarly, More et al.\ demonstrated state-of-the-art binary accuracy using optimized feature selection \cite{more2024enhanced}.
 
-However, these metrics can be misleading. Studies focusing on feature selection often see a significant drop in multiclass performance compared to binary classification \cite{kasongo2020performance}. Furthermore, deep learning approaches, while powerful, often fail to report detailed recall rates for rare attack categories \cite{Vinayakumar2019, Vibhute2024}. There is a clear need to rigorously investigate advanced imbalance-handling strategies to ensure that modern IDSs can detect rare attack categories effectively \cite{choudhary2025review}.
+However, these metrics can be misleading. Studies focusing on feature selection often see a significant drop in multiclass performance compared to binary classification \cite{kasongo2020performance}. Furthermore, deep learning approaches, while powerful, often fail to report detailed recall rates for rare attack categories \cite{Vinayakumar2019, Vibhute2024}. There is a clear need to rigorously investigate advanced imbalance-handling strategies to ensure that modern IDSs can detect rare attack categories effectively \cite{choudhary2025review}. Specifically, prior works often overlook the fact that a model can achieve 99\% accuracy while having 0\% recall on critical rare attacks like Worms and Shellcode.
 
-\section{Objective}
-The primary objective of this research is to improve the multiclass detection performance of machine learning models on the UNSW-NB15 dataset. Specifically, this study aims to:
+\section{Research Objectives and Questions}
+The primary objective of this research is to improve the multiclass detection performance of machine learning models on the UNSW-NB15 dataset. To achieve this, we address the following research questions (RQs):
+
 \begin{itemize}
-    \item Analyze the impact of class imbalance on the detection of minority attack categories.
-    \item Evaluate and compare the effectiveness of imbalance-handling strategies, specifically Cost-Sensitive Learning and SMOTE \cite{chawla2002smote}.
-    \item Establish a reliable baseline for multiclass intrusion detection that prioritizes the identification of rare attacks over simple binary accuracy.
+    \item \textbf{RQ1:} How does class imbalance in UNSW-NB15 affect the performance of classical ML models on binary vs.\ multiclass intrusion detection tasks?
+    \item \textbf{RQ2:} To what extent do class weighting and oversampling improve detection of minority attack classes compared to raw imbalanced data?
+    \item \textbf{RQ3:} Is there a consistent pattern in how different models (Logistic Regression, Random Forest, XGBoost) respond to imbalance-handling methods across binary and multiclass tasks?
+    \item \textbf{RQ4:} For extremely rare classes (Worms, Shellcode), does oversampling significantly improve recall without degrading majority class performance?
 \end{itemize}
 
 \section{Contribution}
 This study contributes to the field of Network Intrusion Detection through the following:
+
 \begin{itemize}
-    \item \textbf{Systematic Evaluation of Imbalance Strategies:} We provide a comparative analysis of how different techniques (No Balancing, Class Weighting, and SMOTE) affect model performance on a modern benchmark dataset.
-    \item \textbf{Focus on Rare Attack Detection:} Unlike prior works that prioritize binary accuracy, this study explicitly analyzes performance metrics (Precision, Recall, F1-score) for minority classes such as Worms and Shellcode.
-    \item \textbf{Adoption of Comprehensive Metrics:} We utilize G-Mean and per-class metrics to provide a fair assessment of model reliability, addressing the pitfalls of using standard accuracy for skewed datasets.
+    \item \textbf{Systematic Evaluation (C1):} We provide the first systematic comparison of three imbalance strategies (No Balancing, Class Weighting, Random Oversampling) across three classical ML models and two tasks (18 experiments total) on the UNSW-NB15 dataset.
+    \item \textbf{Explicit Rare-Class Analysis (C2):} Unlike prior works that prioritize binary accuracy, this study explicitly analyzes performance metrics (Precision, Recall, F1-score) for minority classes, establishing quantified recall targets for Worms and Shellcode.
+    \item \textbf{Reproducible Baseline (C3):} We establish a transparent, reproducible baseline pipeline with fixed hyperparameters and strict data leakage prevention, enabling future research to benchmark against clean classical ML results.
+    \item \textbf{Adoption of Comprehensive Metrics (C4):} We utilize G-Mean and per-class metrics to provide a fair assessment of model reliability, addressing the pitfalls of using standard accuracy for skewed datasets.
 \end{itemize}

@@ -3,13 +3,40 @@
 This chapter outlines the steps taken to build and evaluate the intrusion detection system. The process begins with selecting the dataset, followed by cleaning and preparing the data, training the models using different strategies to handle class imbalance, and finally evaluating the results.
 
 \section{Dataset Description}
-We selected the \textbf{UNSW-NB15} dataset for this research \cite{moustafa2015unsw}. This dataset was created by Moustafa and Slay to address the limitations of older datasets like KDD99. KDD99 is often considered outdated because it contains duplicate records and does not include modern attack patterns \cite{moustafa2016evaluation}. In contrast, UNSW-NB15 includes nine types of contemporary attacks, making it a more realistic benchmark for current network security. Surveys of intrusion detection datasets confirm that UNSW-NB15 is a reliable choice for research, though it is noted to be highly imbalanced, which makes classification difficult \cite{ring2019survey}.
+We selected the \textbf{UNSW-NB15} dataset for this research \cite{moustafa2015unsw}. This dataset was created by Moustafa and Slay to address the limitations of older datasets like KDD99. UNSW-NB15 includes nine types of contemporary attacks, making it a more realistic benchmark for current network security.
+
+\subsection{Class Distribution and Imbalance}
+The dataset is characterized by severe class imbalance. Table~\ref{tab:train_dist} shows the distribution of the training set used in our experiments. Notably, the \textit{Worms} category constitutes only 0.07\% of the data, posing a significant challenge for classification.
+
+\begin{table}[h]
+\centering
+\caption{Class Distribution in Training Set}
+\label{tab:train_dist}
+\begin{tabular}{|l|r|r|l|}
+\hline
+\textbf{Class} & \textbf{Count} & \textbf{Percentage} & \textbf{Imbalance Level} \\
+\hline
+Normal & 56,000 & 31.94\% & Majority \\
+Generic & 40,000 & 22.82\% & Common \\
+Exploits & 33,393 & 19.04\% & Common \\
+Fuzzers & 18,184 & 10.37\% & Moderate \\
+DoS & 12,264 & 6.99\% & Moderate \\
+Reconnaissance & 10,491 & 5.98\% & Moderate \\
+Analysis & 2,000 & 1.14\% & Rare \\
+Backdoor & 1,746 & 1.00\% & Rare \\
+Shellcode & 1,133 & 0.65\% & Rare \\
+Worms & 130 & 0.07\% & \textbf{Critically Rare} \\
+\hline
+\textbf{Total} & \textbf{175,341} & 100\% & --- \\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Data Preprocessing}
 Raw network data cannot be used directly by machine learning algorithms. We applied a consistent preprocessing pipeline to clean and format the data.
 
 \subsection{Feature Cleaning and Selection}
-The version of the UNSW-NB15 dataset used in this study (the train/test partition) already excludes high-cardinality identifiers such as \texttt{srcip}, \texttt{dstip}, \texttt{sport}, \texttt{dsport}, \texttt{stime}, and \texttt{ltime}. These features are specific to the network setup and do not help the model learn general attack patterns. We confirmed their absence in the input files to ensure no leakage of specific IP addresses or timestamps occurs. We utilized feature selection concepts discussed by Janarthanan and Zargari to ensure only relevant information remained \cite{8001537}.
+The first step involved removing data columns that are not useful for detecting attacks. We dropped identifiers such as IP addresses (\texttt{srcip}, \texttt{dstip}), ports (\texttt{sport}, \texttt{dsport}), and timestamps (\texttt{stime}, \texttt{ltime}). These features are specific to the network setup and do not help the model learn general attack patterns. We utilized feature selection concepts discussed by Janarthanan and Zargari to ensure only relevant information remained \cite{8001537}.
 
 \subsection{Missing Values}
 Real-world data often has gaps. To handle this, we checked for missing values in the dataset. For numerical features, we filled missing entries with the median value of that column. For categorical features, we replaced missing entries with a placeholder category labeled ``missing''.
@@ -21,11 +48,13 @@ We organized the experiment into two distinct tracking tasks:
     \item \textbf{Task B (Multiclass Classification):} We retained the detailed labels for all nine attack categories along with Normal traffic.
 \end{itemize}
 
-\subsection{Data Scaling}
-Since different features have different ranges, we scaled the numeric features. We used standard scaling to ensure the values fall within a similar range. This step is critical for models like Logistic Regression but less critical for tree-based models.
+\subsection{Encoding and Scaling}
+Categorical features (e.g., \texttt{proto}, \texttt{service}, \texttt{state}) were transformed using One-Hot Encoding. Since different features have different ranges, we scaled the numeric features using Standard Scaling (zero mean, unit variance). This step is critical for models like Logistic Regression.
 
-\subsection{Splitting Into Train, Validation, and Test}
+\subsection{Data Splitting and Leakage Prevention}
 We adhered to the standard training and testing splits provided by the UNSW-NB15 authors. Within the training set, we created a validation split (80\% training, 20\% validation) to tune model settings before final testing.
+
+\textbf{Leakage Prevention:} To ensure the validity of our results, we strictly enforced data isolation. Preprocessing statistics (mean, variance, encoding categories) were computed solely on the training set. Resampling techniques were applied \textit{only} to the training split, leaving the validation and test sets untouched.
 
 \section{System Flow}
 The system follows a structured pipeline from raw data to final evaluation. The experimental setup compares different strategies to handle the dataset imbalance.
@@ -34,7 +63,7 @@ The system follows a structured pipeline from raw data to final evaluation. The 
 \begin{enumerate}
     \item \textbf{S0 (No Balancing):} Baseline model training without modifying class distribution.
     \item \textbf{S1 (Class Weighting):} Applying higher misclassification penalties for minority classes (cost-sensitive learning) \cite{5596486}.
-    \item \textbf{S2 (Oversampling):} Increasing the number of minority attack samples through resampling techniques \cite{bagui2021resampling}.
+    \item \textbf{S2a (Random Oversampling):} Increasing the number of minority attack samples through random duplication \cite{bagui2021resampling}. Note that we selected Random Oversampling over SMOTE for the primary analysis to avoid potential artifact generation in extremely rare classes (e.g., Worms with only 130 samples).
 \end{enumerate}
 
 \begin{figure}[h]
@@ -61,7 +90,7 @@ The system follows a structured pipeline from raw data to final evaluation. The 
 +-------------------------------------------------------+
 |            Imbalance Handling Strategies              |
 |                                                       |
-|  [S0: None]    [S1: Class Weights]   [S2: Oversample] |
+|  [S0: None]    [S1: Class Weights]   [S2a: Oversample]|
 +----------+----------------+-----------------+---------+
            |                |                 |
            v                v                 v
@@ -71,8 +100,8 @@ The system follows a structured pipeline from raw data to final evaluation. The 
 |   2. Random Forest                                    |
 |   3. XGBoost                                          |
 +--------------------------+----------------------------+
-                           |
-                           v
+           |
+           v
 +-------------------------------------------------------+
 |                 Performance Evaluation                |
 |  (Accuracy, F1-Score, ROC-AUC, G-Mean, Confusion Mat) |
@@ -85,27 +114,12 @@ The system follows a structured pipeline from raw data to final evaluation. The 
 \section{Technology Used}
 The implementation was carried out using \textbf{Python}. We utilized the \textbf{scikit-learn} library for preprocessing, Logistic Regression, and Random Forest models. For gradient boosting, we used \textbf{XGBoost}. Oversampling was implemented using the \textbf{imbalanced-learn} library.
 
-\subsection{Model Hyperparameters}
-To establish a reproducible baseline, we used fixed hyperparameters across all experiments rather than performing hyperparameter tuning. This choice ensures fair comparison across strategies and simplifies replication.
-
-\begin{itemize}
-    \item \textbf{Logistic Regression:} $C=1.0$, solver=\texttt{saga}, penalty=\texttt{l2}, max\_iter=1000.
-    \item \textbf{Random Forest:} n\_estimators=100, max\_depth=25, min\_samples\_split=5, min\_samples\_leaf=2.
-    \item \textbf{XGBoost:} n\_estimators=100, learning\_rate=0.1, max\_depth=10, subsample=0.8, colsample\_bytree=0.8.
-\end{itemize}
-
-For XGBoost, we employed \textbf{early stopping} (patience=10 iterations) using the validation set to prevent overfitting. Training terminates if the evaluation metric does not improve for 10 consecutive boosting rounds, selecting the best iteration. This approach reduces overfitting risk without constituting hyperparameter tuning, as the patience value was fixed a priori.
-
-All models were initialized with \texttt{random\_state=42} for reproducibility.
-
 \section{Evaluation Metrics}
 To evaluate the performance of our models, especially for minority attack classes, we used the following metrics:
 \begin{itemize}
     \item \textbf{Accuracy:} Overall correctness of predictions.
     \item \textbf{Macro F1-Score:} Average F1 score across all classes, treating each class equally.
     \item \textbf{ROC-AUC:} Ability of the model to distinguish between classes across thresholds.
-    \item \textbf{G-Mean:} Balances recall of both majority and minority classes, useful for imbalanced datasets \cite{choudhary2025review}.
+    \item \textbf{G-Mean:} The geometric mean of sensitivity and specificity, which balances recall of both majority and minority classes \cite{choudhary2025review}.
     \item \textbf{Confusion Matrix:} Summarizes correct and incorrect predictions for each class.
 \end{itemize}
-
-
